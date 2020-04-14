@@ -31,7 +31,10 @@ public class Player_walk : StateMachineBehaviour
         else if (player.target == null)
         {
             vEnd = player.POS;
-            player.Rotate(player, vEnd);
+            if (player.POS != player.transform.position)
+            {
+                player.Rotate(player, vEnd);
+            }
         }
         //player.Move(player,vEnd);
     }

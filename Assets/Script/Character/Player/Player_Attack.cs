@@ -11,6 +11,7 @@ public class Player_Attack : StateMachineBehaviour
         {
             player = animator.GetComponent<Player>();
         }
+        //요거때매 한번만 공격하는거같은데
         player.POS= player.transform.position;
     }
 
@@ -24,7 +25,8 @@ public class Player_Attack : StateMachineBehaviour
                 animator.SetInteger("iAniIndex", 1);
             }
             // 타겟의 Hp가 0이라면
-            animator.SetInteger("iAniIndex", 0);
+            if(player.target.HP==0)
+                animator.SetInteger("iAniIndex", 0);
         }
         else
         {
@@ -40,7 +42,10 @@ public class Player_Attack : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //player.POS = player.t_pos.position;
+        
+            player.POS = player.t_pos.position;
+        
+        
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

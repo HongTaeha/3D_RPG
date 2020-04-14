@@ -14,8 +14,18 @@ public class Character : MonoBehaviour
             get { return pos; }
             set { pos= value; }
     }
-
     public Character target = null;
+
+    public Vector3 targetpos
+    {
+        get
+        {
+            if (target != null)
+                return target.transform.position;
+            else
+                return transform.position; 
+        }
+    }
     public Transform t_pos
     {
         get
@@ -43,8 +53,6 @@ public class Character : MonoBehaviour
 
     void Start()
     {
-        ani = GetComponent<Animator>();
-        POS = transform.position;
 
     }
 
@@ -56,6 +64,7 @@ public class Character : MonoBehaviour
 
     public void  Move(Character obj, Vector3 _pos)
     {
+
         obj.transform.position = Vector3.MoveTowards(obj.transform.position, _pos, Time.deltaTime * speed);
         if (obj.transform.position == _pos)
         {

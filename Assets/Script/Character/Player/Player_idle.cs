@@ -20,6 +20,7 @@ public class Player_idle : StateMachineBehaviour
             if (player.TargetDIstance< player.Range)
             {
                 animator.SetInteger("iAniIndex", 2);
+
             }
             else
             {
@@ -38,6 +39,7 @@ public class Player_idle : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+
         Debug.Log("========= OnStateExit");
     }
 

@@ -11,7 +11,9 @@ public class Player : Character
         HP = 10;
         MP = 10;
         Range = 2;
+
         ani = GetComponent<Animator>();
+        POS = transform.position;
     }
 
     // Update is called once per frame

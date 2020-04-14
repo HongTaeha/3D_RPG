@@ -32,6 +32,7 @@ public class PlayerController : Controller
                     // 적에게 다가가고 타겟 바꾸고 공격
                     player.POS= hit.collider.transform.position;
                     player.target = hit.collider.gameObject.GetComponent<Character>();
+                    
 
                 }
             }
@@ -83,7 +84,7 @@ public class PlayerController : Controller
             player.GetComponent<Rigidbody>().velocity = new Vector2(player.GetComponent<Rigidbody>().velocity.x,5.0f);
         }
 
-        player.Move(player, player.POS);
+            player.Move(player, player.POS);
     }
 
 
