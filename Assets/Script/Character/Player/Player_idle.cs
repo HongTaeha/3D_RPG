@@ -23,6 +23,7 @@ public class Player_idle : StateMachineBehaviour
             }
             else
             {
+                player.Rotate(player, player.t_pos.position);
                 animator.SetInteger("iAniIndex", 1);
             }
         }

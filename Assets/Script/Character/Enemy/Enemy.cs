@@ -8,6 +8,8 @@ public class Enemy : Character
     void Start()
     {
         StrName = "Enemy";
+        HP = 10;
+        MP = 10;
     }
 
     // Update is called once per frame

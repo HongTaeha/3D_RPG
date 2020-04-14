@@ -24,7 +24,7 @@ public class Player_Attack : StateMachineBehaviour
                 animator.SetInteger("iAniIndex", 1);
             }
             // 타겟의 Hp가 0이라면
-            //animator.SetInteger("iAniIndex", 0);
+            animator.SetInteger("iAniIndex", 0);
         }
         else
         {
@@ -33,14 +33,14 @@ public class Player_Attack : StateMachineBehaviour
                 //추격
                 animator.SetInteger("iAniIndex", 1);
             }
-            //player.Rotate(cha.target.transform.position);
+            player.Rotate(player,player.t_pos.position);
         }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        player.POS= player.transform.position;
+        //player.POS = player.t_pos.position;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

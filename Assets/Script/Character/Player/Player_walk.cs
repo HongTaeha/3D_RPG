@@ -12,6 +12,7 @@ public class Player_walk : StateMachineBehaviour
         {
             player = animator.GetComponent<Player>();
         }
+       
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -22,15 +23,17 @@ public class Player_walk : StateMachineBehaviour
             vEnd = player.target.transform.position;
             if (player.TargetDIstance< player.Range)
             {
+
+                player.Rotate(player, vEnd);
                 animator.SetInteger("iAniIndex", 2);
             }
         }
         else if (player.target == null)
         {
             vEnd = player.POS;
+            player.Rotate(player, vEnd);
         }
-        //player.Move(vEnd);
-        //player.Rotate(vEnd);
+        //player.Move(player,vEnd);
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
