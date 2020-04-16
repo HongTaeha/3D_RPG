@@ -7,6 +7,7 @@ public class Player_idle : StateMachineBehaviour
     Player player = null;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        
         if (player == null)
         {
             player = animator.GetComponent<Player>();
@@ -40,7 +41,6 @@ public class Player_idle : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
 
-        Debug.Log("========= OnStateExit");
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

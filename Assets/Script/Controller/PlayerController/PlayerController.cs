@@ -4,35 +4,37 @@ using UnityEngine;
 
 public class PlayerController : Controller
 {
+    //인풋 매니저
     public Player player;
-
+    public float speed = 3.0f;
     void MousePick()
     {
         //마우스 버튼에 따른 설정
         // 오른쪽 클릭 : 이동
         // 왼쪽 클릭 : 대상 설정
-        
+
         //오른쪽 클릭
         if (Input.GetMouseButtonDown(1))
         {
+            Debug.Log("오른클릭");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("Terrain"))
+                if (hit.collider.CompareTag("ground"))
                 {
                     // 배경을 눌렀을 경우 타겟 변화 없음
                     // 오로지 이동만
-                    
+
                     player.POS = hit.point;
                 }
                 else if (hit.collider.CompareTag("Enemy"))
                 {
                     // 적을 눌렀을경우
                     // 적에게 다가가고 타겟 바꾸고 공격
-                    player.POS= hit.collider.transform.position;
+                    player.POS = hit.collider.transform.position;
                     player.target = hit.collider.gameObject.GetComponent<Character>();
-                    
+
 
                 }
             }
@@ -40,6 +42,7 @@ public class PlayerController : Controller
         //왼쪽 클릭
         if (Input.GetMouseButtonDown(0))
         {
+            Debug.Log("왼클릭");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
@@ -55,15 +58,15 @@ public class PlayerController : Controller
             }
         }
 
-                    if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.W))
         {
             player.POS = player.transform.position;
-            player.POS += Vector3.forward* speed * Time.deltaTime;
+            player.POS += Vector3.forward * speed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.A))
         {
             player.POS = player.transform.position;
-            player.POS+= Vector3.left* speed * Time.deltaTime;
+            player.POS += Vector3.left * speed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.S))
         {
@@ -76,27 +79,33 @@ public class PlayerController : Controller
             player.POS += Vector3.right * speed * Time.deltaTime;
         }
 
-        
+
         //점프 구현
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("점프");
-            player.GetComponent<Rigidbody>().velocity = new Vector2(player.GetComponent<Rigidbody>().velocity.x,5.0f);
+            //player.GetComponent<Rigidbody>().velocity = new Vector2(player.GetComponent<Rigidbody>().velocity.x,5.0f);
+
         }
 
-            player.Move(player, player.POS);
+        player.Move(player, player.POS);
     }
 
 
+    void setgravity()
+    {
+
+    }
 
 
-  
 
     void Start()
     {
     }
     void Update()
     {
+        //setgravity();
         MousePick();
+
     }
 }

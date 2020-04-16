@@ -24,7 +24,7 @@ public class Player_walk : StateMachineBehaviour
             if (player.TargetDIstance< player.Range)
             {
 
-                player.Rotate(player, vEnd);
+               // player.Rotate(player, vEnd);
                 animator.SetInteger("iAniIndex", 2);
             }
         }
@@ -33,7 +33,7 @@ public class Player_walk : StateMachineBehaviour
             vEnd = player.POS;
             if (player.POS != player.transform.position)
             {
-                player.Rotate(player, vEnd);
+                //player.Rotate(player, vEnd);
             }
         }
         //player.Move(player,vEnd);

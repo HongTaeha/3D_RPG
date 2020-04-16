@@ -5,6 +5,8 @@ using UnityEngine;
 public class Player : Character
 {
 
+    [HideInInspector]
+    public bool isJumping = false;
     void Start()
     {
         StrName = "Player";
@@ -14,11 +16,14 @@ public class Player : Character
 
         ani = GetComponent<Animator>();
         POS = transform.position;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        mypos = transform.position;
 
+        
     }
 }

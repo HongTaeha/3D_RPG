@@ -21,12 +21,15 @@ using UnityEngine;
 
 public class qweqweqwe : MonoBehaviour
 {
+    Animator ani;
     // Start is called before the first frame update
     void Start()
     {
-        Vector3 world = transform.TransformPoint(new Vector3(0, 0, 0));
-        Debug.Log(world);
-        
+        ani = GetComponent<Animator>();
+        ani.SetInteger("iAniIndex", 1);
+        ani.SetInteger("iAniIndex", 2);
+        ani.SetInteger("iAniIndex", 3);
+        ani.SetTrigger("triger");
     }
 
     // Update is called once per frame
