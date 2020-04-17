@@ -7,7 +7,7 @@ public class Enemy : Character
     // Start is called before the first frame update
     void Start()
     {
-        StrName = "Enemy";
+        StrName = this.name;
         HP = 10;
         MP = 10;
     }

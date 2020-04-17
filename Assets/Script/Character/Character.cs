@@ -95,7 +95,7 @@ public class Character : MonoBehaviour
         if (Vector3.Dot(targetDir.normalized, obj.transform.forward).CompareTo(0.99f) >= 0)
             return;
 
-        Vector3 newDir = Vector3.RotateTowards(obj.transform.forward, targetDir.normalized, Time.deltaTime * speed, 0);
+        Vector3 newDir = Vector3.RotateTowards(obj.transform.forward, targetDir.normalized, Time.deltaTime * 10, 0);
         obj.transform.rotation = Quaternion.LookRotation(newDir);
     }
    

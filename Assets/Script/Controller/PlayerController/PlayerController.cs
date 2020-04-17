@@ -6,8 +6,8 @@ public class PlayerController : Controller
 {
     //인풋 매니저
     public Player player;
-    public float speed = 3.0f;
-    void MousePick()
+    float speed = 3.0f;
+    void Movement()
     {
         //마우스 버튼에 따른 설정
         // 오른쪽 클릭 : 이동
@@ -34,11 +34,47 @@ public class PlayerController : Controller
                     // 적에게 다가가고 타겟 바꾸고 공격
                     player.POS = hit.collider.transform.position;
                     player.target = hit.collider.gameObject.GetComponent<Character>();
-
-
+                    player.Move(player, player.POS);
                 }
             }
         }
+        if (Input.GetKey(KeyCode.W))
+        {
+            player.POS = player.transform.position + player.transform.forward*Time.deltaTime*speed;
+            player.Move(player, player.POS);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            player.POS = player.transform.position + player.transform.right*(-1) * Time.deltaTime * speed;
+            player.Move(player, player.POS);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            player.POS = player.transform.position + player.transform.forward*(-1) * Time.deltaTime * speed;
+            player.Move(player, player.POS);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            player.POS = player.transform.position + player.transform.right * Time.deltaTime * speed;
+            player.Move(player, player.POS);
+        }
+
+
+        //점프 구현
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("점프");
+            //player.GetComponent<Rigidbody>().velocity = new Vector2(player.GetComponent<Rigidbody>().velocity.x,5.0f);
+
+        }
+      
+
+
+        //player.Move(player, player.POS);
+    }
+    
+    void targetcontroll()
+    {
         //왼쪽 클릭
         if (Input.GetMouseButtonDown(0))
         {
@@ -57,55 +93,20 @@ public class PlayerController : Controller
                 }
             }
         }
-
-        if (Input.GetKey(KeyCode.W))
+        //esc키로 목표 타겟 제거
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
-            player.POS = player.transform.position;
-            player.POS += Vector3.forward * speed * Time.deltaTime;
+            player.target = null;
         }
-        if (Input.GetKey(KeyCode.A))
-        {
-            player.POS = player.transform.position;
-            player.POS += Vector3.left * speed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            player.POS = player.transform.position;
-            player.POS += Vector3.back * speed * Time.deltaTime;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            player.POS = player.transform.position;
-            player.POS += Vector3.right * speed * Time.deltaTime;
-        }
-
-
-        //점프 구현
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("점프");
-            //player.GetComponent<Rigidbody>().velocity = new Vector2(player.GetComponent<Rigidbody>().velocity.x,5.0f);
-
-        }
-
-        player.Move(player, player.POS);
     }
-
-
-    void setgravity()
-    {
-
-    }
-
-
 
     void Start()
     {
     }
     void Update()
     {
-        //setgravity();
-        MousePick();
+        targetcontroll();
+        Movement();
 
     }
 }

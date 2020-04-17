@@ -5,13 +5,13 @@ using UnityEngine;
 public class Player_Attack : StateMachineBehaviour
 {
     Player player;
+    Vector3 temp = Vector3.zero;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (player== null)
         {
             player = animator.GetComponent<Player>();
         }
-        //요거때매 한번만 공격하는거같은데
         player.POS= player.transform.position;
     }
 

@@ -6,16 +6,16 @@ public class UIController : Controller
 {
 
     public Player player;
-    public Text text;
-
     public Image image;
+    public Text text;
 
     void UI_Target()
     {
 
         if (player.target!=null)
         {
-            //text.text = player.target.StrName;
+            image.gameObject.SetActive(true);
+            text.text = player.target.StrName+" "+player.target.HP.ToString();
         }
         else
         {
@@ -26,8 +26,7 @@ public class UIController : Controller
 
     void Start()
     {
-
-        text = image.GetComponent<Text>();
+        text = image.GetComponentInChildren<Text>();
     }
 
     void Update()
