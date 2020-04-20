@@ -21,20 +21,25 @@ using UnityEngine;
 
 public class qweqweqwe : MonoBehaviour
 {
-    Animator ani;
     // Start is called before the first frame update
     void Start()
     {
-        ani = GetComponent<Animator>();
-        ani.SetInteger("iAniIndex", 1);
-        ani.SetInteger("iAniIndex", 2);
-        ani.SetInteger("iAniIndex", 3);
-        ani.SetTrigger("triger");
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetMouseButtonDown(0))
+        {
+            //카메라를 기준으로 마우스 위치로부터 모니터 안쪽으로 향하는 광선 생성
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hitInfo; 
+            if(Physics.Raycast(ray,out hitInfo))
+            {
+                Debug.Log("교차한 게임 오브젝트 = " + hitInfo.collider.name);
+                Debug.Log("교차한 위치 = " + hitInfo.point);
+            }
+        }
         
     }
 }

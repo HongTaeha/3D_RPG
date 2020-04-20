@@ -25,8 +25,8 @@ public class PlayerController : Controller
                 {
                     // 배경을 눌렀을 경우 타겟 변화 없음
                     // 오로지 이동만
-
                     player.POS = hit.point;
+                    player.Move(player, player.POS);
                 }
                 else if (hit.collider.CompareTag("Enemy"))
                 {
@@ -34,7 +34,10 @@ public class PlayerController : Controller
                     // 적에게 다가가고 타겟 바꾸고 공격
                     player.POS = hit.collider.transform.position;
                     player.target = hit.collider.gameObject.GetComponent<Character>();
+                    player.Is_Battle = true;
+                    player.Attack_Target = player.target;
                     player.Move(player, player.POS);
+
                 }
             }
         }
@@ -42,21 +45,27 @@ public class PlayerController : Controller
         {
             player.POS = player.transform.position + player.transform.forward*Time.deltaTime*speed;
             player.Move(player, player.POS);
+            player.ani.SetInteger("iAniIndex", 1);
+
         }
         if (Input.GetKey(KeyCode.A))
         {
             player.POS = player.transform.position + player.transform.right*(-1) * Time.deltaTime * speed;
             player.Move(player, player.POS);
+            player.ani.SetInteger("iAniIndex", 1);
         }
         if (Input.GetKey(KeyCode.S))
         {
             player.POS = player.transform.position + player.transform.forward*(-1) * Time.deltaTime * speed;
             player.Move(player, player.POS);
+
+            player.ani.SetInteger("iAniIndex", 1);
         }
         if (Input.GetKey(KeyCode.D))
         {
             player.POS = player.transform.position + player.transform.right * Time.deltaTime * speed;
             player.Move(player, player.POS);
+            player.ani.SetInteger("iAniIndex", 1);
         }
 
 
@@ -67,10 +76,6 @@ public class PlayerController : Controller
             //player.GetComponent<Rigidbody>().velocity = new Vector2(player.GetComponent<Rigidbody>().velocity.x,5.0f);
 
         }
-      
-
-
-        //player.Move(player, player.POS);
     }
     
     void targetcontroll()

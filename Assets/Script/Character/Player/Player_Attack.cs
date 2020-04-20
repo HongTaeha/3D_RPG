@@ -12,38 +12,50 @@ public class Player_Attack : StateMachineBehaviour
         {
             player = animator.GetComponent<Player>();
         }
-        player.POS= player.transform.position;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (player.target == null)
+        if (player.Attack_Target!=null) //공격타겟이 있을때
         {
-            if (player.POS != player.transform.position)
+            //공격중에
+            //다른 곳이 클릭되면
+            if (player.POS != player.Attack_Target.transform.position)
             {
+                player.Attack_Target = null;
                 animator.SetInteger("iAniIndex", 1);
             }
-            // 타겟의 Hp가 0이라면
-            if(player.target.HP==0)
-                animator.SetInteger("iAniIndex", 0);
+            else
+            {
+                //대상이 사거리 안에 있으면
+                if (player.TargetDIstance(player, player.Attack_Target) < player.Range)
+                {
+                    player.Rotate(player, player.Attack_Target.transform.position); //공격 대상을 본다
+                }
+
+                //대상이 사거리 안에 없으면
+                else
+                {
+                    //추격
+                    player.POS = player.Attack_Target.transform.position;
+                    animator.SetInteger("iAniIndex", 1);
+                }
+
+            }
         }
-        else
+        else //공격타겟이 없을때
         {
-            if (player.TargetDIstance> player.Range)
-            {
-                //추격
-                animator.SetInteger("iAniIndex", 1);
-            }
-            player.Rotate(player,player.t_pos.position);
+            player.Is_Battle = false; //전투 중지
+            if(player.POS == player.transform.position)
+            animator.SetInteger("iAniIndex", 0);
         }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
-            player.POS = player.t_pos.position;
+
         
         
     }

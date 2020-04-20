@@ -12,31 +12,28 @@ public class Player_walk : StateMachineBehaviour
         {
             player = animator.GetComponent<Player>();
         }
-       
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Vector3 vEnd = Vector3.zero;
-        if (player.target != null)
+        if (player.Attack_Target != null) //공격 타겟이 있을 때
         {
-            vEnd = player.target.transform.position;
-            if (player.TargetDIstance< player.Range)
+            vEnd = player.Attack_Target.transform.position; //공격 타겟을 향해서
+            if (player.TargetDIstance(player,player.Attack_Target)<= player.Range)  //대상이 공격 거리 안에 있을 때
             {
+               //player.Rotate(player, vEnd);
+                              
+               animator.SetInteger("iAniIndex", 2); //공격
+            }
+        }
+        else //공격 타겟이 없을 떄
+        {
+            vEnd = player.POS;   //자신의 현재 위치를 향해서        
+        }
 
-               player.Rotate(player, vEnd);
-                animator.SetInteger("iAniIndex", 2);
-            }
-        }
-        else if (player.target == null)
-        {
-            vEnd = player.POS;
-            if (player.POS != player.transform.position)
-            {
-                player.Rotate(player, vEnd);
-            }
-        }
-        player.Move(player,vEnd);
+        player.Move(player, vEnd); //이동한다
+        player.Rotate(player, vEnd); //돈다
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

@@ -15,27 +15,30 @@ public class Player_idle : StateMachineBehaviour
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        if (player.target != null)
-        {
-            if (player.TargetDIstance< player.Range)
+    {        
+        
+            //player.Rotate(player, player.target.transform.position);
+            if (player.Attack_Target !=null)
             {
-                animator.SetInteger("iAniIndex", 2);
-
+                if (player.TargetDIstance(player,player.Attack_Target) < player.Range)
+                {
+                    animator.SetInteger("iAniIndex", 2);
+                }
+                else
+                {
+                    animator.SetInteger("iAniIndex", 1);
+                }
             }
-            else
-            {
-                player.Rotate(player, player.t_pos.position);
-                animator.SetInteger("iAniIndex", 1);
-            }
-        }
+        
         else
         {
-            if (player.transform.position != player.POS)
+
+            if(player.transform.position!=player.POS)
             {
                 animator.SetInteger("iAniIndex", 1);
             }
         }
+
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
-    //중력
-    float gravity = 9.8f;
-
-
-
 
     //목표 대상 구현
     public Character target = null;
@@ -23,37 +18,19 @@ public class Character : MonoBehaviour
         }
     }
     public Vector3 mypos; 
-
-    public Transform t_pos
-    {
-        get
-        {
-            if (target != null)
-                return target.transform;
-            else
-                return null;
-        }
-    }
-    public float TargetDIstance
-    {
-        get
-        {
-
-            return Vector3.Distance(transform.position, target.transform.position);
-
-        }
-
-    }
+    
 
     //애니메이션
     public Animator ani;
-    public float speed = 3.0f;
+    float speed = 3.0f;
     private Vector3 pos = Vector3.zero;
     public Vector3 POS
     {        
             get { return pos; }
             set { pos= value; }
     }
+    public bool Is_Battle = false;
+    public bool is_Move = false;
 
 
 
@@ -76,15 +53,20 @@ public class Character : MonoBehaviour
 
 
     }
+    public float TargetDIstance(Character obj,Character target)
+    {
+
+        return Vector3.Distance(obj.transform.position, target.transform.position);
+        
+    }
 
     public void  Move(Character obj, Vector3 _pos)
     {
 
         obj.transform.position = Vector3.MoveTowards(obj.transform.position, _pos, Time.deltaTime * speed);
+        
         if (obj.transform.position == _pos)
         {
-            //애니메이션 지정
-
             ani.SetInteger("iAniIndex", 0);
         }
     }

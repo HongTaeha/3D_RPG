@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Player : Character
 {
+    
 
-    [HideInInspector]
-    public bool isJumping = false;
+    public Character Attack_Target;
+
     void Start()
     {
         StrName = "Player";
