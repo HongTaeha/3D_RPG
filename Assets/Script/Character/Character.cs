@@ -35,16 +35,21 @@ public class Character : MonoBehaviour
 
 
     //케릭터 스텟
-    public string StrName;
-    public float Range;
-    public float HP;
-    public float MP;
+    public string StrName ="";
+    public float Range =2;
+    public float Max_HP = 10;
+    public float Max_MP = 10;
+    public float HP = 10;
+    public float MP = 10;
+
+    public float attackSpeed = 1;
+    public float attackCoolTime = 1;
+    public float currentAttackCoolTime = 1;
 
 
 
     void Start()
     {
-       
     }
 
 
@@ -80,5 +85,40 @@ public class Character : MonoBehaviour
         Vector3 newDir = Vector3.RotateTowards(obj.transform.forward, targetDir.normalized, Time.deltaTime * 10, 0);
         obj.transform.rotation = Quaternion.LookRotation(newDir);
     }
-   
+
+    public void SetAttackSpeed(float _attackSpeed)
+    {
+        attackSpeed = _attackSpeed;
+        attackCoolTime = 1f / attackSpeed;
+        currentAttackCoolTime = attackCoolTime;
+        ani.SetFloat("AttackSpeed", attackSpeed);
+        
+
+    }
+
+    public void StartAttack()
+    {
+        StartCoroutine("EnumAttack");
+    }
+    public void EndAttack()
+    {
+        StopCoroutine("EnumAttack");
+    }
+    private IEnumerator EnumAttack()
+    {
+        while (true)
+        {
+            if (currentAttackCoolTime >= attackCoolTime)
+            {
+                currentAttackCoolTime = 0;
+                Attack();
+            }
+            currentAttackCoolTime += Time.deltaTime;
+            yield return null;         
+        }
+    }
+    private void Attack()
+    {
+        ani.SetInteger("iAniIndex", 2);
+    }
 }

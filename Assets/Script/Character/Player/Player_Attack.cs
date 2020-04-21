@@ -23,6 +23,7 @@ public class Player_Attack : StateMachineBehaviour
             //다른 곳이 클릭되면
             if (player.POS != player.Attack_Target.transform.position)
             {
+                player.EndAttack();
                 player.Attack_Target = null;
                 animator.SetInteger("iAniIndex", 1);
             }
@@ -38,6 +39,7 @@ public class Player_Attack : StateMachineBehaviour
                 else
                 {
                     //추격
+                    player.EndAttack();
                     player.POS = player.Attack_Target.transform.position;
                     animator.SetInteger("iAniIndex", 1);
                 }
@@ -46,6 +48,7 @@ public class Player_Attack : StateMachineBehaviour
         }
         else //공격타겟이 없을때
         {
+            player.EndAttack();
             player.Is_Battle = false; //전투 중지
             if(player.POS == player.transform.position)
             animator.SetInteger("iAniIndex", 0);
@@ -55,9 +58,6 @@ public class Player_Attack : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
-        
-        
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

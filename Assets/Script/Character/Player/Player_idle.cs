@@ -22,8 +22,9 @@ public class Player_idle : StateMachineBehaviour
             {
                 if (player.TargetDIstance(player,player.Attack_Target) < player.Range)
                 {
-                    animator.SetInteger("iAniIndex", 2);
-                }
+                //animator.SetInteger("iAniIndex", 2);
+                player.StartAttack();
+            }
                 else
                 {
                     animator.SetInteger("iAniIndex", 1);
