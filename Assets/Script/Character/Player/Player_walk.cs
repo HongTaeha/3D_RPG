@@ -26,7 +26,8 @@ public class Player_walk : StateMachineBehaviour
 
                 //animator.SetInteger("iAniIndex", 2); //공격
                 player.StartAttack();
-            }
+
+            }   
         }
         else //공격 타겟이 없을 떄
         {

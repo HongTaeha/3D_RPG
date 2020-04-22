@@ -6,11 +6,11 @@ public class Player : Character
 {
     
 
-    public Character Attack_Target;
 
     void Start()
     {
         StrName = "Player";
+        ani = GetComponent<Animator>();
         HP = 10;
         MP = 10;
         Max_HP = 10;
@@ -19,9 +19,8 @@ public class Player : Character
         attackSpeed = 2;
         attackCoolTime = 1;
         currentAttackCoolTime = 1;
-        ani = GetComponent<Animator>();
         POS = transform.position;
-
+        AttackDamage = 2;
     }
 
     // Update is called once per frame

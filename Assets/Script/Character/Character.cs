@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public abstract class Character : MonoBehaviour
 {
 
     //목표 대상 구현
+    public Character Attack_Target=null;
     public Character target = null;
     public Vector3 targetpos //디버그용
     {
@@ -35,21 +36,29 @@ public class Character : MonoBehaviour
 
 
     //케릭터 스텟
-    public string StrName ="";
-    public float Range =2;
-    public float Max_HP = 10;
-    public float Max_MP = 10;
-    public float HP = 10;
-    public float MP = 10;
+    public string StrName ;
+    public float Range;
+    public float Max_HP;
+    public float Max_MP;
+    public float HP;
+    public float MP;
+    public float AttackDamage;
 
     public float attackSpeed = 1;
     public float attackCoolTime = 1;
     public float currentAttackCoolTime = 1;
 
+    public void Take_Damage(float dmg)
+    {
+        this.HP -= dmg;
+    }
+
 
 
     void Start()
     {
+        
+      
     }
 
 
@@ -95,7 +104,7 @@ public class Character : MonoBehaviour
         
 
     }
-
+    
     public void StartAttack()
     {
         StartCoroutine("EnumAttack");
@@ -113,12 +122,19 @@ public class Character : MonoBehaviour
                 currentAttackCoolTime = 0;
                 Attack();
             }
+            
             currentAttackCoolTime += Time.deltaTime;
             yield return null;         
         }
+
     }
     private void Attack()
     {
         ani.SetInteger("iAniIndex", 2);
     }
+    public void HitEvent()
+    {
+        Attack_Target.Take_Damage(AttackDamage);
+    }
+
 }

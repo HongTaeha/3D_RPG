@@ -29,25 +29,37 @@ public class Player_Attack : StateMachineBehaviour
             }
             else
             {
-                //대상이 사거리 안에 있으면
-                if (player.TargetDIstance(player, player.Attack_Target) < player.Range)
+                if (player.Attack_Target.HP <= 0)
                 {
-                    player.Rotate(player, player.Attack_Target.transform.position); //공격 대상을 본다
+                    player.EndAttack();
+                    player.POS = player.transform.position;
+                    player.Attack_Target = null;
+                    animator.SetInteger("iAniIndex", 0);
                 }
-
-                //대상이 사거리 안에 없으면
+                //대상이 사거리 안에 있으면
                 else
                 {
-                    //추격
-                    player.EndAttack();
-                    player.POS = player.Attack_Target.transform.position;
-                    animator.SetInteger("iAniIndex", 1);
-                }
+                    if (player.TargetDIstance(player, player.Attack_Target) < player.Range)
+                    {
+                        player.Rotate(player, player.Attack_Target.transform.position); //공격 대상을 본다
 
+
+                    }
+
+                    //대상이 사거리 안에 없으면
+                    else
+                    {
+                        //추격
+                        player.EndAttack();
+                        player.POS = player.Attack_Target.transform.position;
+                        animator.SetInteger("iAniIndex", 1);
+                    }
+                }
             }
         }
         else //공격타겟이 없을때
         {
+            
             player.EndAttack();
             player.Is_Battle = false; //전투 중지
             if(player.POS == player.transform.position)
