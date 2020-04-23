@@ -36,9 +36,9 @@ public class Player : Character
     {
         mypos = transform.position;
 
-        SetAttackSpeed(status.attackSpeed);
-        //Die();
+        SetAttackSpeed(this.status.attackSpeed);
+        Die();
 
-
+        //        Collider[] colliders = Physics.OverlapSphere(this.transform.position, 15);
     }
 }

@@ -35,7 +35,24 @@ public class Enemy : Character
     {
         Die();
         SetAttackSpeed(this.status.attackSpeed);
+
+        if (this.target == null)
+        {
+
+            Recognition();
+            Move_Random();
+        }
+        else
+        {
+            this.Is_Battle = true;
+
+        }
+
+
+
+
     }
+    
 
     void DieEvent()
     {
@@ -48,12 +65,13 @@ public class Enemy : Character
     public void Move_Random()
     {
 
+
+        Move(this, this.POS);
     }
 
     //일정 거리 안의 플레이어 인식
     public void Recognition()
     {
-
     }
 
     //플레이어가 죽거나 일정 반경 밖으로 나가면 제자리로 돌아감
@@ -61,7 +79,7 @@ public class Enemy : Character
 
     public void Return_Spawnpoint()
     {
-
+        Move(this, this.Spawn_Point);
     }
 
 
