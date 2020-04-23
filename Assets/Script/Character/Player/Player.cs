@@ -4,23 +4,31 @@ using UnityEngine;
 
 public class Player : Character
 {
-    
 
-
+    Status st = null;
     void Start()
-    {
-        StrName = "Player";
+    {       
+        st = new Status();
+        st.StrName = "Player";
+        st.HP = 10;
+        st.MP = 10;
+        st.Max_HP = 10;
+        st.Max_MP = 10;
+        st.Range = 2;
+        st.attackSpeed = 2;
+        st.AttackDamage = 2;
+        Status_DB.instance.status_dic.Add("Player", st);
+
+
+        Status_DB.instance.status_dic.TryGetValue("Player",out status);
+
         ani = GetComponent<Animator>();
-        HP = 10;
-        MP = 10;
-        Max_HP = 10;
-        Max_MP = 10;
-        Range = 2;
-        attackSpeed = 2;
+        
         attackCoolTime = 1;
         currentAttackCoolTime = 1;
         POS = transform.position;
-        AttackDamage = 2;
+        
+        isDead= false;
     }
 
     // Update is called once per frame
@@ -28,7 +36,8 @@ public class Player : Character
     {
         mypos = transform.position;
 
-        SetAttackSpeed(attackSpeed);
+        SetAttackSpeed(status.attackSpeed);
+        //Die();
 
 
     }

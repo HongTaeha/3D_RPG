@@ -20,7 +20,7 @@ public class Player_walk : StateMachineBehaviour
         if (player.Attack_Target != null) //공격 타겟이 있을 때
         {
             vEnd = player.Attack_Target.transform.position; //공격 타겟을 향해서
-            if (player.TargetDIstance(player,player.Attack_Target)<= player.Range)  //대상이 공격 거리 안에 있을 때
+            if (player.TargetDIstance(player,player.Attack_Target)<= player.status.Range)  //대상이 공격 거리 안에 있을 때
             {
                 //player.Rotate(player, vEnd);
 

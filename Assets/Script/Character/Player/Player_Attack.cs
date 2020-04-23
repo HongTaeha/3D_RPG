@@ -29,7 +29,7 @@ public class Player_Attack : StateMachineBehaviour
             }
             else
             {
-                if (player.Attack_Target.HP <= 0)
+                if (player.Attack_Target.status.HP <= 0)
                 {
                     player.EndAttack();
                     player.POS = player.transform.position;
@@ -39,7 +39,7 @@ public class Player_Attack : StateMachineBehaviour
                 //대상이 사거리 안에 있으면
                 else
                 {
-                    if (player.TargetDIstance(player, player.Attack_Target) < player.Range)
+                    if (player.TargetDIstance(player, player.Attack_Target) < player.status.Range)
                     {
                         player.Rotate(player, player.Attack_Target.transform.position); //공격 대상을 본다
 

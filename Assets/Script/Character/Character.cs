@@ -36,23 +36,36 @@ public abstract class Character : MonoBehaviour
 
 
     //케릭터 스텟
+    /*
     public string StrName ;
     public float Range;
     public float Max_HP;
     public float Max_MP;
     public float HP;
     public float MP;
-    public float AttackDamage;
-
+    public float AttackDamage;    
     public float attackSpeed = 1;
+    */
+    public Status status ;
     public float attackCoolTime = 1;
     public float currentAttackCoolTime = 1;
 
+    //케릭터 상태
+    public bool isDead = false;
+
     public void Take_Damage(float dmg)
     {
-        this.HP -= dmg;
+        status.HP -= dmg;
     }
+    public void Die()
+    {
+        if (status.HP <= 0 && isDead != true)
+        {
+            ani.SetTrigger("Die");
+            isDead = true;
+        }
 
+    }
 
 
     void Start()
@@ -97,10 +110,10 @@ public abstract class Character : MonoBehaviour
 
     public void SetAttackSpeed(float _attackSpeed)
     {
-        attackSpeed = _attackSpeed;
-        attackCoolTime = 1f / attackSpeed;
+        this.status.attackSpeed = _attackSpeed;
+        attackCoolTime = 1f / status.attackSpeed;
         currentAttackCoolTime = attackCoolTime;
-        ani.SetFloat("AttackSpeed", attackSpeed);
+        ani.SetFloat("AttackSpeed", status.attackSpeed);
         
 
     }
@@ -134,7 +147,7 @@ public abstract class Character : MonoBehaviour
     }
     public void HitEvent()
     {
-        Attack_Target.Take_Damage(AttackDamage);
+        Attack_Target.Take_Damage(this.status.AttackDamage);
     }
 
 }

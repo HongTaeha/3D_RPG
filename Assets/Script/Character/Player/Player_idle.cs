@@ -24,7 +24,7 @@ public class Player_idle : StateMachineBehaviour
         if (player.Attack_Target !=null)
             {
                 //사거리가 닿을 때
-                if (player.TargetDIstance(player,player.Attack_Target) < player.Range)
+                if (player.TargetDIstance(player,player.Attack_Target) < player.status.Range)
                 {
 
                 //공격
