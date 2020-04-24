@@ -35,10 +35,7 @@ public class Character : MonoBehaviour
 
 
 
-    //케릭터 스텟
-    /*
-   
-    */
+    //케릭터 스텟    
     public Status status;
     public float attackCoolTime ;
     public float currentAttackCoolTime ;
@@ -59,21 +56,13 @@ public class Character : MonoBehaviour
         }
 
     }
-
-
-
-
     void Start()
     {
-        status = new Status();
-      
-    }
+     }
 
 
     void Update()
     {
-
-
     }
 
 
@@ -89,12 +78,8 @@ public class Character : MonoBehaviour
         st1.MP=st.MP;
         st1.AttackDamage = st.AttackDamage;
         st1.attackSpeed = st.attackSpeed;
+    }
 
-
-
-
-
-}
     public float TargetDIstance(Character obj,Character target)
     {
 

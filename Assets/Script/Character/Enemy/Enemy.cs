@@ -13,8 +13,7 @@ public class Enemy : Character
 
     Status tmp;
     void Start()
-    {
-        
+    {        
         status = new Status();
         Status_DB.instance.status_dic.TryGetValue("Enemy", out tmp);
         Get_Status(this.status,tmp);
