@@ -1,0 +1,24 @@
+{
+	"1" : {
+		"ID" : "Player",
+		"Max_HP" : "10",
+		"Max_MP" : "10",
+		"HP" : "10",
+		"MP" : "10",
+		"Armor" : "0",
+		"Range" : "2",
+		"AttackDamage" : "2",
+		"AttackSpeed" : "1"
+	},
+	"2" : {
+		"ID" : "Enemy",
+		"Max_HP" : "10",
+		"Max_MP" : "10",
+		"HP" : "10",
+		"MP" : "10",
+		"Armor" : "0",
+		"Range" : "1",
+		"AttackDamage" : "1",
+		"AttackSpeed" : "1"
+	}
+}

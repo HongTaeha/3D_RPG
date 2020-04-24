@@ -4,23 +4,18 @@ using UnityEngine;
 
 public class Player : Character
 {
+    Status tmp;
 
-    Status st = null;
     void Start()
-    {       
-        st = new Status();
-        st.StrName = "Player";
-        st.HP = 10;
-        st.MP = 10;
-        st.Max_HP = 10;
-        st.Max_MP = 10;
-        st.Range = 2;
-        st.attackSpeed = 2;
-        st.AttackDamage = 2;
-        Status_DB.instance.status_dic.Add("Player", st);
+    {
+        status = new Status();
+        Status_DB.instance.status_dic.TryGetValue("Player", out tmp);
+        
+        Get_Status(this.status, tmp);
+
+        Debug.Log(tmp.StrName);
 
 
-        Status_DB.instance.status_dic.TryGetValue("Player",out status);
 
         ani = GetComponent<Animator>();
         
@@ -31,6 +26,8 @@ public class Player : Character
         isDead= false;
     }
 
+  
+
     // Update is called once per frame
     void Update()
     {
@@ -38,7 +35,5 @@ public class Player : Character
 
         SetAttackSpeed(this.status.attackSpeed);
         Die();
-
-        //        Collider[] colliders = Physics.OverlapSphere(this.transform.position, 15);
     }
 }

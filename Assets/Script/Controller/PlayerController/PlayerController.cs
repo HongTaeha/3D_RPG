@@ -92,7 +92,7 @@ public class PlayerController : Controller
                 {
                     player.target = null;
                 }
-                else if (hit.collider.CompareTag("Enemy"))
+                else if (hit.collider.CompareTag("Enemy")|| hit.collider.CompareTag("Player"))
                 {
                     player.target = hit.collider.gameObject.GetComponent<Character>();
                 }

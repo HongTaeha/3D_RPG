@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Character : MonoBehaviour
+public class Character : MonoBehaviour
 {
 
     //목표 대상 구현
@@ -37,18 +37,11 @@ public abstract class Character : MonoBehaviour
 
     //케릭터 스텟
     /*
-    public string StrName ;
-    public float Range;
-    public float Max_HP;
-    public float Max_MP;
-    public float HP;
-    public float MP;
-    public float AttackDamage;    
-    public float attackSpeed = 1;
+   
     */
-    public Status status ;
-    public float attackCoolTime = 1;
-    public float currentAttackCoolTime = 1;
+    public Status status;
+    public float attackCoolTime ;
+    public float currentAttackCoolTime ;
 
     //케릭터 상태
     public bool isDead = false;
@@ -68,9 +61,11 @@ public abstract class Character : MonoBehaviour
     }
 
 
+
+
     void Start()
     {
-        
+        status = new Status();
       
     }
 
@@ -80,6 +75,26 @@ public abstract class Character : MonoBehaviour
 
 
     }
+
+
+    public void Get_Status(Status st1, Status st)
+    {
+
+        st1.StrName= st.StrName;
+        st1.Range=st.Range;
+        st1.Armor = st.Armor;
+        st1.Max_HP=st.Max_HP;
+        st1.Max_HP=st.Max_MP;
+        st1.HP=st.HP;
+        st1.MP=st.MP;
+        st1.AttackDamage = st.AttackDamage;
+        st1.attackSpeed = st.attackSpeed;
+
+
+
+
+
+}
     public float TargetDIstance(Character obj,Character target)
     {
 
@@ -147,6 +162,7 @@ public abstract class Character : MonoBehaviour
     }
     public void HitEvent()
     {
+        if(this.Attack_Target)
         Attack_Target.Take_Damage(this.status.AttackDamage);
     }
 

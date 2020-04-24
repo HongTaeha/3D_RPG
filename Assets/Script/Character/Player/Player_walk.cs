@@ -19,15 +19,23 @@ public class Player_walk : StateMachineBehaviour
         Vector3 vEnd = Vector3.zero;
         if (player.Attack_Target != null) //공격 타겟이 있을 때
         {
-            vEnd = player.Attack_Target.transform.position; //공격 타겟을 향해서
-            if (player.TargetDIstance(player,player.Attack_Target)<= player.status.Range)  //대상이 공격 거리 안에 있을 때
+            if (player.POS == player.Attack_Target.transform.position) //찍힌 좌표가 공격타겟이면
             {
-                //player.Rotate(player, vEnd);
+                vEnd = player.Attack_Target.transform.position; //공격 타겟을 향해서
+                if (player.TargetDIstance(player, player.Attack_Target) <= player.status.Range)  //대상이 공격 거리 안에 있을 때
+                {
+                    //player.Rotate(player, vEnd);
 
-                //animator.SetInteger("iAniIndex", 2); //공격
-                player.StartAttack();
+                    //animator.SetInteger("iAniIndex", 2); //공격
+                    player.StartAttack();
 
-            }   
+                }
+            }
+            else
+            {
+                player.Attack_Target = null;
+                vEnd = player.POS;
+            }
         }
         else //공격 타겟이 없을 떄
         {

@@ -62,7 +62,6 @@ public class Player_Attack : StateMachineBehaviour
             
             player.EndAttack();
             player.Is_Battle = false; //전투 중지
-            if(player.POS == player.transform.position)
             animator.SetInteger("iAniIndex", 0);
         }
     }
