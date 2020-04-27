@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class Enemy : Character
 {
-    Vector3 Spawn_Point = Vector3.zero;
+    public Vector3 Spawn_Point = Vector3.zero;
     bool is_returning=false;
-    float SPAWNDISTANCE
+    public float SPAWNDISTANCE
     {
         get { return Vector3.Distance(this.transform.position, Spawn_Point); }
     }
 
     Status tmp;
+
+    private void Awake()
+    {
+        Spawn_Point = transform.position;
+    }
     void Start()
     {        
         status = new Status();
@@ -25,9 +30,7 @@ public class Enemy : Character
 
         POS = transform.position;
         isDead = false;
-        Spawn_Point = transform.position;
         Is_Battle = true;
-
     }
 
     // Update is called once per frame
@@ -36,58 +39,47 @@ public class Enemy : Character
         Die();
         SetAttackSpeed(this.status.attackSpeed);
 
-
-        if (SPAWNDISTANCE > 10)
-        {
-            Return_Spawnpoint();
-        }
-        else
-        {
-            if (this.target == null)
-            {
-                if (Is_Battle == true)
-                    //Recognition("Player");
-                Move_Random();
-            }
-            else
-            {
-                this.Is_Battle = true;
-                if (target.status.HP <= 0)
-                    this.Is_Battle = false;
-                Move(this, target.transform.position);
-
-            }
-        }
-
         
 
 
+
     }
-    
+
 
     void DieEvent()
     {
         Destroy(ani.gameObject);
     }
 
-    //적이 해야할 행동
-
+  
     //스폰 지점에서 일정 반경 내로 랜덤 이동
-    public void Move_Random()
+    public Vector3 Random_spot(Vector3 spawn)
     {
-        Move(this, this.POS);
-
-
+        
+        Vector3 tmp = spawn;
+        int nR = Random.Range(0, 10);
+        if (nR == 0 || nR == 4 || nR == 9)
+        {
+            float dx = Random.Range(-4f, 4f);
+            float dz = Random.Range(-4f, 4f);
+            tmp.x= spawn.x + dx;
+            tmp.z = spawn.z + dz;
+        }    
+        return tmp;        
     }
 
     //일정 거리 안의 플레이어 인식
     public void Recognition(string tag)
     {
-        Collider[] cols = Physics.OverlapSphere(this.transform.position, 15);
+        Collider[] cols = Physics.OverlapSphere(this.transform.position, 5);
         for (int i = 0; i < cols.Length; i++)
         {
             if (cols[i].CompareTag(tag))
+            {
                 this.target = cols[i].GetComponent<Character>();
+                this.POS = this.target.POS;
+                break;
+            }
         }
     }
 

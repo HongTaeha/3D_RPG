@@ -5,7 +5,7 @@ using SimpleJSON;
 
 public class JSON_Parsor : MonoBehaviour
 {
-    private void Start()
+    private void Awake()
     {
         TextAsset txtAsset = Resources.Load<TextAsset>("Status_JSON");
         JSONNode root = JSON.Parse(txtAsset.text);
