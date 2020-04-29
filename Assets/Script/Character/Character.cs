@@ -87,15 +87,9 @@ public class Character : MonoBehaviour
         
     }
 
-    public void  Move(Character obj, Vector3 _pos)
+    public void Move(Character obj, Vector3 _pos)
     {
-
         obj.transform.position = Vector3.MoveTowards(obj.transform.position, _pos, Time.deltaTime * speed);
-        
-        if (obj.transform.position == _pos)
-        {
-            ani.SetInteger("iAniIndex", 0);
-        }
     }
 
     public void Rotate(Character obj, Vector3 _pos)

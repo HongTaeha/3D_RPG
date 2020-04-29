@@ -18,14 +18,22 @@ public class Enemy_Walk : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       if(enemy.transform.position==enemy.POS)
-        {
-            animator.SetInteger("iAniIndex", 0);
+        if (enemy.target == null)
+        {       
+            if (enemy.transform.position == enemy.POS)
+            {
+                enemy.is_Move = false;
+                animator.SetInteger("iAniIndex", 0);
+
+            }
+            else
+            {
+                enemy.is_Move = true;
+            }
         }
-       else
+        else
         {
-            enemy.Move(enemy, enemy.POS);
-            enemy.Rotate(enemy, enemy.POS);
+
         }
     }
 

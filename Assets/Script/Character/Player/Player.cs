@@ -5,7 +5,6 @@ using UnityEngine;
 public class Player : Character
 {
     Status tmp;
-
     void Start()
     {
         status = new Status();
@@ -14,8 +13,7 @@ public class Player : Character
         Get_Status(this.status, tmp);
 
         Debug.Log(tmp.StrName);
-
-
+        
 
         ani = GetComponent<Animator>();
         
@@ -34,6 +32,6 @@ public class Player : Character
         mypos = transform.position;
 
         SetAttackSpeed(this.status.attackSpeed);
-        Die();
+        Die();        
     }
 }

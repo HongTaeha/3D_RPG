@@ -26,18 +26,18 @@ public class PlayerController : Controller
                     // 배경을 눌렀을 경우 타겟 변화 없음
                     // 오로지 이동만
                     player.POS = hit.point;
-                    player.Move(player, player.POS);
+                    if (player.Attack_Target)
+                        player.Attack_Target = null;
                 }
                 else if (hit.collider.CompareTag("Enemy"))
                 {
                     // 적을 눌렀을경우
                     // 적에게 다가가고 타겟 바꾸고 공격
+                    
                     player.POS = hit.collider.transform.position;
                     player.target = hit.collider.gameObject.GetComponent<Character>();
                     player.Is_Battle = true;
-                    player.Attack_Target = player.target;
-                    player.Move(player, player.POS);
-
+                    player.Attack_Target = hit.collider.gameObject.GetComponent<Character>();
                 }
             }
         }

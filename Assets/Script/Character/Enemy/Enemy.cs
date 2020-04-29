@@ -32,17 +32,25 @@ public class Enemy : Character
         isDead = false;
         Is_Battle = true;
     }
-
+   
     // Update is called once per frame
     void Update()
     {
         Die();
         SetAttackSpeed(this.status.attackSpeed);
+        //Recognition("Player");
+       
 
         
-
-
-
+    }
+    private void LateUpdate()
+    {
+        if (is_Move)
+        {
+            this.Move(this, this.POS);
+            //this.Rotate(this, this.POS);
+            this.is_Move = false;
+        }
     }
 
 
@@ -53,19 +61,20 @@ public class Enemy : Character
 
   
     //스폰 지점에서 일정 반경 내로 랜덤 이동
-    public Vector3 Random_spot(Vector3 spawn)
+    public void Random_spot()
     {
-        
-        Vector3 tmp = spawn;
+        Vector3 tmp = this.POS;
         int nR = Random.Range(0, 10);
         if (nR == 0 || nR == 4 || nR == 9)
-        {
+        {            
             float dx = Random.Range(-4f, 4f);
             float dz = Random.Range(-4f, 4f);
-            tmp.x= spawn.x + dx;
-            tmp.z = spawn.z + dz;
-        }    
-        return tmp;        
+            tmp.x = this.Spawn_Point.x + dx;
+            tmp.z = this.Spawn_Point.z + dz;
+        }
+        //Debug.Log(this.name);
+        this.POS = tmp;
+        //return tmp;        
     }
 
     //일정 거리 안의 플레이어 인식
@@ -84,8 +93,7 @@ public class Enemy : Character
     }
 
     //플레이어가 죽거나 일정 반경 밖으로 나가면 제자리로 돌아감
-
-
+    
     public void Return_Spawnpoint()
     {
         is_returning = true;
@@ -105,7 +113,6 @@ public class Enemy : Character
 
         }
         
-    }    
-
+    }
 
 }

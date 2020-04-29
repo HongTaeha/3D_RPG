@@ -7,8 +7,7 @@ public class Enemy_Idle : StateMachineBehaviour
     Enemy enemy;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-        
+    {        
         if (enemy == null)
         {
             enemy = animator.GetComponent<Enemy>();
@@ -18,9 +17,19 @@ public class Enemy_Idle : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        enemy.POS=enemy.Random_spot(enemy.Spawn_Point);
-        animator.SetInteger("iAniIndex", 1);
+        if (enemy.target == null)
+        {
+            if (enemy.POS == enemy.transform.position)
+            {
+                enemy.Random_spot();
+                if(enemy.POS != enemy.transform.position)
+                animator.SetInteger("iAniIndex", 1);
+            }                         
+        }
+        else
+        {
 
+        }
 
     }
 

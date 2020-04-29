@@ -19,41 +19,30 @@ public class Player_Attack : StateMachineBehaviour
     {
         if (player.Attack_Target!=null) //공격타겟이 있을때
         {
-            //공격중에
-            //다른 곳이 클릭되면
-            if (player.POS != player.Attack_Target.transform.position)
+            //공격중에          
+            if (player.Attack_Target.status.HP <= 0)
             {
                 player.EndAttack();
+                player.POS = player.transform.position;
                 player.Attack_Target = null;
-                animator.SetInteger("iAniIndex", 1);
+                animator.SetInteger("iAniIndex", 0);
             }
+            //대상이 안죽었으면
             else
             {
-                if (player.Attack_Target.status.HP <= 0)
+                //사거리 안에 있다
+                if (player.TargetDIstance(player, player.Attack_Target) < player.status.Range)
                 {
-                    player.EndAttack();
-                    player.POS = player.transform.position;
-                    player.Attack_Target = null;
-                    animator.SetInteger("iAniIndex", 0);
+                    player.Rotate(player, player.Attack_Target.transform.position); //공격 대상을 본다                
+
                 }
-                //대상이 사거리 안에 있으면
+                //대상이 사거리 안에 없으면
                 else
                 {
-                    if (player.TargetDIstance(player, player.Attack_Target) < player.status.Range)
-                    {
-                        player.Rotate(player, player.Attack_Target.transform.position); //공격 대상을 본다
-
-
-                    }
-
-                    //대상이 사거리 안에 없으면
-                    else
-                    {
-                        //추격
-                        player.EndAttack();
-                        player.POS = player.Attack_Target.transform.position;
-                        animator.SetInteger("iAniIndex", 1);
-                    }
+                    //추격
+                    player.EndAttack();
+                    player.POS = player.Attack_Target.transform.position;
+                    animator.SetInteger("iAniIndex", 1);
                 }
             }
         }
