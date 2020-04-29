@@ -744,6 +744,7 @@ MonoBehaviour:
   currentAttackCoolTime: 1
   isDead: 0
   Spawn_Point: {x: 0, y: 0, z: 0}
+  is_returning: 0
 --- !u!1001 &226427766
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3328,6 +3329,7 @@ MonoBehaviour:
   currentAttackCoolTime: 1
   isDead: 0
   Spawn_Point: {x: 0, y: 0, z: 0}
+  is_returning: 0
 --- !u!1001 &1021968340
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3423,6 +3425,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e5b85e044ae5eb140a7ccaf66ab3d62a, type: 2}
+    - target: {fileID: 95980759410839360, guid: e9a03d46b76afe246a9ffd58d255bb65,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3816240601114007025, guid: e9a03d46b76afe246a9ffd58d255bb65,
         type: 3}
       propertyPath: m_Enabled
@@ -4272,6 +4279,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e5b85e044ae5eb140a7ccaf66ab3d62a, type: 2}
+    - target: {fileID: 95025375702580604, guid: f88c6ad57910d8648807bcf0c131f49d,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8173784817979543962, guid: f88c6ad57910d8648807bcf0c131f49d,
         type: 3}
       propertyPath: m_Enabled
@@ -4875,6 +4887,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: e5b85e044ae5eb140a7ccaf66ab3d62a, type: 2}
+    - target: {fileID: 95319451835724688, guid: 7f931d4b5c97d194d8726ddf5acdd440,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2350440557342213593, guid: 7f931d4b5c97d194d8726ddf5acdd440,
         type: 3}
       propertyPath: m_Constraints
@@ -6210,6 +6227,7 @@ MonoBehaviour:
   currentAttackCoolTime: 1
   isDead: 0
   Spawn_Point: {x: 0, y: 0, z: 0}
+  is_returning: 0
 --- !u!4 &2101890317 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 435e0e335035e3f47b6cb073d9957c07,

@@ -5,6 +5,7 @@ using UnityEngine;
 public class Player : Character
 {
     Status tmp;
+
     void Start()
     {
         status = new Status();

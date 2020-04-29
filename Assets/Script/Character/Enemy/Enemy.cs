@@ -5,7 +5,7 @@ using UnityEngine;
 public class Enemy : Character
 {
     public Vector3 Spawn_Point = Vector3.zero;
-    bool is_returning=false;
+    public bool is_returning=false;
     public float SPAWNDISTANCE
     {
         get { return Vector3.Distance(this.transform.position, Spawn_Point); }
@@ -38,22 +38,16 @@ public class Enemy : Character
     {
         Die();
         SetAttackSpeed(this.status.attackSpeed);
-        //Recognition("Player");
-       
-
-        
-    }
-    private void LateUpdate()
-    {
-        if (is_Move)
+        if(!is_returning)
+            Recognition("Player");    
+        if(SPAWNDISTANCE>5.0f)
         {
-            this.Move(this, this.POS);
-            //this.Rotate(this, this.POS);
-            this.is_Move = false;
+            Return_Spawnpoint();
         }
+        if (this.transform.position == this.Spawn_Point)
+            this.is_returning = false;
+
     }
-
-
     void DieEvent()
     {
         Destroy(ani.gameObject);
@@ -72,9 +66,7 @@ public class Enemy : Character
             tmp.x = this.Spawn_Point.x + dx;
             tmp.z = this.Spawn_Point.z + dz;
         }
-        //Debug.Log(this.name);
         this.POS = tmp;
-        //return tmp;        
     }
 
     //일정 거리 안의 플레이어 인식
@@ -86,7 +78,8 @@ public class Enemy : Character
             if (cols[i].CompareTag(tag))
             {
                 this.target = cols[i].GetComponent<Character>();
-                this.POS = this.target.POS;
+                //this.Attack_Target = this.target;
+                this.POS = this.target.transform.position;
                 break;
             }
         }
@@ -96,23 +89,12 @@ public class Enemy : Character
     
     public void Return_Spawnpoint()
     {
-        is_returning = true;
+        this.is_returning = true;
         this.target = null;
         this.Is_Battle = false;
-        this.POS = Spawn_Point;
+        this.POS = this.Spawn_Point;        
+        ani.SetInteger("iAniIndex", 1);
 
-        if (this.transform.position!=Spawn_Point)
-        {
-            Move(this, this.Spawn_Point);
-        }
-        else
-        {
-            is_returning = false;            
-            this.Is_Battle = true;
-
-
-        }
-        
     }
 
 }

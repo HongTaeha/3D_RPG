@@ -20,14 +20,13 @@ public class Player_walk : StateMachineBehaviour
 
         if (player.Attack_Target != null) //공격 타겟이 있을 때
         {
-            
-                vEnd = player.Attack_Target.transform.position; //공격 타겟을 향해서
-                if (player.TargetDIstance(player, player.Attack_Target) <= player.status.Range)  //대상이 공격 거리 안에 있을 때
-                {
-                    player.StartAttack();
-                }
-            
-            
+            vEnd = player.Attack_Target.transform.position; //공격 타겟을 향해서
+            if (player.TargetDIstance(player, player.Attack_Target) <= player.status.Range)  //대상이 공격 거리 안에 있을 때
+            {
+                player.StartAttack();
+            }
+            player.Move(player, vEnd); //이동한다
+            player.Rotate(player, vEnd); //돈다
         }
         else //공격 타겟이 없을 떄
         {
@@ -35,11 +34,11 @@ public class Player_walk : StateMachineBehaviour
                 animator.SetInteger("iAniIndex", 0);
             else
             {
-                vEnd = player.POS;   //자신의 현재 목표를 향해서                   
+                vEnd = player.POS;   //자신의 현재 목표를 향해서   
+                player.Move(player, vEnd); //이동한다
+                player.Rotate(player, vEnd); //돈다
             }
         }
-        player.Move(player, vEnd); //이동한다
-        player.Rotate(player, vEnd); //돈다
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

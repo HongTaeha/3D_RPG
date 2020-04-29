@@ -17,30 +17,24 @@ public class Player_idle : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         //가만히 있을 때
-
-        //player.Rotate(player, player.target.transform.position);
-
         //공격대상이 있으면
         if (player.Attack_Target !=null)
+        {
+
+            //사거리가 닿을 때
+            if (player.TargetDIstance(player,player.Attack_Target) < player.status.Range)
             {
-
-                //사거리가 닿을 때
-                if (player.TargetDIstance(player,player.Attack_Target) < player.status.Range)
-                {
-
                 //공격
                 //animator.SetInteger("iAniIndex", 2);
                 player.StartAttack();
-                    
-
-                }
-                //안닿으면
-                else
-                {
-                    //추적
-                    animator.SetInteger("iAniIndex", 1);
-                }
             }
+            //안닿으면
+            else
+            {
+                //추적
+                animator.SetInteger("iAniIndex", 1);
+            }
+        }
         //공격대상이 없으면
         else
         {
@@ -49,6 +43,7 @@ public class Player_idle : StateMachineBehaviour
             {
                 animator.SetInteger("iAniIndex", 1);
             }
+
         }
 
     }
