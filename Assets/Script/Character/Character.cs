@@ -39,13 +39,21 @@ public class Character : MonoBehaviour
     public Status status;
     public float attackCoolTime ;
     public float currentAttackCoolTime ;
+    public List<Skills> skillbook;
+
+
 
     //케릭터 상태
     public bool isDead = false;
 
     public void Take_Damage(float dmg)
     {
-        status.HP -= dmg;
+        float total_dmg;
+        total_dmg = dmg - this.status.Armor;
+        if (dmg < 0)
+            dmg = 0;
+        this.status.HP -= total_dmg;
+
     }
     public void Die()
     {

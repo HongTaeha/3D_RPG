@@ -40,7 +40,7 @@ public class Enemy : Character
         SetAttackSpeed(this.status.attackSpeed);
         if(!is_returning)
             Recognition("Player");    
-        if(SPAWNDISTANCE>5.0f)
+        if(SPAWNDISTANCE>20.0f)
         {
             Return_Spawnpoint();
         }
@@ -78,7 +78,7 @@ public class Enemy : Character
             if (cols[i].CompareTag(tag))
             {
                 this.target = cols[i].GetComponent<Character>();
-                //this.Attack_Target = this.target;
+                this.Attack_Target = this.target;
                 this.POS = this.target.transform.position;
                 break;
             }
@@ -91,6 +91,7 @@ public class Enemy : Character
     {
         this.is_returning = true;
         this.target = null;
+        this.Attack_Target = null;
         this.Is_Battle = false;
         this.POS = this.Spawn_Point;        
         ani.SetInteger("iAniIndex", 1);

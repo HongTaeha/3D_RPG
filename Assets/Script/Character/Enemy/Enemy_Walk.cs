@@ -30,8 +30,10 @@ public class Enemy_Walk : StateMachineBehaviour
                 enemy.POS = enemy.target.transform.position;
                 if(enemy.TargetDIstance(enemy,enemy.target)<enemy.status.Range)
                 {
+                    
                     enemy.StartAttack();
                 }
+                
             }
             enemy.Rotate(enemy, enemy.POS);
             enemy.Move(enemy, enemy.POS);

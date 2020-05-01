@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 
-public class JSON_Parsor : MonoBehaviour
+public class Status_Parsor : MonoBehaviour
 {
     private void Awake()
     {

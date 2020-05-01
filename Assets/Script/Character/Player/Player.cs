@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Player : Character
 {
-    Status tmp;
-
+    Status tmp;    
+    
     void Start()
     {
         status = new Status();
@@ -31,7 +31,6 @@ public class Player : Character
     void Update()
     {
         mypos = transform.position;
-
         SetAttackSpeed(this.status.attackSpeed);
         Die();        
     }
