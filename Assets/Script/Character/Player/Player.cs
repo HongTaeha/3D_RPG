@@ -6,21 +6,22 @@ public class Player : Character
 {
     Status tmp;    
     
+   
     void Start()
     {
         status = new Status();
-        Status_DB.instance.status_dic.TryGetValue("Player", out tmp);
-        
+        skillbook = new List<Skills>();
+        var database = Resources.Load<Skills_DB>("Skills_DB");
+        skillbook.Add(database.skills[0]);        
+        Status_DB.instance.status_dic.TryGetValue("Player", out tmp);        
         Get_Status(this.status, tmp);
-
-        Debug.Log(tmp.StrName);
-        
-
-        ani = GetComponent<Animator>();
-        
+        Debug.Log(tmp.StrName);      
+        ani = GetComponent<Animator>();        
         attackCoolTime = 1;
         currentAttackCoolTime = 1;
         POS = transform.position;
+
+
         
         isDead= false;
     }
@@ -34,4 +35,5 @@ public class Player : Character
         SetAttackSpeed(this.status.attackSpeed);
         Die();        
     }
+
 }

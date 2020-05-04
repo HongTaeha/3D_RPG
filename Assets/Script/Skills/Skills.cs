@@ -2,39 +2,80 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Skills 
+public class Skills :ScriptableObject
 {
-    public string skillName = string.Empty; 
+
+    public string skillName = string.Empty;
+    public float CoolDown;
     public float mpCost = 0;
-    public Character User = null;
-    public Character Target = null;
-    public bool isActive = false;
-    
-    public void Update()
+    public float SpellID;
+    public Sprite Icon;
+    public int Animation_ID;
+    public float value;
+    public bool is_damage = true;
+    public bool is_Active = true;
+    public Buff buff;
+
+   
+
+    public virtual void Use(Character target, Character user)
+    {     }
+
+}
+
+/*
+skill 종류
+딜스킬
+힐스킬
+버프스킬
+디버프 스킬
+
+단일 대상
+대상지정
+
+다수 대상
+버프형
+
+범위 지정형
+
+플레이어 전방형
+*/
+
+[CreateAssetMenu(fileName = "Skill_Solo_", menuName = "Skill_Solo")]
+public class Solo_skill : Skills
+{
+    public override void Use(Character target, Character user)
     {
-        if (!isActive)
+        if (!is_Active) {
+            user.buff.Add(buff);
+        }
+        else
+        if (is_damage)
         {
-            
+            if (!user.CompareTag(target.gameObject.tag))
+            {
+                target.Take_Damage(value);
+                user.ani.SetInteger("iAniIndex", Animation_ID);
+            }
+        }
+        else
+        {
+            if(user.CompareTag(target.gameObject.tag))
+            {
+                target.Take_Heal(value);
+                user.ani.SetInteger("iAniIndex", Animation_ID);
+            }
         }
     }
-    
-
-    public virtual IEnumerator Use()
-    { // Coroutine so it can do stuff over time.
-        isActive = true;
-        yield return null;
-        // Do stuff based on the settings above.
-        isActive = false;
-    }
-    
 }
 
-
-public class Skill_1 : Skills
+[CreateAssetMenu(fileName = "Skill_Range_", menuName = "Skill_Range")]
+public class RangeSkill : Skills
 {
-    public override IEnumerator Use()
+    public override void Use(Character target, Character user)
     {
-        yield return null;
+
     }
 }
+
 

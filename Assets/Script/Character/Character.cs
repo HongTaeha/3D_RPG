@@ -39,8 +39,12 @@ public class Character : MonoBehaviour
     public Status status;
     public float attackCoolTime ;
     public float currentAttackCoolTime ;
+    
     public List<Skills> skillbook;
-
+    public List<Buff> buff;
+    public List<float> buffTimers;
+    public List<Debuff> dbuff;
+    public List<float> dbuffTimers;
 
 
     //케릭터 상태
@@ -53,6 +57,12 @@ public class Character : MonoBehaviour
         if (dmg < 0)
             dmg = 0;
         this.status.HP -= total_dmg;
+
+    }
+    public void Take_Heal(float heal)
+    {
+
+        this.status.HP += heal;
 
     }
     public void Die()
@@ -73,6 +83,41 @@ public class Character : MonoBehaviour
     {
     }
 
+    public List<Character> Recognition(string tag, float range)
+    {
+        Collider[] cols = Physics.OverlapSphere(this.transform.position, range);
+        List<Character> ch = new List<Character>();
+        for(int i=0;i<cols.Length;i++)
+        {
+            if(cols[i].CompareTag(tag))
+            {
+                ch.Add(cols[i].GetComponent<Character>());
+            }
+        }
+        return ch;
+    }
+    public void addBuff(Buff b,float Time)
+    {
+        buff.Add(b);
+        buffTimers.Add(Time);
+    }
+    public void Buff_Timer()
+    {
+        if(buffTimers.Count>0)
+        {
+            for(int i =0;i<buffTimers.Count;i++)
+            {
+                buffTimers[i] -= Time.deltaTime;
+                if(buffTimers[i]<=0)
+                {
+                    //Buff b = buff[i];
+                    buff.RemoveAt(i);
+                    buffTimers.RemoveAt(i);
+                    
+                }
+            }
+        }
+    }
 
     public void Get_Status(Status st1, Status st)
     {
@@ -90,9 +135,7 @@ public class Character : MonoBehaviour
 
     public float TargetDIstance(Character obj,Character target)
     {
-
         return Vector3.Distance(obj.transform.position, target.transform.position);
-        
     }
 
     public void Move(Character obj, Vector3 _pos)
@@ -115,8 +158,7 @@ public class Character : MonoBehaviour
         this.status.attackSpeed = _attackSpeed;
         attackCoolTime = 1f / status.attackSpeed;
         currentAttackCoolTime = attackCoolTime;
-        ani.SetFloat("AttackSpeed", status.attackSpeed);
-        
+        ani.SetFloat("AttackSpeed", status.attackSpeed);   
 
     }
     

@@ -39,7 +39,7 @@ public class Enemy : Character
         Die();
         SetAttackSpeed(this.status.attackSpeed);
         if(!is_returning)
-            Recognition("Player");    
+            Recognition();    
         if(SPAWNDISTANCE>20.0f)
         {
             Return_Spawnpoint();
@@ -70,12 +70,12 @@ public class Enemy : Character
     }
 
     //일정 거리 안의 플레이어 인식
-    public void Recognition(string tag)
+    public void Recognition()
     {
         Collider[] cols = Physics.OverlapSphere(this.transform.position, 5);
         for (int i = 0; i < cols.Length; i++)
         {
-            if (cols[i].CompareTag(tag))
+            if (cols[i].CompareTag("Player"))
             {
                 this.target = cols[i].GetComponent<Character>();
                 this.Attack_Target = this.target;

@@ -742,6 +742,9 @@ MonoBehaviour:
   is_Move: 0
   attackCoolTime: 1
   currentAttackCoolTime: 1
+  skillbook: []
+  buffTimers: []
+  dbuffTimers: []
   isDead: 0
   Spawn_Point: {x: 0, y: 0, z: 0}
   is_returning: 0
@@ -1338,6 +1341,11 @@ PrefabInstance:
       propertyPath: sph
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7860768184530023878, guid: 18d254698d3cbe44fbbca3cfa810e368,
+        type: 3}
+      propertyPath: db
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3170368409035389468, guid: 18d254698d3cbe44fbbca3cfa810e368, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 18d254698d3cbe44fbbca3cfa810e368, type: 3}
@@ -1484,6 +1492,7 @@ Transform:
   m_LocalPosition: {x: -0.13266456, y: 2.1664858, z: 0.7066908}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 391844943}
   - {fileID: 979228384}
   - {fileID: 1842879290}
   - {fileID: 984409166}
@@ -1491,6 +1500,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &391844942
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 391844943}
+  - component: {fileID: 391844944}
+  m_Layer: 0
+  m_Name: Skill_DB
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &391844943
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391844942}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -1.0248039, y: -8.628825, z: 4.0620337}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 390722709}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &391844944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391844942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0dde566e9e5885499a3ca8d05dd4dee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  db: {fileID: 0}
 --- !u!1001 &393660638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1871,7 +1924,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 390722709}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &549954000
 GameObject:
@@ -3083,7 +3136,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 390722709}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &979228385
 MonoBehaviour:
@@ -3127,7 +3180,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 390722709}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &984409167
 MonoBehaviour:
@@ -3327,6 +3380,9 @@ MonoBehaviour:
   is_Move: 0
   attackCoolTime: 1
   currentAttackCoolTime: 1
+  skillbook: []
+  buffTimers: []
+  dbuffTimers: []
   isDead: 0
   Spawn_Point: {x: 0, y: 0, z: 0}
   is_returning: 0
@@ -6003,7 +6059,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 390722709}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1842879291
 MonoBehaviour:
@@ -6225,6 +6281,9 @@ MonoBehaviour:
   is_Move: 0
   attackCoolTime: 1
   currentAttackCoolTime: 1
+  skillbook: []
+  buffTimers: []
+  dbuffTimers: []
   isDead: 0
   Spawn_Point: {x: 0, y: 0, z: 0}
   is_returning: 0

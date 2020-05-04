@@ -2,24 +2,41 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-public class Skills_DB :SingleTon<Skills>
-{ 
-    public Dictionary<int, Skills> skills = new Dictionary<int, Skills>();
-    public void Awake()
-    {
-        for (int i = 0; i < skills.Count; i++)
+
+public class Skills_DB : ScriptableObject
+{
+    public List<Skills> skills = new List<Skills>();   
+    public void Update_DB()
+    {            
+        Skills[] instances = Resources.FindObjectsOfTypeAll<Skills>();
+        for(int i=0; i<instances.Length;i++)
         {
-           
+            skills.Add(instances[i]);
         }
     }
-    public void Update()
+    public void Print()
     {
-        foreach (KeyValuePair<int, Skills> items in skills)
+        for(int i=0;i<skills.Count;i++)
         {
-            skills[items.Key].Update();
+            if (skills[i] != null)
+                Debug.Log(skills[i].skillName);
         }
     }
-        
+
+    public void Clear()
+    {
+        skills = new List<Skills>();
+    }
+
 }
 
 
+
+public class SkillMenu
+{
+    [MenuItem("Assets/Create/Skill Database")]
+    public static void CreateSkillDatabaseAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<Skills_DB>();
+    }
+}
