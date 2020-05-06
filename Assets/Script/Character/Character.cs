@@ -18,8 +18,8 @@ public class Character : MonoBehaviour
                 return transform.position;
         }
     }
-    public Vector3 mypos; 
-    
+    public Vector3 mypos;
+    public Sprite icon;
 
     //애니메이션
     public Animator ani;
@@ -126,7 +126,7 @@ public class Character : MonoBehaviour
         st1.Range=st.Range;
         st1.Armor = st.Armor;
         st1.Max_HP=st.Max_HP;
-        st1.Max_HP=st.Max_MP;
+        st1.Max_MP=st.Max_MP;
         st1.HP=st.HP;
         st1.MP=st.MP;
         st1.AttackDamage = st.AttackDamage;
@@ -153,11 +153,12 @@ public class Character : MonoBehaviour
         obj.transform.rotation = Quaternion.LookRotation(newDir);
     }
 
-    public void SetAttackSpeed(float _attackSpeed)
+    public void SetAttackSpeed(float _attackSpeed, float _attackCooltime)
     {
         this.status.attackSpeed = _attackSpeed;
         attackCoolTime = 1f / status.attackSpeed;
         currentAttackCoolTime = attackCoolTime;
+
         ani.SetFloat("AttackSpeed", status.attackSpeed);   
 
     }
@@ -178,8 +179,7 @@ public class Character : MonoBehaviour
             {
                 currentAttackCoolTime = 0;
                 Attack();
-            }
-            
+            }            
             currentAttackCoolTime += Time.deltaTime;
             yield return null;         
         }

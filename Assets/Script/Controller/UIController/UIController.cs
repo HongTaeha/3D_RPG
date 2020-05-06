@@ -6,48 +6,49 @@ public class UIController : Controller
 {
 
     public Player player;
-    public Image image;
-    public Image Hp;
-    public Image Mp;
-    public Image T_Hp;
-    public Image T_Mp;
+    public GameObject Target;
+    public Image T_ICON;
+    public Image T_HP;
+    public Image T_MP;
 
- 
+    public Image Player_status;
+    public Image HP;
+    public Image MP;
+
     void UI_Target()
     {
-        Text text = image.GetComponentInChildren<Text>();
         if (player.target!=null)
         {
             
-            Text t_hp = T_Hp.GetComponentInChildren<Text>();
-            Text t_mp = T_Mp.GetComponentInChildren<Text>();
-            Text T_Name = image.GetComponentInChildren<Text>();
+            Target.SetActive(true);
+            T_ICON.sprite = player.target.icon;
 
-            image.gameObject.SetActive(true);
+            T_HP.fillAmount= player.target.status.HP / player.target.status.Max_HP;
+            T_MP.fillAmount = player.target.status.MP / player.target.status.Max_MP;
 
-
-            T_Name.text=player.target.status.StrName;
-            T_Hp.fillAmount = player.target.status.HP / player.target.status.Max_HP;
+            Text t_hp = T_HP.GetComponentInChildren<Text>();
+            Text t_mp = T_MP.GetComponentInChildren<Text>();
             t_hp.text = string.Format("HP {0}/{1}", player.target.status.HP, player.target.status.Max_HP);
-            T_Mp.fillAmount = player.target.status.MP / player.target.status.Max_MP;
             t_mp.text = string.Format("MP {0}/{1}", player.target.status.MP, player.target.status.Max_MP);
+           
         }
         else
         {
-            image.gameObject.SetActive(false);
+            Target.SetActive(false);
         }
     }
     void UI_Status()
     {
-        Text hp= Hp.GetComponentInChildren<Text>(); 
-        Text mp = Mp.GetComponentInChildren<Text>();
+
+        Player_status.sprite = player.icon;
+        Text hp= HP.GetComponentInChildren<Text>(); 
+        Text mp = MP.GetComponentInChildren<Text>();
         
-
-        Hp.fillAmount = player.status.HP / player.status.Max_HP;
+        HP.fillAmount = player.status.HP / player.status.Max_HP;
         hp.text = string.Format("HP {0}/{1}", player.status.HP,player.status.Max_HP);
-        Mp.fillAmount = player.status.MP / player.status.Max_MP;
+        MP.fillAmount = player.status.MP / player.status.Max_MP;
         mp.text = string.Format("MP {0}/{1}", player.status.MP,player.status.Max_MP);             
-
+        
     }
 
 

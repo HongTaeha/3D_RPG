@@ -24,9 +24,15 @@ public class Enemy : Character
         Get_Status(this.status,tmp);
         this.status.StrName = this.name;
         ani = GetComponent<Animator>();       
-
-        attackCoolTime = 1;
-        currentAttackCoolTime = 1;
+        
+        RuntimeAnimatorController ac = ani.runtimeAnimatorController;
+        for(int i=0;i<ac.animationClips.Length;i++)
+        {
+            if(ac.animationClips[i].name=="Stab Attack")
+            {
+                this.status.attackSpeed = ac.animationClips[i].length;
+            }
+        }
 
         POS = transform.position;
         isDead = false;
@@ -37,7 +43,7 @@ public class Enemy : Character
     void Update()
     {
         Die();
-        SetAttackSpeed(this.status.attackSpeed);
+        SetAttackSpeed(this.status.attackSpeed,2);
         if(!is_returning)
             Recognition();    
         if(SPAWNDISTANCE>20.0f)

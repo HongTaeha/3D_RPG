@@ -16,14 +16,19 @@ public class Player : Character
         Status_DB.instance.status_dic.TryGetValue("Player", out tmp);        
         Get_Status(this.status, tmp);
         Debug.Log(tmp.StrName);      
-        ani = GetComponent<Animator>();        
-        attackCoolTime = 1;
-        currentAttackCoolTime = 1;
+        ani = GetComponent<Animator>();  
         POS = transform.position;
 
+        RuntimeAnimatorController ac = ani.runtimeAnimatorController;
+        for (int i = 0; i < ac.animationClips.Length; i++)
+        {
+            if (ac.animationClips[i].name == "Attack1")
+            {
+                this.status.attackSpeed = ac.animationClips[i].length;
+            }
+        }
 
-        
-        isDead= false;
+        isDead = false;
     }
 
   
@@ -32,7 +37,7 @@ public class Player : Character
     void Update()
     {
         mypos = transform.position;
-        SetAttackSpeed(this.status.attackSpeed);
+        SetAttackSpeed(this.status.attackSpeed,1);
         Die();        
     }
 

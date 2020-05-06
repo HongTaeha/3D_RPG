@@ -7,7 +7,6 @@ public class LoadSkills : MonoBehaviour
     Skills_DB db = null;
     void Awake()
     {
-        // At runtime, instantiate a copy so you don't modify the design-time original:
         db = Resources.Load<Skills_DB>("Skills_DB");
 
         if (db.skills.Count == 0)
@@ -24,5 +23,6 @@ public class LoadSkills : MonoBehaviour
 
     private void OnDestroy()
     {
+        db.Clear();
     }
 }

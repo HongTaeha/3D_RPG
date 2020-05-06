@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-
+using System.IO;
 public class Skills_DB : ScriptableObject
 {
+    string[] fName;
+    Object[] fObj;
     public List<Skills> skills = new List<Skills>();   
     public void Update_DB()
-    {            
-        Skills[] instances = Resources.FindObjectsOfTypeAll<Skills>();
+    {
+
+
+        Skills[] instances= Resources.LoadAll<Skills>("Skills");        
         for(int i=0; i<instances.Length;i++)
         {
             skills.Add(instances[i]);
         }
+        
     }
     public void Print()
     {
