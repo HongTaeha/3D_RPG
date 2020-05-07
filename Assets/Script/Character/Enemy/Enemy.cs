@@ -37,13 +37,13 @@ public class Enemy : Character
         POS = transform.position;
         isDead = false;
         Is_Battle = true;
+        SetAttackSpeed(this.status.attackSpeed, 2);
     }
    
     // Update is called once per frame
     void Update()
     {
         Die();
-        SetAttackSpeed(this.status.attackSpeed,2);
         if(!is_returning)
             Recognition();    
         if(SPAWNDISTANCE>20.0f)

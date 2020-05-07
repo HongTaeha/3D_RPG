@@ -155,7 +155,7 @@ public class Character : MonoBehaviour
 
     public void SetAttackSpeed(float _attackSpeed, float _attackCooltime)
     {
-        this.status.attackSpeed = _attackSpeed;
+        this.status.attackSpeed = _attackSpeed/ _attackCooltime;
         attackCoolTime = 1f / status.attackSpeed;
         currentAttackCoolTime = attackCoolTime;
 
@@ -177,13 +177,13 @@ public class Character : MonoBehaviour
         {
             if (currentAttackCoolTime >= attackCoolTime)
             {
-                currentAttackCoolTime = 0;
                 Attack();
-            }            
-            currentAttackCoolTime += Time.deltaTime;
-            yield return null;         
+                currentAttackCoolTime = 0;
+            }
+            else
+                currentAttackCoolTime += Time.deltaTime;
+            yield return null;
         }
-
     }
     private void Attack()
     {
@@ -193,6 +193,14 @@ public class Character : MonoBehaviour
     {
         if(this.Attack_Target)
         Attack_Target.Take_Damage(this.status.AttackDamage);
+    }
+
+    public void Use_Skill(int num)
+    {
+        
+        if (skillbook[num].is_Active)
+            skillbook[num].Use( this, target);
+
     }
 
 }

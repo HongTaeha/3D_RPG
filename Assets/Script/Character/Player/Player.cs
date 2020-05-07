@@ -10,9 +10,12 @@ public class Player : Character
     void Start()
     {
         status = new Status();
+
+        /*
         skillbook = new List<Skills>();
         var database = Resources.Load<Skills_DB>("Skills_DB");
-        skillbook.Add(database.skills[0]);        
+        skillbook.Add(database.skills[0]);      
+        */
         Status_DB.instance.status_dic.TryGetValue("Player", out tmp);        
         Get_Status(this.status, tmp);
         Debug.Log(tmp.StrName);      
@@ -24,11 +27,12 @@ public class Player : Character
         {
             if (ac.animationClips[i].name == "Attack1")
             {
-                this.status.attackSpeed = ac.animationClips[i].length;
+                this.status.attackSpeed *= ac.animationClips[i].length;
             }
         }
 
         isDead = false;
+        SetAttackSpeed(this.status.attackSpeed, 1);
     }
 
   
@@ -37,7 +41,6 @@ public class Player : Character
     void Update()
     {
         mypos = transform.position;
-        SetAttackSpeed(this.status.attackSpeed,1);
         Die();        
     }
 

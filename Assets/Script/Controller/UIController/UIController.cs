@@ -15,6 +15,12 @@ public class UIController : Controller
     public Image HP;
     public Image MP;
 
+
+    [SerializeField]
+    private Button[] skillslot;
+    float cooltime;
+    Image slot1;
+
     void UI_Target()
     {
         if (player.target!=null)
@@ -50,16 +56,57 @@ public class UIController : Controller
         mp.text = string.Format("MP {0}/{1}", player.status.MP,player.status.Max_MP);             
         
     }
+    void UI_SkillSlot()
+    {
+
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ButtonOnClick(0);
+            StartCoroutine(CoolTime(slot1, player.skillbook[0].CoolDown));
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            ButtonOnClick(1);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            ButtonOnClick(2);
+        }
+    }
+    private void ButtonOnClick(int btn)
+    {
+        skillslot[btn].onClick.Invoke();
+    }
+    IEnumerator CoolTime(Image btn,float cool)
+    {
+        cooltime = cool;
+        while(cool>0.0f)
+        {
+            cooltime -= Time.deltaTime;
+            btn.fillAmount = 1-(cooltime/cool);
+            yield return new WaitForFixedUpdate();
+        }
+    }
+
 
 
     void Start()
     {
 
+        slot1 = skillslot[0].image;
+        //Image bt2 = skillslot[1].GetComponent<Image>();
+        //Image bt3 = skillslot[2].GetComponent<Image>();
+
+        slot1.sprite = player.skillbook[0].Icon;
+        //bt2.sprite = player.skillbook[1].Icon;
+        //bt3.sprite = player.skillbook[2].Icon;
     }
     void Update()
     {
         UI_Target();
         UI_Status();
+        UI_SkillSlot();
 
     }
 }

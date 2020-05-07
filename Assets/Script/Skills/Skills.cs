@@ -44,7 +44,7 @@ skill 종류
 [CreateAssetMenu(fileName = "Skill_Solo_", menuName = "Skill_Solo")]
 public class Solo_skill : Skills
 {
-    public override void Use(Character target, Character user)
+    public override void Use(Character user, Character target)
     {
         if (!is_Active) {
             user.buff.Add(buff);

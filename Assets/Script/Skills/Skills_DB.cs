@@ -10,8 +10,6 @@ public class Skills_DB : ScriptableObject
     public List<Skills> skills = new List<Skills>();   
     public void Update_DB()
     {
-
-
         Skills[] instances= Resources.LoadAll<Skills>("Skills");        
         for(int i=0; i<instances.Length;i++)
         {

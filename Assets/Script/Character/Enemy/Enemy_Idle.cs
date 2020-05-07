@@ -33,6 +33,12 @@ public class Enemy_Idle : StateMachineBehaviour
             {
                 if (enemy.POS != enemy.transform.position)
                     animator.SetInteger("iAniIndex", 1);
+
+                if(enemy.TargetDIstance(enemy,enemy.target)<enemy.status.Range)
+            {
+                enemy.StartAttack();
+
+            }
             }
         
     }
