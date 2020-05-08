@@ -22,17 +22,11 @@ public class Player : Character
         ani = GetComponent<Animator>();  
         POS = transform.position;
 
-        RuntimeAnimatorController ac = ani.runtimeAnimatorController;
-        for (int i = 0; i < ac.animationClips.Length; i++)
-        {
-            if (ac.animationClips[i].name == "Attack1")
-            {
-                this.status.attackSpeed *= ac.animationClips[i].length;
-            }
-        }
+       
 
         isDead = false;
-        SetAttackSpeed(this.status.attackSpeed, 1);
+        SetAttackSpeed("Attack1", 1);
+
     }
 
   

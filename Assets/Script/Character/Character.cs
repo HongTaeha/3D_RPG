@@ -81,7 +81,10 @@ public class Character : MonoBehaviour
     void Update()
     {
     }
-
+    void Ani_speed(string str)
+    {
+       
+    }
     public List<Character> Recognition(string tag, float range)
     {
         Collider[] cols = Physics.OverlapSphere(this.transform.position, range);
@@ -152,9 +155,19 @@ public class Character : MonoBehaviour
         obj.transform.rotation = Quaternion.LookRotation(newDir);
     }
 
-    public void SetAttackSpeed(float _attackSpeed, float _attackCooltime)
+    public void SetAttackSpeed(string str,  float _attackCooltime)
     {
-        this.status.attackSpeed = _attackSpeed/ _attackCooltime;
+        RuntimeAnimatorController ac = this.ani.runtimeAnimatorController;
+        for (int i = 0; i < ac.animationClips.Length; i++)
+        {
+            if (ac.animationClips[i].name == str)
+            {
+                this.status.attackSpeed = ac.animationClips[i].length;
+                break;
+            }
+        }
+
+        this.status.attackSpeed = this.status.attackSpeed* _attackCooltime;
         attackCoolTime = 1f / status.attackSpeed;
         currentAttackCoolTime = attackCoolTime;
 
@@ -208,10 +221,8 @@ public class Character : MonoBehaviour
         }
     }
 
-    public void setskill(Skills skill)
-    {
-        Object fd;
-       
+    public void addskill(Skills skill)
+    {        
         skillbook.Add(skill);
     }
 

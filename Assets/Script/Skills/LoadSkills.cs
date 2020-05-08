@@ -14,6 +14,7 @@ public class LoadSkills : MonoBehaviour
     }
     private void Start()
     {
+        db.wakeup();
 
     }
     private void Update()

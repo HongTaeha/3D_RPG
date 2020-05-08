@@ -20,6 +20,11 @@ public class Skills :ScriptableObject
     {
     }
 
+    public void Awake()
+    {
+        is_Available = true;
+    }
+
     public void cooldown(MonoBehaviour parentMonoBehaviour)
     {
         parentMonoBehaviour.StartCoroutine(CooldownTimeCoroutine());        
@@ -31,7 +36,9 @@ public class Skills :ScriptableObject
         while (cooltime > 0)
         {
             Debug.Log(cooltime);
-            cooltime -= Time.deltaTime;            
+            cooltime -= Time.deltaTime;
+            if (cooltime <= 0)
+                is_Available = true;
             yield return new WaitForFixedUpdate();
         }
         

@@ -25,19 +25,12 @@ public class Enemy : Character
         this.status.StrName = this.name;
         ani = GetComponent<Animator>();       
         
-        RuntimeAnimatorController ac = ani.runtimeAnimatorController;
-        for(int i=0;i<ac.animationClips.Length;i++)
-        {
-            if(ac.animationClips[i].name=="Stab Attack")
-            {
-                this.status.attackSpeed = ac.animationClips[i].length;
-            }
-        }
+       
 
         POS = transform.position;
         isDead = false;
         Is_Battle = true;
-        SetAttackSpeed(this.status.attackSpeed, 2);
+        SetAttackSpeed("Stab Attack", 0.5f);
     }
    
     // Update is called once per frame
