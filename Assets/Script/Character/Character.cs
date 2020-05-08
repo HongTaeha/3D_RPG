@@ -49,7 +49,6 @@ public class Character : MonoBehaviour
 
     //케릭터 상태
     public bool isDead = false;
-
     public void Take_Damage(float dmg)
     {
         float total_dmg;
@@ -197,10 +196,23 @@ public class Character : MonoBehaviour
 
     public void Use_Skill(int num)
     {
-        
-        if (skillbook[num].is_Active)
-            skillbook[num].Use( this, target);
 
+        if (skillbook[num].is_Active)
+        {
+            if (skillbook[num].is_Available)
+            {
+                skillbook[num].Use(this, target);
+                skillbook[num].cooldown(this);
+            }
+                
+        }
+    }
+
+    public void setskill(Skills skill)
+    {
+        Object fd;
+       
+        skillbook.Add(skill);
     }
 
 }

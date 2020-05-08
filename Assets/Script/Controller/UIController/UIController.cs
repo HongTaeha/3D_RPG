@@ -56,14 +56,14 @@ public class UIController : Controller
         mp.text = string.Format("MP {0}/{1}", player.status.MP,player.status.Max_MP);             
         
     }
+
     void UI_SkillSlot()
     {
-
-
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             ButtonOnClick(0);
             StartCoroutine(CoolTime(slot1, player.skillbook[0].CoolDown));
+            
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {

@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class Skills :ScriptableObject
 {
 
@@ -12,15 +11,31 @@ public class Skills :ScriptableObject
     public Sprite Icon;
     public int Animation_ID;
     public float value;
-    public bool is_damage = true;
+    public bool is_Available=true;
+    public bool is_Damage = true;
     public bool is_Active = true;
     public Buff buff;
 
-   
+    public virtual void Use(Character user, Character target)
+    {
+    }
 
-    public virtual void Use(Character target, Character user)
-    {     }
-
+    public void cooldown(MonoBehaviour parentMonoBehaviour)
+    {
+        parentMonoBehaviour.StartCoroutine(CooldownTimeCoroutine());        
+    }   
+    IEnumerator CooldownTimeCoroutine()
+    {
+        float startTime = Time.deltaTime;           
+        float cooltime = CoolDown;
+        while (cooltime > 0)
+        {
+            Debug.Log(cooltime);
+            cooltime -= Time.deltaTime;            
+            yield return new WaitForFixedUpdate();
+        }
+        
+    }
 }
 
 /*
@@ -44,13 +59,15 @@ skill 종류
 [CreateAssetMenu(fileName = "Skill_Solo_", menuName = "Skill_Solo")]
 public class Solo_skill : Skills
 {
+   
     public override void Use(Character user, Character target)
     {
+       
         if (!is_Active) {
             user.buff.Add(buff);
         }
         else
-        if (is_damage)
+        if (is_Damage)
         {
             if (!user.CompareTag(target.gameObject.tag))
             {
@@ -66,6 +83,7 @@ public class Solo_skill : Skills
                 user.ani.SetInteger("iAniIndex", Animation_ID);
             }
         }
+        is_Available = false;
     }
 }
 
@@ -74,7 +92,6 @@ public class RangeSkill : Skills
 {
     public override void Use(Character target, Character user)
     {
-
     }
 }
 
