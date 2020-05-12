@@ -18,7 +18,8 @@ public class Enemy : Character
         Spawn_Point = transform.position;
     }
     void Start()
-    {        
+    {
+        this.tag = "Enemy";
         status = new Status();
         Status_DB.instance.status_dic.TryGetValue("Enemy", out tmp);
         Get_Status(this.status,tmp);

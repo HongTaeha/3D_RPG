@@ -74,11 +74,7 @@ public class PlayerController : Controller
         {
             
             //player.GetComponent<Rigidbody>().velocity = new Vector2(player.GetComponent<Rigidbody>().velocity.x,5.0f);
-            if(player.skillbook[0]!=null)
-            {
-                Debug.Log("스킬");
-                player.skillbook[0].Use(player.target, player);
-            }
+           
         }
     }
     

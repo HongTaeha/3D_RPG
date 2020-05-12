@@ -37,8 +37,8 @@ public class Character : MonoBehaviour
 
     //케릭터 스텟    
     public Status status;
-    public float attackCoolTime ;
-    public float currentAttackCoolTime ;
+    float attackCoolTime ;
+    float currentAttackCoolTime ;
     
     public List<Skills> skillbook;
     public List<Buff> buff;
@@ -62,6 +62,8 @@ public class Character : MonoBehaviour
     {
 
         this.status.HP += heal;
+        if (this.status.HP > this.status.Max_HP)
+            this.status.HP = this.status.Max_HP;
 
     }
     public void Die()
@@ -120,7 +122,6 @@ public class Character : MonoBehaviour
             }
         }
     }
-
     public void Get_Status(Status st1, Status st)
     {
 
@@ -134,17 +135,14 @@ public class Character : MonoBehaviour
         st1.AttackDamage = st.AttackDamage;
         st1.attackSpeed = st.attackSpeed;
     }
-
     public float TargetDIstance(Character obj,Character target)
     {
         return Vector3.Distance(obj.transform.position, target.transform.position);
     }
-
     public void Move(Character obj, Vector3 _pos)
     {
         obj.transform.position = Vector3.MoveTowards(obj.transform.position, _pos, Time.deltaTime * speed);
     }
-
     public void Rotate(Character obj, Vector3 _pos)
     {
         Vector3 targetDir = _pos - obj.transform.position;
@@ -154,7 +152,6 @@ public class Character : MonoBehaviour
         Vector3 newDir = Vector3.RotateTowards(obj.transform.forward, targetDir.normalized, Time.deltaTime * 10, 0);
         obj.transform.rotation = Quaternion.LookRotation(newDir);
     }
-
     public void SetAttackSpeed(string str,  float _attackCooltime)
     {
         RuntimeAnimatorController ac = this.ani.runtimeAnimatorController;
@@ -173,8 +170,7 @@ public class Character : MonoBehaviour
 
         ani.SetFloat("AttackSpeed", status.attackSpeed);   
 
-    }
-    
+    }    
     public void StartAttack()
     {
         StartCoroutine("EnumAttack");
@@ -189,7 +185,7 @@ public class Character : MonoBehaviour
         {
             if (currentAttackCoolTime >= attackCoolTime)
             {
-                Attack();
+                ani.SetInteger("iAniIndex", 2);
                 currentAttackCoolTime = 0;
             }
             else
@@ -197,34 +193,20 @@ public class Character : MonoBehaviour
             yield return null;
         }
     }
-    private void Attack()
-    {
-        ani.SetInteger("iAniIndex", 2);
-    }
     public void HitEvent()
     {
         if (this.Attack_Target)
         {
-            Attack_Target.Take_Damage(this.status.AttackDamage);
-            if (Attack_Target.target == null)
-            {
-                Attack_Target.target = this;
-                Attack_Target.Is_Battle = true;
-            }
+            Attack_Target.Take_Damage(this.status.AttackDamage);            
         }
     }
 
     public void Use_Skill(int num)
     {
-
-        if (skillbook[num].is_Active)
+        if (skillbook[num].is_Active&& skillbook[num].is_Available)
         {
-            if (skillbook[num].is_Available)
-            {
                 skillbook[num].Use(this, target);
-                skillbook[num].cooldown(this);
-            }
-                
+                skillbook[num].cooldown(this);                     
         }
     }
 

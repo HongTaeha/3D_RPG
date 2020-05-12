@@ -14,7 +14,7 @@ public class LoadSkills : MonoBehaviour
     private void Start()
     {
         db.wakeup();
-        Destroy(this);
+        //Destroy(this);
     }
     private void Update()
     {

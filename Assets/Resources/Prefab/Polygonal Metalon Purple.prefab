@@ -748,8 +748,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4673369876368086}
   - component: {fileID: 95980759410839360}
-  - component: {fileID: -4708897452567075495}
   - component: {fileID: 3816240601114007025}
+  - component: {fileID: 3815940641293659510}
   m_Layer: 0
   m_Name: Polygonal Metalon Purple
   m_TagString: Untagged
@@ -808,22 +808,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!54 &-4708897452567075495
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1462720695320296}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &3816240601114007025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -837,6 +821,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.6834033, y: 2.1699014, z: 3.9756052}
   m_Center: {x: -0.00039684772, y: 0.8608711, z: 0.34600103}
+--- !u!114 &3815940641293659510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462720695320296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36ab33bfb7b726a45b14d66010b8287d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Attack_Target: {fileID: 0}
+  target: {fileID: 0}
+  mypos: {x: 0, y: 0, z: 0}
+  icon: {fileID: 21300000, guid: 130b9afe61f49bb47918d94e4a3dc761, type: 3}
+  ani: {fileID: 0}
+  Is_Battle: 0
+  is_Move: 0
+  skillbook: []
+  buffTimers: []
+  dbuffTimers: []
+  db: {fileID: 0}
+  isDead: 0
+  Spawn_Point: {x: 0, y: 0, z: 0}
+  is_returning: 0
 --- !u!1 &1486048802852170
 GameObject:
   m_ObjectHideFlags: 0

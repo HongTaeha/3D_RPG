@@ -20,7 +20,6 @@ public class Player : Character
 
         Status_DB.instance.status_dic.TryGetValue("Player", out tmp);        
         Get_Status(this.status, tmp);
-        Debug.Log(tmp.StrName);      
         ani = GetComponent<Animator>();  
         POS = transform.position;
 
