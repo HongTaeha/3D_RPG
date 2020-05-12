@@ -35,7 +35,6 @@ public class Skills :ScriptableObject
         float cooltime = CoolDown;
         while (cooltime > 0)
         {
-            Debug.Log(cooltime);
             cooltime -= Time.deltaTime;
             if (cooltime <= 0)
                 is_Available = true;
@@ -69,6 +68,7 @@ public class Solo_skill : Skills
    
     public override void Use(Character user, Character target)
     {
+
        
         if (!is_Active) {
             user.buff.Add(buff);

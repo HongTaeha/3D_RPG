@@ -45,7 +45,7 @@ public class Character : MonoBehaviour
     public List<float> buffTimers;
     public List<Debuff> dbuff;
     public List<float> dbuffTimers;
-
+    public Skills_DB db;
 
     //케릭터 상태
     public bool isDead = false;
@@ -203,8 +203,15 @@ public class Character : MonoBehaviour
     }
     public void HitEvent()
     {
-        if(this.Attack_Target)
-        Attack_Target.Take_Damage(this.status.AttackDamage);
+        if (this.Attack_Target)
+        {
+            Attack_Target.Take_Damage(this.status.AttackDamage);
+            if (Attack_Target.target == null)
+            {
+                Attack_Target.target = this;
+                Attack_Target.Is_Battle = true;
+            }
+        }
     }
 
     public void Use_Skill(int num)
@@ -222,8 +229,9 @@ public class Character : MonoBehaviour
     }
 
     public void addskill(Skills skill)
-    {        
-        skillbook.Add(skill);
+    {
+        Skills tmp = Skills.Instantiate(skill);
+        skillbook.Add(tmp);
     }
 
 }

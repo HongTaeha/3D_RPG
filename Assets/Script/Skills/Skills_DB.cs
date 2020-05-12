@@ -7,7 +7,7 @@ public class Skills_DB : ScriptableObject
 {
     string[] fName;
     Object[] fObj;
-    public List<Skills> skills = new List<Skills>();
+    public List<Skills> skills = new List<Skills>();    
     public void Update_DB()
     {
         Skills[] instances= Resources.LoadAll<Skills>("Skills");        

@@ -10,12 +10,14 @@ public class Player : Character
     void Start()
     {
         status = new Status();
+        skillbook = new List<Skills>();      
 
-        /*
-        skillbook = new List<Skills>();
-        var database = Resources.Load<Skills_DB>("Skills_DB");
-        skillbook.Add(database.skills[0]);      
-        */
+        db = Resources.Load<Skills_DB>("Skills_DB");
+        for(int i=0;i<db.skills.Count;i++)
+        {
+            addskill(db.skills[i]);
+        }
+
         Status_DB.instance.status_dic.TryGetValue("Player", out tmp);        
         Get_Status(this.status, tmp);
         Debug.Log(tmp.StrName);      

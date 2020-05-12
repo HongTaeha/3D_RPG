@@ -19,7 +19,8 @@ public class UIController : Controller
     [SerializeField]
     private Button[] skillslot;
     float cooltime;
-    Image slot1;
+    Image slot1,slot2,slot3;
+   
 
     void UI_Target()
     {
@@ -59,21 +60,25 @@ public class UIController : Controller
 
     void UI_SkillSlot()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        
+        if (Input.GetKeyDown(KeyCode.Alpha1)&&player.skillbook[0].is_Available)
         {
             ButtonOnClick(0);
             StartCoroutine(CoolTime(slot1, player.skillbook[0].CoolDown));
             
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) && player.skillbook[1].is_Available)
         {
             ButtonOnClick(1);
+            StartCoroutine(CoolTime(slot2, player.skillbook[1].CoolDown));
         }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha3) && player.skillbook[2].is_Available)
         {
             ButtonOnClick(2);
+            StartCoroutine(CoolTime(slot3, player.skillbook[2].CoolDown));
         }
     }
+    
     private void ButtonOnClick(int btn)
     {
         skillslot[btn].onClick.Invoke();
@@ -95,12 +100,12 @@ public class UIController : Controller
     {
 
         slot1 = skillslot[0].image;
-        //Image bt2 = skillslot[1].GetComponent<Image>();
-        //Image bt3 = skillslot[2].GetComponent<Image>();
+        //slot2 = skillslot[1].image;
+        //slot3 = skillslot[2].image;
 
         slot1.sprite = player.skillbook[0].Icon;
-        //bt2.sprite = player.skillbook[1].Icon;
-        //bt3.sprite = player.skillbook[2].Icon;
+        //slot2.sprite = player.skillbook[1].Icon;
+        //slot3.sprite = player.skillbook[2].Icon;
     }
     void Update()
     {
