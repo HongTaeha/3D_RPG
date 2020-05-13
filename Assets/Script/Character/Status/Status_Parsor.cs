@@ -5,9 +5,10 @@ using SimpleJSON;
 
 public class Status_Parsor : MonoBehaviour
 {
+    public string FileName;
     private void Awake()
     {
-        TextAsset txtAsset = Resources.Load<TextAsset>("Status_JSON");
+        TextAsset txtAsset = Resources.Load<TextAsset>(FileName);
         JSONNode root = JSON.Parse(txtAsset.text);
         JSONNode N1 = root[0];
         

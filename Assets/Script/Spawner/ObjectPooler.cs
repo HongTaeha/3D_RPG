@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ObjectManager : MonoBehaviour
+public class ObjectPooler : MonoBehaviour
 {
+    List<GameObject> _removeLst = new List<GameObject>();
+    //Multimap<string, ObjectPool> _dictObjPool = new Multimap<string, ObjectPool>();
+    Dictionary<string, ObjectPool> _dictObjPool = new Dictionary<string, ObjectPool>();
+    public static ObjectPooler instance = null;
+
+
     public class ObjectPool
     {
         class PoolableObject
@@ -57,20 +63,16 @@ public class ObjectManager : MonoBehaviour
             }
         }
     }
-    public static ObjectManager instance = null;
-    List<GameObject> _removeLst = new List<GameObject>();
-    Dictionary<string, ObjectPool> _dictObjPool = new Dictionary<string, ObjectPool>();
-
     private void Awake()
     {
         instance = this;
+        Pooling_Obj("Enemy", "Prefab/Polygonal Metalon Green", 3);
+        Pooling_Obj("Enemy_1", "Prefab/Polygonal Metalon Purple", 3);
+        Pooling_Obj("Enemy_2", "Prefab/Polygonal Metalon Red", 3);
     }
-    // Start is called before the first frame update
     void Start()
     {
-
-        GeneObjPool("Enemy", "Prefab/Polygonal Metalon Green", 100);
-
+        
     }
 
     void Update()
@@ -78,14 +80,14 @@ public class ObjectManager : MonoBehaviour
 
     }
 
-    void GeneObjPool(string tag, string path, int cnt)
+    void Pooling_Obj(string tag, string path, int cnt)
     {
         ObjectPool objPool = new ObjectPool();
         GameObject prefab = Resources.Load(path) as GameObject;
         objPool.AddObj(prefab, cnt);
         _dictObjPool.Add(tag, objPool);
     }
-    public GameObject GenerateObj(string tag, string path = "")
+    public GameObject Generate_Obj(string tag, string path = "")
     {
         GameObject ret = null;
 
@@ -95,6 +97,8 @@ public class ObjectManager : MonoBehaviour
         }
         else
         {
+            if (path == null && tag == null)
+                return null;
             // ret에 path를 이용해 만든 객체를 리턴해준다. 빈 문자열은 체크해서 예외처리
         }
 
@@ -123,7 +127,7 @@ public class ObjectManager : MonoBehaviour
         foreach (var item in _removeLst)
         {
             //Destroy(item.gameObject);
-            ObjectManager.instance.ReleaseObj(item.gameObject);
+            ObjectPooler.instance.ReleaseObj(item.gameObject);
         }
         _removeLst.Clear();
     }

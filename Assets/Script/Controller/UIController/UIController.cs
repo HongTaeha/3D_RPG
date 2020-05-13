@@ -88,7 +88,6 @@ public class UIController : Controller
         cooltime = cool;
         while(cool>0.0f)
         {
-            Debug.Log(cooltime);
             cooltime -= Time.deltaTime;
             btn.fillAmount = 1-(cooltime/cool);
             if (cooltime <= 0)

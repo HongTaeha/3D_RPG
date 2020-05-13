@@ -24,10 +24,9 @@ public class Enemy : Character
         Status_DB.instance.status_dic.TryGetValue("Enemy", out tmp);
         Get_Status(this.status,tmp);
         this.status.StrName = this.name;
-        ani = GetComponent<Animator>();       
-        
+        ani = GetComponent<Animator>();        
        
-
+  
         POS = transform.position;
         isDead = false;
         Is_Battle = true;
