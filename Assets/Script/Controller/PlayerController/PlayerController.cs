@@ -32,8 +32,7 @@ public class PlayerController : Controller
                 else if (hit.collider.CompareTag("Enemy"))
                 {
                     // 적을 눌렀을경우
-                    // 적에게 다가가고 타겟 바꾸고 공격
-                    
+                    // 적에게 다가가고 타겟 바꾸고 공격                    
                     player.POS = hit.collider.transform.position;
                     player.target = hit.collider.gameObject.GetComponent<Character>();
                     player.Is_Battle = true;
@@ -43,29 +42,33 @@ public class PlayerController : Controller
         }
         if (Input.GetKey(KeyCode.W))
         {
-            player.POS = player.transform.position + player.transform.forward*Time.deltaTime*speed;
-            player.Move(player, player.POS);
+            player.POS = player.transform.position + player.transform.forward;                       
             player.ani.SetInteger("iAniIndex", 1);
 
         }
         if (Input.GetKey(KeyCode.A))
         {
+            player.Rotate(player, player.transform.position + player.transform.right * (-1) * Time.deltaTime,speed );
+            /*
             player.POS = player.transform.position + player.transform.right*(-1) * Time.deltaTime * speed;
             player.Move(player, player.POS);
             player.ani.SetInteger("iAniIndex", 1);
+            */
         }
         if (Input.GetKey(KeyCode.S))
         {
-            player.POS = player.transform.position + player.transform.forward*(-1) * Time.deltaTime * speed;
-            player.Move(player, player.POS);
-
-            player.ani.SetInteger("iAniIndex", 1);
+            //player.POS = player.transform.position + player.transform.forward*(-1);
+            player.Navi.Resume();
+            //player.ani.SetInteger("iAniIndex", 1);
         }
         if (Input.GetKey(KeyCode.D))
         {
+            player.Rotate(player, player.transform.position + player.transform.right* Time.deltaTime ,speed);
+            /*
             player.POS = player.transform.position + player.transform.right * Time.deltaTime * speed;
             player.Move(player, player.POS);
             player.ani.SetInteger("iAniIndex", 1);
+            */
         }
 
 

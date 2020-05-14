@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class Enemy : Character
 {
     public Vector3 Spawn_Point = Vector3.zero;
@@ -19,6 +19,8 @@ public class Enemy : Character
     }
     void Start()
     {
+
+        Navi = GetComponent<NavMeshAgent>();
         this.tag = "Enemy";
         status = new Status();
         Status_DB.instance.status_dic.TryGetValue("Enemy", out tmp);

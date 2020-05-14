@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class Player : Character
 {
-    Status tmp;    
-    
-   
+    Status tmp;
     void Start()
     {
+        Navi = GetComponent<NavMeshAgent>();
+        
         status = new Status();
         skillbook = new List<Skills>();      
 
@@ -35,7 +35,7 @@ public class Player : Character
     // Update is called once per frame
     void Update()
     {
-        mypos = transform.position;
+        //mypos = transform.position;
         Die();        
     }
 

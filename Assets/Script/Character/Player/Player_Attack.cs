@@ -12,11 +12,13 @@ public class Player_Attack : StateMachineBehaviour
         {
             player = animator.GetComponent<Player>();
         }
+        player.POS = player.transform.position;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        player.Move(player, player.transform.position);
         if (player.Attack_Target!=null) //공격타겟이 있을때
         {
             //공격중에          
@@ -58,6 +60,7 @@ public class Player_Attack : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        player.POS = player.transform.position;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

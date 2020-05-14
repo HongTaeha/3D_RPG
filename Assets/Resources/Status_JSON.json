@@ -6,7 +6,7 @@
 		"HP" : "30",
 		"MP" : "10",
 		"Armor" : "1",
-		"Range" : "2",
+		"Range" : "4",
 		"AttackDamage" : "2",
 		"AttackSpeed" : "1"
 	},
@@ -17,7 +17,7 @@
 		"HP" : "20",
 		"MP" : "10",
 		"Armor" : "0",
-		"Range" : "1",
+		"Range" : "3",
 		"AttackDamage" : "2",
 		"AttackSpeed" : "1"
 	}

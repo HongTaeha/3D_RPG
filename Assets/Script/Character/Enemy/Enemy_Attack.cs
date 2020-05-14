@@ -13,11 +13,13 @@ public class Enemy_Attack : StateMachineBehaviour
         {
             enemy = animator.GetComponent<Enemy>();
         }
+        enemy.POS = enemy.transform.position;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        enemy.Move(enemy, enemy.transform.position);
         if (enemy.target == null)
         {
             enemy.Is_Battle = false;
@@ -37,7 +39,8 @@ public class Enemy_Attack : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
+        enemy.POS = enemy.transform.position;
+
     }
     // OnStateMove is called right after Animator.OnAnimatorMove()
     //override public void OnStateMove(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

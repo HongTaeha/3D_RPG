@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Character : MonoBehaviour
 {
 
+    public NavMeshAgent Navi;
     //목표 대상 구현
     public Character Attack_Target=null;
     public Character target = null;
@@ -141,7 +143,8 @@ public class Character : MonoBehaviour
     }
     public void Move(Character obj, Vector3 _pos)
     {
-        obj.transform.position = Vector3.MoveTowards(obj.transform.position, _pos, Time.deltaTime * speed);
+        //obj.transform.position = Vector3.MoveTowards(obj.transform.position, _pos, Time.deltaTime * speed);        
+        obj.Navi.SetDestination(_pos);
     }
     public void Rotate(Character obj, Vector3 _pos)
     {
@@ -150,6 +153,15 @@ public class Character : MonoBehaviour
             return;
 
         Vector3 newDir = Vector3.RotateTowards(obj.transform.forward, targetDir.normalized, Time.deltaTime * 10, 0);
+        obj.transform.rotation = Quaternion.LookRotation(newDir);
+    }
+    public void Rotate(Character obj, Vector3 _pos,float speed)
+    {
+        Vector3 targetDir = _pos - obj.transform.position;
+        if (Vector3.Dot(targetDir.normalized, obj.transform.forward).CompareTo(0.99f) >= 0)
+            return;
+
+        Vector3 newDir = Vector3.RotateTowards(obj.transform.forward, targetDir.normalized, Time.deltaTime * speed, 0);
         obj.transform.rotation = Quaternion.LookRotation(newDir);
     }
     public void SetAttackSpeed(string str,  float _attackCooltime)

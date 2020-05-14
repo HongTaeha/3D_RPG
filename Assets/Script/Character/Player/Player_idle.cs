@@ -18,11 +18,14 @@ public class Player_idle : StateMachineBehaviour
     {
         //가만히 있을 때
         //공격대상이 있으면
-        if (player.Attack_Target !=null)
+        if (Vector3.Distance(player.POS, player.transform.position) < 0.1)
         {
-
+            player.POS = player.transform.position;
+        }
+        if (player.Attack_Target != null)
+        {
             //사거리가 닿을 때
-            if (player.TargetDIstance(player,player.Attack_Target) < player.status.Range)
+            if (player.TargetDIstance(player, player.Attack_Target) < player.status.Range)
             {
                 //공격
                 //animator.SetInteger("iAniIndex", 2);
@@ -39,14 +42,13 @@ public class Player_idle : StateMachineBehaviour
         else
         {
             //이동
-            if(player.transform.position!=player.POS)
+            if (player.transform.position != player.POS)
             {
-                animator.SetInteger("iAniIndex", 1);
+                    animator.SetInteger("iAniIndex", 1);
             }
-
         }
-
     }
+
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
