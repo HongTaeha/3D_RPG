@@ -65,7 +65,7 @@ skill 종류
 플레이어 전방형
 */
 
-[CreateAssetMenu(fileName = "Skill_Solo_", menuName = "Skill_Solo")]
+[CreateAssetMenu(fileName = "Solo_skill", menuName = "Solo_skill")]
 public class Solo_skill : Skills
 {
    

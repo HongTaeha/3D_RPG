@@ -9,17 +9,11 @@ public class Enemy : Character
     public float SPAWNDISTANCE
     {
         get { return Vector3.Distance(this.transform.position, Spawn_Point); }
-    }
-
+    }    
     Status tmp;
-
-    private void Awake()
-    {
-        Spawn_Point = transform.position;
-    }
     void Start()
     {
-
+        
         Navi = GetComponent<NavMeshAgent>();
         this.tag = "Enemy";
         status = new Status();
@@ -45,9 +39,8 @@ public class Enemy : Character
         {
             Return_Spawnpoint();
         }
-        if (this.transform.position == this.Spawn_Point)
+        if (Vector3.Distance(this.transform.position,this.Spawn_Point)<1&&this.is_returning)
             this.is_returning = false;
-
     }
     void DieEvent()
     {

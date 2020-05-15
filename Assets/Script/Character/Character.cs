@@ -33,7 +33,6 @@ public class Character : MonoBehaviour
             set { pos= value; }
     }
     public bool Is_Battle = false;
-    public bool is_Move = false;
 
 
 

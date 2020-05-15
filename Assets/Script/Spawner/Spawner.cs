@@ -19,8 +19,8 @@ public class Spawner : MonoBehaviour
             GenMonster(a,tag);
         }*/
         GenMonster(lst[0],tag);
-        GenMonster(lst[1], tag1);
-        GenMonster(lst[2], tag2);
+        //GenMonster(lst[1], tag1);
+        //GenMonster(lst[2], tag2);
     }    
     void Update()
     {

@@ -41,34 +41,27 @@ public class PlayerController : Controller
             }
         }
         if (Input.GetKey(KeyCode.W))
-        {
-            player.POS = player.transform.position + player.transform.forward;                       
-            player.ani.SetInteger("iAniIndex", 1);
+        {               
+            //player.ani.SetInteger("iAniIndex", 1);
+            player.Navi.Move(player.transform.forward * Time.deltaTime*speed);
+            player.POS = player.transform.position;
 
         }
         if (Input.GetKey(KeyCode.A))
         {
             player.Rotate(player, player.transform.position + player.transform.right * (-1) * Time.deltaTime,speed );
-            /*
-            player.POS = player.transform.position + player.transform.right*(-1) * Time.deltaTime * speed;
-            player.Move(player, player.POS);
-            player.ani.SetInteger("iAniIndex", 1);
-            */
+            player.POS = player.transform.position;
         }
         if (Input.GetKey(KeyCode.S))
-        {
-            //player.POS = player.transform.position + player.transform.forward*(-1);
-            player.Navi.Resume();
+        {           
             //player.ani.SetInteger("iAniIndex", 1);
+            player.Navi.Move(player.transform.forward * Time.deltaTime * speed * (-1));
+            player.POS = player.transform.position;
         }
         if (Input.GetKey(KeyCode.D))
         {
             player.Rotate(player, player.transform.position + player.transform.right* Time.deltaTime ,speed);
-            /*
-            player.POS = player.transform.position + player.transform.right * Time.deltaTime * speed;
-            player.Move(player, player.POS);
-            player.ani.SetInteger("iAniIndex", 1);
-            */
+            player.POS = player.transform.position;
         }
 
 

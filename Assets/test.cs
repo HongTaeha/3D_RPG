@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class test : MonoBehaviour
 {
-    public Enemy enemy;
+    public Character enemy;
     // Start is called before the first frame update
     void Start()
     {
-        enemy = GetComponentInParent<Enemy>();
+        enemy = GetComponentInParent<Character>();
     }
 
     // Update is called once per frame

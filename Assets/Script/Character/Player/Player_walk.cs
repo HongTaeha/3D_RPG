@@ -28,7 +28,7 @@ public class Player_walk : StateMachineBehaviour
                 {
                     player.StartAttack();
                 }
-                player.Move(player, vEnd); //이동한다
+                //player.Move(player, vEnd); //이동한다
                 player.Rotate(player, vEnd); //돈다
             }
             else //공격 타겟이 없을 떄
@@ -38,7 +38,7 @@ public class Player_walk : StateMachineBehaviour
                 else
                 {
                     vEnd = player.POS;   //자신의 현재 목표를 향해서   
-                    player.Move(player, vEnd); //이동한다
+                    //player.Move(player, vEnd); //이동한다
                     player.Rotate(player, vEnd); //돈다
                 }
             }
