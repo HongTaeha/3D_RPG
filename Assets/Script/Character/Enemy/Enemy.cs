@@ -27,20 +27,32 @@ public class Enemy : Character
         isDead = false;
         Is_Battle = true;
         SetAttackSpeed("Stab Attack", 0.5f);
+        ani.SetFloat("WalkSpeed", SetWalkSpeed("Run Forward In Place"));
+        Navi.speed = 3.0f;
     }
    
     // Update is called once per frame
     void Update()
     {
+        if (Vector3.Distance(this.POS, this.transform.position) < 1)
+        {
+            this.POS = this.transform.position;
+        }
         Die();
         if(!is_returning)
             Recognition();    
-        if(SPAWNDISTANCE>20.0f)
+        if(SPAWNDISTANCE>10.0f)
         {
             Return_Spawnpoint();
         }
-        if (Vector3.Distance(this.transform.position,this.Spawn_Point)<1&&this.is_returning)
+        if (Vector3.Distance(this.transform.position, this.Spawn_Point) < 1 && this.is_returning)
             this.is_returning = false;
+        if(this.transform.position!= this.POS)
+        {
+            this.Move(this, this.POS);
+            this.Rotate(this, this.POS);
+        }
+
     }
     void DieEvent()
     {

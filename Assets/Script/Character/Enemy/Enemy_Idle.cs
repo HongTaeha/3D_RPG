@@ -17,20 +17,14 @@ public class Enemy_Idle : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (Vector3.Distance(enemy.POS, enemy.transform.position) < 1)
-        {
-            enemy.POS = enemy.transform.position;
-        }
+        
         if (enemy.target == null)
         {
             if (enemy.POS == enemy.transform.position)
             {
                 enemy.Random_spot();                            
             }
-            else
-            {
-                animator.SetInteger("iAniIndex", 1);
-            }
+                animator.SetInteger("iAniIndex", 1);            
         }
         else
         {

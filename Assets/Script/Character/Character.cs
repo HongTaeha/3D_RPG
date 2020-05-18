@@ -144,7 +144,7 @@ public class Character : MonoBehaviour
     {
         //obj.transform.position = Vector3.MoveTowards(obj.transform.position, _pos, Time.deltaTime * speed);        
         obj.Navi.SetDestination(_pos);
-    }
+    } 
     public void Rotate(Character obj, Vector3 _pos)
     {
         Vector3 targetDir = _pos - obj.transform.position;
@@ -152,15 +152,6 @@ public class Character : MonoBehaviour
             return;
 
         Vector3 newDir = Vector3.RotateTowards(obj.transform.forward, targetDir.normalized, Time.deltaTime * 10, 0);
-        obj.transform.rotation = Quaternion.LookRotation(newDir);
-    }
-    public void Rotate(Character obj, Vector3 _pos,float speed)
-    {
-        Vector3 targetDir = _pos - obj.transform.position;
-        if (Vector3.Dot(targetDir.normalized, obj.transform.forward).CompareTo(0.99f) >= 0)
-            return;
-
-        Vector3 newDir = Vector3.RotateTowards(obj.transform.forward, targetDir.normalized, Time.deltaTime * speed, 0);
         obj.transform.rotation = Quaternion.LookRotation(newDir);
     }
     public void SetAttackSpeed(string str,  float _attackCooltime)
@@ -182,6 +173,19 @@ public class Character : MonoBehaviour
         ani.SetFloat("AttackSpeed", status.attackSpeed);   
 
     }    
+    public float SetWalkSpeed(string str)
+    {
+        RuntimeAnimatorController ac = this.ani.runtimeAnimatorController;
+        for (int i = 0; i < ac.animationClips.Length; i++)
+        {
+            if (ac.animationClips[i].name == str)
+            {
+                return ac.animationClips[i].length;
+                
+            }
+        }
+        return 0;
+    }
     public void StartAttack()
     {
         StartCoroutine("EnumAttack");

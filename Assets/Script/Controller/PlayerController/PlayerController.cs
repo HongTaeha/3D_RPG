@@ -7,6 +7,7 @@ public class PlayerController : Controller
     //인풋 매니저
     public Player player;
     float speed = 3.0f;
+    KeyCode key;
     void Movement()
     {
         //마우스 버튼에 따른 설정
@@ -35,45 +36,42 @@ public class PlayerController : Controller
                     // 적에게 다가가고 타겟 바꾸고 공격                    
                     player.POS = hit.collider.transform.position;
                     player.target = hit.collider.gameObject.GetComponent<Character>();
-                    player.Is_Battle = true;
                     player.Attack_Target = hit.collider.gameObject.GetComponent<Character>();
                 }
             }
         }
         if (Input.GetKey(KeyCode.W))
         {               
-            //player.ani.SetInteger("iAniIndex", 1);
             player.Navi.Move(player.transform.forward * Time.deltaTime*speed);
-            player.POS = player.transform.position;
-
+            poscon();
+        }        
+        if (Input.GetKey(KeyCode.S))
+        {           
+            player.Navi.Move(player.transform.forward * Time.deltaTime * speed * (-1));
+            poscon();
         }
         if (Input.GetKey(KeyCode.A))
         {
-            player.Rotate(player, player.transform.position + player.transform.right * (-1) * Time.deltaTime,speed );
-            player.POS = player.transform.position;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {           
-            //player.ani.SetInteger("iAniIndex", 1);
-            player.Navi.Move(player.transform.forward * Time.deltaTime * speed * (-1));
-            player.POS = player.transform.position;
+            player.Rotate(player, player.transform.position + player.transform.right * (-1) * Time.deltaTime, speed);
+            poscon();
         }
         if (Input.GetKey(KeyCode.D))
         {
             player.Rotate(player, player.transform.position + player.transform.right* Time.deltaTime ,speed);
-            player.POS = player.transform.position;
+            poscon();
         }
-
-
         //점프 구현
         if (Input.GetKeyDown(KeyCode.Space))
-        {
-            
+        {            
             //player.GetComponent<Rigidbody>().velocity = new Vector2(player.GetComponent<Rigidbody>().velocity.x,5.0f);
-           
         }
     }
-    
+    void poscon()
+    {
+        player.POS = player.transform.position;
+        player.Navi.SetDestination(player.transform.position);
+        player.ani.SetInteger("iAniIndex", 1);
+    }  
     void targetcontroll()
     {
         //왼쪽 클릭
@@ -105,8 +103,16 @@ public class PlayerController : Controller
     }
     void Update()
     {
+       
         targetcontroll();
         Movement();
+
+        if (player.transform.position != player.POS)
+        {
+            player.Move(player, player.POS);
+            player.Rotate(player, player.POS);
+        }
+
 
     }
 }
