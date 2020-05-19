@@ -5,7 +5,7 @@ public class Skills :ScriptableObject
 {
 
     public string skillName = string.Empty;
-    public float CoolDown=10;
+    public float CoolTime = 10;
     public float mpCost = 0;
     public float SpellID;
     public Sprite Icon;
@@ -32,7 +32,7 @@ public class Skills :ScriptableObject
     IEnumerator CooldownTimeCoroutine()
     {
         float startTime = Time.deltaTime;           
-        float cooltime = CoolDown;
+        float cooltime = CoolTime;
         while (cooltime > 0)
         {
             cooltime -= Time.deltaTime;
@@ -94,6 +94,7 @@ public class Solo_skill : Skills
             }
         }
         is_Available = false;
+        this.cooldown(user);
     }
 }
 

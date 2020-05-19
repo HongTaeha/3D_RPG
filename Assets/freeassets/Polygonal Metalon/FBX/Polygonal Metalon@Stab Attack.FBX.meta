@@ -356,7 +356,7 @@ ModelImporter:
       - time: 0.44680852
         functionName: HitEvent
         data: 
-        objectReferenceParameter: {fileID: 11500000, guid: 42a0d46757cc7bf41b8855c17feb375d,
+        objectReferenceParameter: {fileID: 11500000, guid: 36ab33bfb7b726a45b14d66010b8287d,
           type: 3}
         floatParameter: 0
         intParameter: 0

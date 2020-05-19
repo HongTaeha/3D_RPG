@@ -7,13 +7,11 @@ public class PlayerController : Controller
     //인풋 매니저
     public Player player;
     float speed = 3.0f;
-    KeyCode key;
     void Movement()
     {
         //마우스 버튼에 따른 설정
         // 오른쪽 클릭 : 이동
         // 왼쪽 클릭 : 대상 설정
-
         //오른쪽 클릭
         if (Input.GetMouseButtonDown(1))
         {
@@ -59,12 +57,7 @@ public class PlayerController : Controller
         {
             player.Rotate(player, player.transform.position + player.transform.right* Time.deltaTime ,speed);
             poscon();
-        }
-        //점프 구현
-        if (Input.GetKeyDown(KeyCode.Space))
-        {            
-            //player.GetComponent<Rigidbody>().velocity = new Vector2(player.GetComponent<Rigidbody>().velocity.x,5.0f);
-        }
+        }       
     }
     void poscon()
     {
@@ -103,16 +96,29 @@ public class PlayerController : Controller
     }
     void Update()
     {
-       
-        targetcontroll();
-        Movement();
-
-        if (player.transform.position != player.POS)
+        if (player.is_Automatic)
         {
-            player.Move(player, player.POS);
-            player.Rotate(player, player.POS);
+            Automatic();
+        }
+        else
+        {
+            targetcontroll();
+            Movement();
+            if (player.transform.position != player.POS)
+            {
+                player.Move(player, player.POS);
+                player.Rotate(player, player.POS);
+            }
         }
 
+        if(player.status.HP<player.status.Max_HP-5)
+        {
+            player.Use_Item(0);
+        }
+    }
 
+    void Automatic()
+    {
+       
     }
 }

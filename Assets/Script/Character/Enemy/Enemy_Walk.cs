@@ -17,37 +17,23 @@ public class Enemy_Walk : StateMachineBehaviour
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {     
-        //목표에 도착
-        if (enemy.transform.position == enemy.POS)
+    {
+        if (enemy.target != null)
         {
-            //대기
-            animator.SetInteger("iAniIndex", 0);
+            enemy.POS = enemy.target.transform.position;
+            if (enemy.TargetDIstance(enemy, enemy.target) < enemy.status.Range)
+            {
+                enemy.StartAttack();
+            }
         }
-        //걷는중일때
         else
         {
-            //타겟이 있으면
-            if (enemy.target != null)
+            if (enemy.transform.position == enemy.POS)
             {
-                enemy.POS = enemy.target.transform.position;
-                if (enemy.TargetDIstance(enemy, enemy.target) < enemy.status.Range)
-                {
-
-                    enemy.StartAttack();
-                }
-                else
-                {
-                    //추적
-                }
-
+                //대기
+                animator.SetInteger("iAniIndex", 0);
             }
-            else
-            {
-
-            }
-        }
-        
+        }        
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

@@ -13,21 +13,26 @@ public class Enemy_Attack : StateMachineBehaviour
         {
             enemy = animator.GetComponent<Enemy>();
         }
-        enemy.POS = enemy.transform.position;
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        enemy.Move(enemy, enemy.transform.position);
-        if (enemy.target == null)
+        enemy.Navi.SetDestination(enemy.transform.position);
+        if (!enemy.target)
         {
-            enemy.Is_Battle = false;
-            enemy.Attack_Target = null;
+            enemy.EndAttack();
             animator.SetInteger("iAniIndex", 0);
         }
         else
         {
+            if(enemy.skillbook[0])
+            {
+                if(enemy.skillbook[0].is_Available)
+                {
+                    enemy.Use_Skill(0);
+                }
+            }
             if (enemy.TargetDIstance(enemy, enemy.target) > enemy.status.Range)
             {
                 enemy.EndAttack();

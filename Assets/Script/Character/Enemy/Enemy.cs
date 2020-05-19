@@ -13,19 +13,26 @@ public class Enemy : Character
     Status tmp;
     void Start()
     {
-        
+
+        Inventory = new List<Items>();
+        Equipment = new List<Item_Equip>();
+        QuestItems = new List<Item_Quest>();
         Navi = GetComponent<NavMeshAgent>();
         this.tag = "Enemy";
         status = new Status();
         Status_DB.instance.status_dic.TryGetValue("Enemy", out tmp);
         Get_Status(this.status,tmp);
         this.status.StrName = this.name;
-        ani = GetComponent<Animator>();        
-       
-  
+        ani = GetComponent<Animator>();
+
+        db = Resources.Load<Skills_DB>("Skills_DB");
+        for (int i = 0; i < db.skills.Count; i++)
+        {
+            addskill(db.skills[i]);
+        }
+
         POS = transform.position;
         isDead = false;
-        Is_Battle = true;
         SetAttackSpeed("Stab Attack", 0.5f);
         ani.SetFloat("WalkSpeed", SetWalkSpeed("Run Forward In Place"));
         Navi.speed = 3.0f;
@@ -34,14 +41,14 @@ public class Enemy : Character
     // Update is called once per frame
     void Update()
     {
+        Die();
         if (Vector3.Distance(this.POS, this.transform.position) < 1)
         {
             this.POS = this.transform.position;
         }
-        Die();
         if(!is_returning)
             Recognition();    
-        if(SPAWNDISTANCE>10.0f)
+        if(SPAWNDISTANCE>15.0f)
         {
             Return_Spawnpoint();
         }
@@ -64,14 +71,12 @@ public class Enemy : Character
     public void Random_spot()
     {
         Vector3 tmp = this.POS;
-        int nR = Random.Range(0, 10);
-        if (nR == 0 || nR == 4 || nR == 9)
-        {            
+               
             float dx = Random.Range(-4f, 4f);
             float dz = Random.Range(-4f, 4f);
             tmp.x = this.Spawn_Point.x + dx;
             tmp.z = this.Spawn_Point.z + dz;
-        }
+       
         this.POS = tmp;
     }
 
@@ -84,7 +89,6 @@ public class Enemy : Character
             if (cols[i].CompareTag("Player"))
             {
                 this.target = cols[i].GetComponent<Character>();
-                this.Attack_Target = this.target;
                 this.POS = this.target.transform.position;
                 break;
             }
@@ -97,11 +101,16 @@ public class Enemy : Character
     {
         this.is_returning = true;
         this.target = null;
-        this.Attack_Target = null;
-        this.Is_Battle = false;
         this.POS = this.Spawn_Point;        
         ani.SetInteger("iAniIndex", 1);
 
+    }
+    public void HitEvent()
+    {
+        if (this.target)
+        {
+            target.Take_Damage(this.status.AttackDamage);
+        }
     }
 
 }

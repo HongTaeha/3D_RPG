@@ -18,13 +18,13 @@ public class Enemy_Idle : StateMachineBehaviour
    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         
-        if (enemy.target == null)
+        if (!enemy.target)
         {
-            if (enemy.POS == enemy.transform.position)
+            int nR = Random.Range(0, 10);
+            if (nR == 0 || nR == 1 || nR == 2)
             {
-                enemy.Random_spot();                            
+                animator.SetInteger("iAniIndex", 1);
             }
-                animator.SetInteger("iAniIndex", 1);            
         }
         else
         {
@@ -41,7 +41,11 @@ public class Enemy_Idle : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
+        if (!enemy.target)
+        {
+            enemy.Random_spot();
+        }
+
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()

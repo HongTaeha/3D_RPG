@@ -8,7 +8,6 @@ public class Character : MonoBehaviour
 
     public NavMeshAgent Navi;
     //목표 대상 구현
-    public Character Attack_Target=null;
     public Character target = null;
     public Vector3 targetpos //디버그용
     {
@@ -32,8 +31,6 @@ public class Character : MonoBehaviour
             get { return pos; }
             set { pos= value; }
     }
-    public bool Is_Battle = false;
-
 
 
     //케릭터 스텟    
@@ -47,6 +44,9 @@ public class Character : MonoBehaviour
     public List<Debuff> dbuff;
     public List<float> dbuffTimers;
     public Skills_DB db;
+    public List<Items> Inventory ;
+    public List<Item_Equip> Equipment ;
+    public List<Item_Quest> QuestItems;
 
     //케릭터 상태
     public bool isDead = false;
@@ -208,20 +208,13 @@ public class Character : MonoBehaviour
             yield return null;
         }
     }
-    public void HitEvent()
-    {
-        if (this.Attack_Target)
-        {
-            Attack_Target.Take_Damage(this.status.AttackDamage);            
-        }
-    }
+    
 
     public void Use_Skill(int num)
     {
         if (skillbook[num].is_Active&& skillbook[num].is_Available)
         {
-                skillbook[num].Use(this, target);
-                skillbook[num].cooldown(this);                     
+                skillbook[num].Use(this, target);                
         }
     }
 
@@ -230,5 +223,25 @@ public class Character : MonoBehaviour
         Skills tmp = Skills.Instantiate(skill);
         skillbook.Add(tmp);
     }
-
+    public void additem(Items item)
+    {
+        Items tmp = Items.Instantiate(item);
+        switch(tmp.tag)
+        {
+            case "Consume":
+            case "Equip":
+                Inventory.Add(tmp);
+                break;
+            case "Quest":
+                QuestItems.Add((Item_Quest)tmp);
+                break;                
+        }
+    }
+    public void Use_Item(int num)
+    {
+        if (this.Inventory[num])
+        {
+            this.Inventory[num].Use(this);
+        }
+    }
 }

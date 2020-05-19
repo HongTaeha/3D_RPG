@@ -15,11 +15,13 @@ public class UIController : Controller
     public Image HP;
     public Image MP;
 
+    public Toggle T_Auto;
 
     [SerializeField]
     private Button[] skillslot;
     float cooltime;
     Image slot1,slot2,slot3;
+
    
 
     void UI_Target()
@@ -64,18 +66,18 @@ public class UIController : Controller
         if (Input.GetKeyDown(KeyCode.Alpha1)&&player.skillbook[0].is_Available)
         {
             ButtonOnClick(0);
-            StartCoroutine(CoolTime(slot1, player.skillbook[0].CoolDown));
+            StartCoroutine(CoolTime(slot1, player.skillbook[0].CoolTime));
             
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) && player.skillbook[1].is_Available)
         {
             ButtonOnClick(1);
-            StartCoroutine(CoolTime(slot2, player.skillbook[1].CoolDown));
+            StartCoroutine(CoolTime(slot2, player.skillbook[1].CoolTime));
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) && player.skillbook[2].is_Available)
         {
             ButtonOnClick(2);
-            StartCoroutine(CoolTime(slot3, player.skillbook[2].CoolDown));
+            StartCoroutine(CoolTime(slot3, player.skillbook[2].CoolTime));
         }
     }
     
@@ -100,7 +102,15 @@ public class UIController : Controller
         yield return null;
     }
 
-
+    void Toggled()
+    {
+        if(T_Auto.isOn)
+        {
+            player.is_Automatic = true;
+        }
+        else
+            player.is_Automatic = false;
+    }
 
     void Start()
     {
@@ -118,6 +128,6 @@ public class UIController : Controller
         UI_Target();
         UI_Status();
         UI_SkillSlot();
-
+        Toggled();
     }
 }
