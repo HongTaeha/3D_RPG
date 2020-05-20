@@ -18,19 +18,14 @@ public class Enemy : Character
         Equipment = new List<Item_Equip>();
         QuestItems = new List<Item_Quest>();
         Navi = GetComponent<NavMeshAgent>();
-        this.tag = "Enemy";
         status = new Status();
+        skillbook = new List<Skills>();
+        this.tag = "Enemy";
         Status_DB.instance.status_dic.TryGetValue("Enemy", out tmp);
+        this.addskill(Skills_DB.instance.skills[0]);
         Get_Status(this.status,tmp);
         this.status.StrName = this.name;
         ani = GetComponent<Animator>();
-
-        db = Resources.Load<Skills_DB>("Skills_DB");
-        for (int i = 0; i < db.skills.Count; i++)
-        {
-            addskill(db.skills[i]);
-        }
-
         POS = transform.position;
         isDead = false;
         SetAttackSpeed("Stab Attack", 0.5f);

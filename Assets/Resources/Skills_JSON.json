@@ -1,0 +1,13 @@
+{
+	"1" : {
+		"skillName" : "Smash",
+		"CoolTime" : "10",
+		"mpCost" : "5",
+		"SpellID" : "0",
+		"Animation_ID" : "5",
+		"value" : "5",
+		"is_Available" : true,
+		"is_Damage" : true,
+		"is_Active" : true
+	}
+}

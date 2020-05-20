@@ -3,18 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.IO;
-public class Skills_DB : ScriptableObject
+public class Skills_DB : SingleTon<Skills_DB>
 {
-    string[] fName;
-    Object[] fObj;
     public List<Skills> skills = new List<Skills>();    
     public void Update_DB()
     {
-        Skills[] instances= Resources.LoadAll<Skills>("Skills");        
-        for(int i=0; i<instances.Length;i++)
-        {   
-            skills.Add(instances[i]);
-        }
+        
         
     }
     public void Print()
@@ -39,13 +33,3 @@ public class Skills_DB : ScriptableObject
 
 }
 
-
-
-public class SkillMenu
-{
-    [MenuItem("Assets/Create/Skill Database")]
-    public static void CreateSkillDatabaseAsset()
-    {
-        ScriptableObjectUtility.CreateAsset<Skills_DB>();
-    }
-}

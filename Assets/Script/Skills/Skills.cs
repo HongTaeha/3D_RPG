@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class Skills :ScriptableObject
+public class Skills
 {
 
     public string skillName = string.Empty;
@@ -16,15 +16,25 @@ public class Skills :ScriptableObject
     public bool is_Active = true;
     public Buff buff;
 
+    public void Copy(Skills other)
+    {
+        other.skillName = this.skillName;
+        other.CoolTime = this.CoolTime;
+        other.mpCost = this.mpCost;
+        other.SpellID= this.SpellID;
+        other.Icon= this.Icon;
+        other.Animation_ID = this.Animation_ID;
+        other.is_Available = this.is_Available;
+        other.is_Damage = this.is_Damage;
+        other.is_Active = this.is_Active;
+    }
     public virtual void Use(Character user, Character target)
     {
     }
-
     public void Awake()
     {
         is_Available = true;
     }
-
     public void cooldown(MonoBehaviour parentMonoBehaviour)
     {
         parentMonoBehaviour.StartCoroutine(CooldownTimeCoroutine());        
@@ -46,64 +56,4 @@ public class Skills :ScriptableObject
         yield return null;
     }
 }
-
-/*
-skill 종류
-딜스킬
-힐스킬
-버프스킬
-디버프 스킬
-
-단일 대상
-대상지정
-
-다수 대상
-버프형
-
-범위 지정형
-
-플레이어 전방형
-*/
-
-[CreateAssetMenu(fileName = "Solo_skill", menuName = "Solo_skill")]
-public class Solo_skill : Skills
-{
-   
-    public override void Use(Character user, Character target)
-    {
-
-       
-        if (!is_Active) {
-            user.buff.Add(buff);
-        }
-        else
-        if (is_Damage)
-        {
-            if (!user.CompareTag(target.gameObject.tag))
-            {
-                target.Take_Damage(value);
-                user.ani.SetInteger("iAniIndex", Animation_ID);
-            }
-        }
-        else
-        {
-            if(user.CompareTag(target.gameObject.tag))
-            {
-                target.Take_Heal(value);
-                user.ani.SetInteger("iAniIndex", Animation_ID);
-            }
-        }
-        is_Available = false;
-        this.cooldown(user);
-    }
-}
-
-[CreateAssetMenu(fileName = "Skill_Range_", menuName = "Skill_Range")]
-public class RangeSkill : Skills
-{
-    public override void Use(Character target, Character user)
-    {
-    }
-}
-
 

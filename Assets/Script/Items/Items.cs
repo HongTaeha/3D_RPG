@@ -1,8 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public  class Items :ScriptableObject
+public  class Items
 {
     public string item_name;
     public int Item_No;
@@ -10,7 +9,20 @@ public  class Items :ScriptableObject
     public int price;
     public string item_info;
     public string tag;
-    public float CoolTime = 10;   
+    public float CoolTime = 10;
+    public int amount = 1;
+
+    public void Copy(Items other)
+    {
+        other.item_name = item_name;
+        other.Item_No = Item_No;
+        other.breakable = breakable;
+        other.price = price;
+        other.item_info = item_info;
+        other.tag = tag;
+        other.CoolTime = CoolTime;
+        other.amount = amount;
+    }
 
     public virtual void update()
     {
@@ -25,80 +37,5 @@ public  class Items :ScriptableObject
 
     }
 
-
-}
-
-[CreateAssetMenu(fileName = "Item_Consum", menuName = "Item_Consum")]
-public class Item_Consum : Items
-{
-    public Buff buff;
-    public bool is_Available=true;
-    public int value;
-    public bool is_Damage = false;
-    public override void Use(Character user)
-    {
-
-        Debug.Log(user.name+"가"+this.name+" 아이템 사용");
-        if (buff!=null)
-        {
-            user.buff.Add(buff);
-            user.buffTimers.Add(buff.duration);
-        }
-        if (is_Damage)
-            user.target.Take_Damage(value);
-        else
-            user.Take_Heal(value);
-
-        this.cooldown(user);
-    }
-    public override void update()
-    {
-        this.price = 0;
-        this.CoolTime = 60;
-        this.tag = "Consume";
-        this.value = 5;
-    }
-    public void cooldown(MonoBehaviour parentMonoBehaviour)
-    {
-        parentMonoBehaviour.StartCoroutine(CooldownTimeCoroutine());
-    }
-    IEnumerator CooldownTimeCoroutine()
-    {
-        float startTime = Time.deltaTime;
-        float cooltime = CoolTime;
-        while (cooltime > 0)
-        {
-            cooltime -= Time.deltaTime;
-            if (cooltime <= 0)
-            {
-                is_Available = true;
-                break;
-            }
-            yield return new WaitForFixedUpdate();
-        }
-        yield return null;
-    }
-
-}
-public class Item_Equip : Items
-{
-    public Status status;
-    public override void update()
-    {
-        this.tag = "Equip";
-    }
-    public override void Use(Character user)
-    {
-        user.Equipment.Add(this);
-    }
-
-}
-public class Item_Quest : Items
-{
-    public override void update()
-    {
-        this.tag = "Quest";
-        this.breakable = false;
-    }
 
 }

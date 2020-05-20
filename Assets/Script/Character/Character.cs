@@ -27,26 +27,27 @@ public class Character : MonoBehaviour
     float speed = 3.0f;
     private Vector3 pos = Vector3.zero;
     public Vector3 POS
-    {        
-            get { return pos; }
-            set { pos= value; }
+    {
+        get { return pos; }
+        set { pos = value; }
     }
 
 
     //케릭터 스텟    
     public Status status;
-    float attackCoolTime ;
-    float currentAttackCoolTime ;
-    
+    float attackCoolTime;
+    float currentAttackCoolTime;
+
     public List<Skills> skillbook;
+    public List<Items> Inventory;
+    public List<Item_Equip> Equipment;
+    public List<Item_Quest> QuestItems;
+
+    //케릭터 스킬
     public List<Buff> buff;
     public List<float> buffTimers;
     public List<Debuff> dbuff;
     public List<float> dbuffTimers;
-    public Skills_DB db;
-    public List<Items> Inventory ;
-    public List<Item_Equip> Equipment ;
-    public List<Item_Quest> QuestItems;
 
     //케릭터 상태
     public bool isDead = false;
@@ -78,7 +79,7 @@ public class Character : MonoBehaviour
     }
     void Start()
     {
-     }
+    }
 
 
     void Update()
@@ -86,39 +87,39 @@ public class Character : MonoBehaviour
     }
     void Ani_speed(string str)
     {
-       
+
     }
     public List<Character> Recognition(string tag, float range)
     {
         Collider[] cols = Physics.OverlapSphere(this.transform.position, range);
         List<Character> ch = new List<Character>();
-        for(int i=0;i<cols.Length;i++)
+        for (int i = 0; i < cols.Length; i++)
         {
-            if(cols[i].CompareTag(tag))
+            if (cols[i].CompareTag(tag))
             {
                 ch.Add(cols[i].GetComponent<Character>());
             }
         }
         return ch;
     }
-    public void addBuff(Buff b,float Time)
+    public void addBuff(Buff b, float Time)
     {
         buff.Add(b);
         buffTimers.Add(Time);
     }
     public void Buff_Timer()
     {
-        if(buffTimers.Count>0)
+        if (buffTimers.Count > 0)
         {
-            for(int i =0;i<buffTimers.Count;i++)
+            for (int i = 0; i < buffTimers.Count; i++)
             {
                 buffTimers[i] -= Time.deltaTime;
-                if(buffTimers[i]<=0)
+                if (buffTimers[i] <= 0)
                 {
                     //Buff b = buff[i];
                     buff.RemoveAt(i);
                     buffTimers.RemoveAt(i);
-                    
+
                 }
             }
         }
@@ -126,17 +127,17 @@ public class Character : MonoBehaviour
     public void Get_Status(Status st1, Status st)
     {
 
-        st1.StrName= st.StrName;
-        st1.Range=st.Range;
+        st1.StrName = st.StrName;
+        st1.Range = st.Range;
         st1.Armor = st.Armor;
-        st1.Max_HP=st.Max_HP;
-        st1.Max_MP=st.Max_MP;
-        st1.HP=st.HP;
-        st1.MP=st.MP;
+        st1.Max_HP = st.Max_HP;
+        st1.Max_MP = st.Max_MP;
+        st1.HP = st.HP;
+        st1.MP = st.MP;
         st1.AttackDamage = st.AttackDamage;
         st1.attackSpeed = st.attackSpeed;
     }
-    public float TargetDIstance(Character obj,Character target)
+    public float TargetDIstance(Character obj, Character target)
     {
         return Vector3.Distance(obj.transform.position, target.transform.position);
     }
@@ -144,7 +145,7 @@ public class Character : MonoBehaviour
     {
         //obj.transform.position = Vector3.MoveTowards(obj.transform.position, _pos, Time.deltaTime * speed);        
         obj.Navi.SetDestination(_pos);
-    } 
+    }
     public void Rotate(Character obj, Vector3 _pos)
     {
         Vector3 targetDir = _pos - obj.transform.position;
@@ -154,7 +155,7 @@ public class Character : MonoBehaviour
         Vector3 newDir = Vector3.RotateTowards(obj.transform.forward, targetDir.normalized, Time.deltaTime * 10, 0);
         obj.transform.rotation = Quaternion.LookRotation(newDir);
     }
-    public void SetAttackSpeed(string str,  float _attackCooltime)
+    public void SetAttackSpeed(string str, float _attackCooltime)
     {
         RuntimeAnimatorController ac = this.ani.runtimeAnimatorController;
         for (int i = 0; i < ac.animationClips.Length; i++)
@@ -166,13 +167,13 @@ public class Character : MonoBehaviour
             }
         }
 
-        this.status.attackSpeed = this.status.attackSpeed* _attackCooltime;
+        this.status.attackSpeed = this.status.attackSpeed * _attackCooltime;
         attackCoolTime = 1f / status.attackSpeed;
         currentAttackCoolTime = attackCoolTime;
 
-        ani.SetFloat("AttackSpeed", status.attackSpeed);   
+        ani.SetFloat("AttackSpeed", status.attackSpeed);
 
-    }    
+    }
     public float SetWalkSpeed(string str)
     {
         RuntimeAnimatorController ac = this.ani.runtimeAnimatorController;
@@ -181,7 +182,7 @@ public class Character : MonoBehaviour
             if (ac.animationClips[i].name == str)
             {
                 return ac.animationClips[i].length;
-                
+
             }
         }
         return 0;
@@ -208,40 +209,45 @@ public class Character : MonoBehaviour
             yield return null;
         }
     }
-    
+
 
     public void Use_Skill(int num)
     {
-        if (skillbook[num].is_Active&& skillbook[num].is_Available)
+        if (skillbook[num].is_Active && skillbook[num].is_Available)
         {
-                skillbook[num].Use(this, target);                
+            skillbook[num].Use(this, target);
         }
     }
-
     public void addskill(Skills skill)
     {
-        Skills tmp = Skills.Instantiate(skill);
+        Skills tmp = new Skills();
+        skill.Copy(tmp);
         skillbook.Add(tmp);
     }
-    public void additem(Items item)
+
+    public void additem(Item_Consum item)
     {
-        Items tmp = Items.Instantiate(item);
-        switch(tmp.tag)
+        Item_Consum tmp = new Item_Consum();
+        item.Copy(tmp);
+        if (Inventory.Exists(x => x.Item_No == tmp.Item_No))
         {
-            case "Consume":
-            case "Equip":
-                Inventory.Add(tmp);
-                break;
-            case "Quest":
-                QuestItems.Add((Item_Quest)tmp);
-                break;                
+            Inventory[Inventory.FindIndex(x => x.Item_No == tmp.Item_No)].amount += tmp.amount;
+            
         }
+        Inventory.Add(tmp);
     }
-    public void Use_Item(int num)
+    public void additem(Item_Equip item)
     {
-        if (this.Inventory[num])
-        {
-            this.Inventory[num].Use(this);
-        }
+        Item_Equip tmp = new Item_Equip();
+        item.Copy(tmp);
+        Inventory.Add(tmp);
     }
+
+    public void additem(Item_Quest item)
+    {
+        Item_Quest tmp = new Item_Quest();
+        item.Copy(tmp);
+        QuestItems.Add(tmp);
+    }
+
 }

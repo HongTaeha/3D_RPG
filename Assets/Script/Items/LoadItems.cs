@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class LoadItems : MonoBehaviour
 {
-    public Items_DB db = null;
-    void Awake()
-    {
-        db = Resources.Load<Items_DB>("Items_DB");
-        if (db.item.Count == 0)
-            db.Update_DB();
+    private void Awake()
+    {        
+        Items_DB.instance.wakeup();
+
     }
     private void Start()
     {
-        db.wakeup();
-        //Destroy(this);
+        
     }
     private void Update()
     {
@@ -23,6 +20,5 @@ public class LoadItems : MonoBehaviour
 
     private void OnDestroy()
     {
-        db.Clear();
     }
 }

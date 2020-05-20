@@ -26,7 +26,7 @@ public class Enemy_Attack : StateMachineBehaviour
         }
         else
         {
-            if(enemy.skillbook[0])
+            if(enemy.skillbook[0]!=null)
             {
                 if(enemy.skillbook[0].is_Available)
                 {

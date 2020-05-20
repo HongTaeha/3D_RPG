@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Spawner : MonoBehaviour
 {
-    public GameObject _enemy;
     float dt = 0;
     string tag = "Enemy";
     string tag1 = "Enemy_1";
@@ -19,8 +18,8 @@ public class Spawner : MonoBehaviour
             GenMonster(a,tag);
         }*/
         GenMonster(lst[0],tag);
-        //GenMonster(lst[1], tag1);
-        //GenMonster(lst[2], tag2);
+        GenMonster(lst[1], tag1);
+        GenMonster(lst[2], tag2);
     }    
     void Update()
     {

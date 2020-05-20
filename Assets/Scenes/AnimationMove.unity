@@ -506,7 +506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8acc1684d75fc1499b5814488427227, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemy: {fileID: 0}
 --- !u!1001 &101490867
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1894,6 +1893,16 @@ PrefabInstance:
       propertyPath: skillbook.Array.data[0]
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7860768184530023878, guid: 18d254698d3cbe44fbbca3cfa810e368,
+        type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7860768184530023878, guid: 18d254698d3cbe44fbbca3cfa810e368,
+        type: 3}
+      propertyPath: Item_Available
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3170368409035389468, guid: 18d254698d3cbe44fbbca3cfa810e368, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 18d254698d3cbe44fbbca3cfa810e368, type: 3}
@@ -2098,7 +2107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0dde566e9e5885499a3ca8d05dd4dee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  db: {fileID: 0}
+  FileName: Skills_JSON
 --- !u!1001 &393660638
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2976,7 +2985,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e28598a2a2560c94b8be7e11569c0790, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  db: {fileID: 0}
 --- !u!1 &590866133
 GameObject:
   m_ObjectHideFlags: 0

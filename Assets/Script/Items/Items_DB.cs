@@ -1,20 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
-using System.IO;
-public class Items_DB : ScriptableObject
+
+
+public class Items_DB :SingleTon<Items_DB>
 {
-    string[] fName;
-    Object[] fObj;
     public List<Items> item = new List<Items>();
     public void Update_DB()
     {
-        Items[] instances = Resources.LoadAll<Items>("Items");
-        for (int i = 0; i < instances.Length; i++)
-        {
-            item.Add(instances[i]);
-        }
+
 
     }
     public void Print()
@@ -38,12 +32,3 @@ public class Items_DB : ScriptableObject
     }
 }
 
-
-public class ItemMenu
-{
-    [MenuItem("Assets/Create/Item Database")]
-    public static void CreateSkillDatabaseAsset()
-    {
-        ScriptableObjectUtility.CreateAsset<Items_DB>();
-    }
-}
