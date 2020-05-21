@@ -6,6 +6,8 @@ public class Enemy : Character
 {
     public Vector3 Spawn_Point = Vector3.zero;
     public bool is_returning=false;
+    
+
     public float SPAWNDISTANCE
     {
         get { return Vector3.Distance(this.transform.position, Spawn_Point); }
@@ -19,7 +21,7 @@ public class Enemy : Character
         QuestItems = new List<Item_Quest>();
         Navi = GetComponent<NavMeshAgent>();
         status = new Status();
-        skillbook = new List<Skills>();
+        skillbook = new List<Solo_skill>();
         this.tag = "Enemy";
         Status_DB.instance.status_dic.TryGetValue("Enemy", out tmp);
         this.addskill(Skills_DB.instance.skills[0]);

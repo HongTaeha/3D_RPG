@@ -3,23 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 public class Spawner : MonoBehaviour
 {
-    float dt = 0;
-    string tag = "Enemy";
-    string tag1 = "Enemy_1";
-    string tag2 = "Enemy_2";
-    List<Vector3> lst = null;
-
+    List<Vector3> lst = new List<Vector3>();
     void Start()
-    {
-        Spawn_Table.instance.Spawn_table.TryGetValue(tag, out List<Vector3> lst);
-        /*
+    {        
+        
+        Spawn_Table.instance.Spawn_table.TryGetValue("Enemy", out List<Vector3> lst);
+
         foreach (Vector3 a in lst)
         {
-            GenMonster(a,tag);
-        }*/
-        GenMonster(lst[0],tag);
-        GenMonster(lst[1], tag1);
-        GenMonster(lst[2], tag2);
+            foreach (string tag in ObjectPooler.instance.tags)
+            {
+                GenMonster(a, tag);
+            }
+        }
     }    
     void Update()
     {
@@ -31,6 +27,6 @@ public class Spawner : MonoBehaviour
         GameObject prefab = ObjectPooler.instance.Generate_Obj(tag);
         prefab.transform.Rotate(0, 180, 0);
         prefab.GetComponent<Enemy>().Spawn_Point=pos;
-        prefab.transform.position = pos;        
+        prefab.transform.position = pos;
     }
 }

@@ -5,10 +5,9 @@ using UnityEngine;
 public class ObjectPooler : MonoBehaviour
 {
     List<GameObject> _removeLst = new List<GameObject>();
-    //Multimap<string, ObjectPool> _dictObjPool = new Multimap<string, ObjectPool>();
     Dictionary<string, ObjectPool> _dictObjPool = new Dictionary<string, ObjectPool>();
     public static ObjectPooler instance = null;
-
+    public List<string> tags = new List<string>();
 
     public class ObjectPool
     {
@@ -19,6 +18,8 @@ public class ObjectPooler : MonoBehaviour
         }
         List<PoolableObject> objLst = new List<PoolableObject>();
 
+
+        
         public void AddObj(GameObject obj, int cnt)
         {
             for (int i = 0; i < cnt; i++)
@@ -31,6 +32,20 @@ public class ObjectPooler : MonoBehaviour
             }
 
         }
+
+        public List<GameObject> GetActiveObj()
+        {
+            List<GameObject> tmp = new List<GameObject>();
+            foreach (var item in objLst)
+            {
+                if (item.isActive != false)
+                {
+                    tmp.Add(item.obj);
+                }
+            }
+            return tmp;
+        }
+
         public GameObject GetObj()
         {
             GameObject ret = null;
@@ -79,42 +94,56 @@ public class ObjectPooler : MonoBehaviour
     {
 
     }
+    public void getActiveObject(out List<GameObject> list)
+    {
+        List<GameObject> lst = new List<GameObject>();
+        foreach (string tag in tags)
+        {
+            foreach(GameObject tmp in _dictObjPool[tag].GetActiveObj())
+            {
+                lst.Add(tmp);
+            }
+        }
+        list = lst;
+    }
 
     void Pooling_Obj(string tag, string path, int cnt)
     {
-        ObjectPool objPool = new ObjectPool();
-        GameObject prefab = Resources.Load(path) as GameObject;
-        objPool.AddObj(prefab, cnt);
-        _dictObjPool.Add(tag, objPool);
+        if (!tags.Contains(tag))
+        {
+            tags.Add(tag);
+            ObjectPool objPool = new ObjectPool();
+            GameObject prefab = Resources.Load(path) as GameObject;
+            objPool.AddObj(prefab, cnt);
+            _dictObjPool.Add(tag, objPool);
+        }
     }
     public GameObject Generate_Obj(string tag, string path = "")
     {
         GameObject ret = null;
-
-        if (_dictObjPool[tag] != null)
+        if (tags.Contains(tag))
         {
-            ret = _dictObjPool[tag].GetObj();
+            if (_dictObjPool[tag] != null)
+            {
+                ret = _dictObjPool[tag].GetObj();
+            }
         }
-        else
-        {
-            if (path == null && tag == null)
-                return null;
-            // ret에 path를 이용해 만든 객체를 리턴해준다. 빈 문자열은 체크해서 예외처리
-        }
-
         return ret;
     }
 
     public void ReleaseObj(GameObject obj)
     {
-
-        if (_dictObjPool.ContainsKey(obj.tag))
+        if (tags.Contains(tag))
         {
-            _dictObjPool[obj.tag].ReleaseObj(obj);
-        }
-        else
-        {
-            Destroy(obj);
+            tags.Remove(tag);
+            if (_dictObjPool.ContainsKey(obj.tag))
+            {
+                _dictObjPool[obj.tag].ReleaseObj(obj);
+            }
+            else
+            {
+                Destroy(obj);
+            }
         }
     }
     public void AddRemoveObj(GameObject obj)

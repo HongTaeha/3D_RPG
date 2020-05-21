@@ -22,9 +22,9 @@ public class Player : Character
         QuestItems = new List<Item_Quest>();
         Navi = GetComponent<NavMeshAgent>();        
         status = new Status();
-        skillbook = new List<Skills>();             
+        skillbook = new List<Solo_skill>();             
         Status_DB.instance.status_dic.TryGetValue("Player", out tmp);
-        addskill(Skills_DB.instance.skills[0]);
+        addskill((Solo_skill)Skills_DB.instance.skills[0]);
 
 
         this.skillbook[0].Icon = Resources.Load("WOW_Icon/ability_ambush", typeof(Sprite)) as Sprite;

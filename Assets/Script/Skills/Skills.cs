@@ -28,9 +28,18 @@ public class Skills
         other.is_Damage = this.is_Damage;
         other.is_Active = this.is_Active;
     }
-    public virtual void Use(Character user, Character target)
+    public void Use(Character parent)
     {
+        Debug.Log(parent.name + "가" + this.skillName + " 스킬 사용");
+        parent.StartCoroutine(Use_Skill(parent, parent.target));
+        is_Available = false;
+        this.cooldown(parent);
     }
+    public virtual IEnumerator Use_Skill(Character user, Character target)
+    {
+        yield return null;
+    }
+
     public void Awake()
     {
         is_Available = true;

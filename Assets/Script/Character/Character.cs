@@ -38,7 +38,7 @@ public class Character : MonoBehaviour
     float attackCoolTime;
     float currentAttackCoolTime;
 
-    public List<Skills> skillbook;
+    public List<Solo_skill> skillbook;
     public List<Items> Inventory;
     public List<Item_Equip> Equipment;
     public List<Item_Quest> QuestItems;
@@ -215,12 +215,12 @@ public class Character : MonoBehaviour
     {
         if (skillbook[num].is_Active && skillbook[num].is_Available)
         {
-            skillbook[num].Use(this, target);
+            skillbook[num].Use(this);
         }
     }
     public void addskill(Skills skill)
     {
-        Skills tmp = new Skills();
+        Solo_skill tmp = new Solo_skill();
         skill.Copy(tmp);
         skillbook.Add(tmp);
     }

@@ -103,23 +103,60 @@ public class PlayerController : Controller
         else
         {
             targetcontroll();
-            Movement();
-            if (player.transform.position != player.POS)
-            {
-                player.Move(player, player.POS);
-                player.Rotate(player, player.POS);
-            }
+            Movement();            
         }
 
-        if(player.status.HP<player.status.Max_HP-5)
+        if (player.transform.position != player.POS)
         {
-            if(player.Inventory.Count>0)
-            player.Use_Item(0);
+            player.Move(player, player.POS);
+            player.Rotate(player, player.POS);
+        }
+
+    }
+    void Automatic()
+    {
+        /* 1. 지역의 몬스터 리스트를 갖고 온다 
+         * 2. 몬스터별로 거리를 계산한다
+         * 3. 가까운 몬스터별로 잡으러 간다
+         * 4. 중간에 피가 떨어지면 포션을 마신다.
+         * 5. 스킬 쿨타임이 되면 바로 쓴다.*/
+        Cal_Distance();
+        /*
+        if(player.skillbook[0].is_Available&&player.Attack_Target.status.HP>player.skillbook[0].value)
+        {
+            player.Use_Skill(0);
+        }
+        */
+        if (player.status.HP < player.status.Max_HP - 5)
+        {
+            if (player.Inventory.Count > 0)
+                player.Use_Item(0);
         }
     }
 
-    void Automatic()
+    class disLst
     {
-       
+        public GameObject obj;
+        public float distance;
+    }
+    void Cal_Distance()
+    {
+        ObjectPooler.instance.getActiveObject(out List<GameObject> lst);
+        List<disLst> lst2 = new List<disLst>();
+        foreach (GameObject a in lst)
+        {
+            disLst tmp = new disLst();
+            tmp.obj = a;
+            tmp.distance = Vector3.Distance(player.transform.position, a.transform.position);
+            lst2.Add(tmp);
+
+        }
+        lst2.Sort((x, y) => x.distance.CompareTo(y.distance));
+        player.target = lst2[0].obj.GetComponent<Enemy>();
+        player.Attack_Target = player.target;
+        player.POS = player.target.transform.position;
+        if (player.target.status.HP <= 0)
+            lst2.RemoveAt(0);
+
     }
 }
