@@ -16,7 +16,7 @@ public class Items_DB :SingleTon<Items_DB>
         for (int i = 0; i < item.Count; i++)
         {
             if (item[i] != null)
-                Debug.Log(item[i].item_name);
+                Debug.Log(item[i].Item_name);
         }
     }
     public void wakeup()

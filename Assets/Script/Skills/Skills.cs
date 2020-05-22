@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 public class Skills
 {
 
@@ -15,6 +16,8 @@ public class Skills
     public bool is_Damage = true;
     public bool is_Active = true;
     public Buff buff;
+    public Image Slot;
+
 
     public void Copy(Skills other)
     {
@@ -30,10 +33,17 @@ public class Skills
     }
     public void Use(Character parent)
     {
-        Debug.Log(parent.name + "가" + this.skillName + " 스킬 사용");
-        parent.StartCoroutine(Use_Skill(parent, parent.target));
-        is_Available = false;
-        this.cooldown(parent);
+        if (parent.TargetDIstance(parent, parent.target) > parent.status.Range)
+        {
+            Debug.Log("대상이 너무 멀리 있습니다.");
+        }
+        else
+        {
+            Debug.Log(parent.name + "가" + this.skillName + " 스킬 사용");
+            parent.StartCoroutine(Use_Skill(parent, parent.target));
+            is_Available = false;
+            this.cooldown(parent);
+        }
     }
     public virtual IEnumerator Use_Skill(Character user, Character target)
     {
@@ -55,6 +65,8 @@ public class Skills
         while (cooltime > 0)
         {
             cooltime -= Time.deltaTime;
+            if (Slot != null)
+                Slot.fillAmount = 1 - (cooltime / CoolTime);
             if (cooltime <= 0)
             {
                 is_Available = true;

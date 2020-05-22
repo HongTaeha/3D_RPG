@@ -7,7 +7,6 @@ public class ObjectPooler : MonoBehaviour
     List<GameObject> _removeLst = new List<GameObject>();
     Dictionary<string, ObjectPool> _dictObjPool = new Dictionary<string, ObjectPool>();
     public static ObjectPooler instance = null;
-    public List<string> tags = new List<string>();
 
     public class ObjectPool
     {
@@ -82,8 +81,8 @@ public class ObjectPooler : MonoBehaviour
     {
         instance = this;
         Pooling_Obj("Enemy", "Prefab/Polygonal Metalon Green", 3);
-        Pooling_Obj("Enemy_1", "Prefab/Polygonal Metalon Purple", 3);
-        Pooling_Obj("Enemy_2", "Prefab/Polygonal Metalon Red", 3);
+        Pooling_Obj("Enemy", "Prefab/Polygonal Metalon Purple", 3);
+        Pooling_Obj("Enemy", "Prefab/Polygonal Metalon Red", 3);
     }
     void Start()
     {
@@ -94,48 +93,44 @@ public class ObjectPooler : MonoBehaviour
     {
 
     }
-    public void getActiveObject(out List<GameObject> list)
+    public void getActiveObject(string tag, out List<GameObject> list)
     {
         List<GameObject> lst = new List<GameObject>();
-        foreach (string tag in tags)
+        foreach (GameObject tmp in _dictObjPool[tag].GetActiveObj())
         {
-            foreach(GameObject tmp in _dictObjPool[tag].GetActiveObj())
-            {
-                lst.Add(tmp);
-            }
-        }
+            lst.Add(tmp);
+        }        
         list = lst;
     }
 
     void Pooling_Obj(string tag, string path, int cnt)
     {
-        if (!tags.Contains(tag))
+        ObjectPool objPool = new ObjectPool();
+        GameObject prefab = Resources.Load(path) as GameObject;
+
+
+        if (!_dictObjPool.ContainsKey(tag))
         {
-            tags.Add(tag);
-            ObjectPool objPool = new ObjectPool();
-            GameObject prefab = Resources.Load(path) as GameObject;
             objPool.AddObj(prefab, cnt);
             _dictObjPool.Add(tag, objPool);
         }
+        else
+            _dictObjPool[tag].AddObj(prefab, cnt);
+        
     }
     public GameObject Generate_Obj(string tag, string path = "")
     {
         GameObject ret = null;
-        if (tags.Contains(tag))
+        if (_dictObjPool[tag] != null)
         {
-            if (_dictObjPool[tag] != null)
-            {
-                ret = _dictObjPool[tag].GetObj();
-            }
-        }
+            ret = _dictObjPool[tag].GetObj();
+        }       
         return ret;
     }
 
     public void ReleaseObj(GameObject obj)
     {
-        if (tags.Contains(tag))
-        {
-            tags.Remove(tag);
+            
             if (_dictObjPool.ContainsKey(obj.tag))
             {
                 _dictObjPool[obj.tag].ReleaseObj(obj);
@@ -144,7 +139,7 @@ public class ObjectPooler : MonoBehaviour
             {
                 Destroy(obj);
             }
-        }
+        
     }
     public void AddRemoveObj(GameObject obj)
     {

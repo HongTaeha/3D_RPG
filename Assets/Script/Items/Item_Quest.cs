@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Item_Quest : Items
 {
-    public override void update()
+    public override IEnumerator Use_Item(Character user)
     {
-        this.tag = "Quest";
-        this.breakable = false;
+        yield return null;
     }
 
 }

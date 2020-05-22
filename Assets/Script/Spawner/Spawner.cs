@@ -11,11 +11,11 @@ public class Spawner : MonoBehaviour
 
         foreach (Vector3 a in lst)
         {
-            foreach (string tag in ObjectPooler.instance.tags)
-            {
-                GenMonster(a, tag);
-            }
+            GenMonster(a, "Enemy");
+            GenMonster(a, "Enemy");
+            GenMonster(a, "Enemy");
         }
+       
     }    
     void Update()
     {

@@ -25,7 +25,7 @@ public class Player : Character
         skillbook = new List<Solo_skill>();             
         Status_DB.instance.status_dic.TryGetValue("Player", out tmp);
         addskill((Solo_skill)Skills_DB.instance.skills[0]);
-
+        additem((Item_Consum)Items_DB.instance.item[0]);
 
         this.skillbook[0].Icon = Resources.Load("WOW_Icon/ability_ambush", typeof(Sprite)) as Sprite;
 
@@ -36,7 +36,8 @@ public class Player : Character
         SetAttackSpeed("Attack1", 1);
         ani.SetFloat("WalkSpeed",SetWalkSpeed("Walk"));
         Navi.speed = 3.0f;
-        
+        Debug.Log(this.Inventory.Count);
+        Debug.Log(this.skillbook.Count);
     }
 
 
@@ -65,7 +66,7 @@ public class Player : Character
     }
     public void HitEvent()
     {
-        if (this.Attack_Target)
+        if (this.Attack_Target&&this.TargetDIstance(this,this.Attack_Target)<this.status.Range)
         {
             Attack_Target.Take_Damage(this.status.AttackDamage);
         }
@@ -74,24 +75,24 @@ public class Player : Character
     public void Use_Item(int num)
     {
 
-        if (this.Inventory[num]!=null && Item_Available)
+        if (Item_Available)
         {
-            this.Inventory[num].Use(this);
-            if (this.Inventory[num].tag == "Consume")
+            if (Inventory.Exists(x => x.Item_No == num))
             {
-                Item_cooldown = this.Inventory[num].CoolTime;
-                Inventory[num].amount -= 1;
-                if (Inventory[num].amount < 1)
+                this.Inventory[num].Use(this);
+                if (this.Inventory[num].Tag == "Consume")
                 {
-                    this.Inventory.RemoveAt(num);
-                    this.Inventory.Clear();
+                    Item_cooldown = this.Inventory[num].CoolTime;
+                    Inventory[num].Amount -= 1;
+                    if (Inventory[num].Amount < 1)
+                    {
+                        this.Inventory.RemoveAt(num);
+                        this.Inventory.Clear();
+                    }
+                    Item_Available = false;
+                    cooldown(this);
                 }
-                Item_Available = false;
-                cooldown(this);
             }
-
-
-
         }
     }
     public void cooldown(MonoBehaviour parentMonoBehaviour)

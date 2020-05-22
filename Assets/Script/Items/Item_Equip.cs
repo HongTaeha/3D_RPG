@@ -5,13 +5,9 @@ using UnityEngine;
 public class Item_Equip : Items
 {
     public Status status;
-    public override void update()
+    public override IEnumerator Use_Item(Character user)
     {
-        this.tag = "Equip";
-    }
-    public override void Use(Character user)
-    {
-        user.Equipment.Add(this);
+        yield return null;
     }
 
 }

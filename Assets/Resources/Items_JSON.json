@@ -1,0 +1,13 @@
+{
+	"1" : {
+		"Item_name" : "Potion",
+		"Item_No" : "0",
+		"is_Breakable" : false,
+		"Price" : "0",
+		"Item_info" : "체력 회복용 포션",
+		"Tag" : "Potion",
+		"CoolTime" : "5",
+		"Amount" : "5",
+		"is_Active" : true	          
+	}
+}

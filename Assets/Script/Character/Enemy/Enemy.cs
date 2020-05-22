@@ -60,7 +60,10 @@ public class Enemy : Character
     }
     void DieEvent()
     {
-        Destroy(ani.gameObject);
+        
+        //ObjectPooler.instance.AddRemoveObj(ani.gameObject);
+        ObjectPooler.instance.ReleaseObj(ani.gameObject);
+        //Destroy(ani.gameObject);
     }
 
   

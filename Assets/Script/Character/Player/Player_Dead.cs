@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy_Dead : StateMachineBehaviour
+public class Player_Dead : StateMachineBehaviour
 {
-    Enemy enemy;
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    Player player;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (enemy == null)
+        if (player == null)
         {
-            enemy = animator.GetComponent<Enemy>();
+            player = animator.GetComponent<Player>();
         }
-        enemy.Navi.isStopped = true;
     }
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //player.Navi.isStopped = true;
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

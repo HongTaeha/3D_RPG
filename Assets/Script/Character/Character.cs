@@ -58,7 +58,6 @@ public class Character : MonoBehaviour
         if (dmg < 0)
             dmg = 0;
         this.status.HP -= total_dmg;
-
     }
     public void Take_Heal(float heal)
     {
@@ -209,8 +208,6 @@ public class Character : MonoBehaviour
             yield return null;
         }
     }
-
-
     public void Use_Skill(int num)
     {
         if (skillbook[num].is_Active && skillbook[num].is_Available)
@@ -224,14 +221,13 @@ public class Character : MonoBehaviour
         skill.Copy(tmp);
         skillbook.Add(tmp);
     }
-
     public void additem(Item_Consum item)
     {
         Item_Consum tmp = new Item_Consum();
         item.Copy(tmp);
         if (Inventory.Exists(x => x.Item_No == tmp.Item_No))
         {
-            Inventory[Inventory.FindIndex(x => x.Item_No == tmp.Item_No)].amount += tmp.amount;
+            Inventory[Inventory.FindIndex(x => x.Item_No == tmp.Item_No)].Amount += tmp.Amount;
             
         }
         Inventory.Add(tmp);
@@ -242,7 +238,6 @@ public class Character : MonoBehaviour
         item.Copy(tmp);
         Inventory.Add(tmp);
     }
-
     public void additem(Item_Quest item)
     {
         Item_Quest tmp = new Item_Quest();

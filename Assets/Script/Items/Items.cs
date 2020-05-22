@@ -3,38 +3,62 @@ using System.Collections.Generic;
 using UnityEngine;
 public  class Items
 {
-    public string item_name;
+    public string Item_name;
     public int Item_No;
-    public bool breakable = true;
-    public int price;
-    public string item_info;
-    public string tag;
+    public bool is_Breakable = true;
+    public int Price;
+    public string Item_info;
+    public string Tag;
     public float CoolTime = 10;
-    public int amount = 1;
-
+    public int Amount = 1;
+    public bool is_Available = true;
     public void Copy(Items other)
     {
-        other.item_name = item_name;
+        other.Item_name = Item_name;
         other.Item_No = Item_No;
-        other.breakable = breakable;
-        other.price = price;
-        other.item_info = item_info;
-        other.tag = tag;
+        other.is_Breakable = is_Breakable;
+        other.Price = Price;
+        other.Item_info = Item_info;
+        other.Tag = Tag;
         other.CoolTime = CoolTime;
-        other.amount = amount;
+        other.Amount = Amount;
+
     }
 
-    public virtual void update()
+    public void Use(Character parent)
     {
-
+        Debug.Log(parent.name + "가 " + this.Item_name + " 아이템 사용 "+(this.Amount-1)+"개 남음");
+        parent.StartCoroutine(Use_Item(parent));
+        is_Available = false;
     }
+    public virtual IEnumerator Use_Item(Character user)
+    {
+        yield return null;
+    }
+
     public void Awake()
     {
-        this.update();
+        is_Available = true;
     }
-    public virtual void Use(Character user)
+    public void cooldown(MonoBehaviour parentMonoBehaviour)
     {
-
+        parentMonoBehaviour.StartCoroutine(CooldownTimeCoroutine());
+    }
+    IEnumerator CooldownTimeCoroutine()
+    {
+        float startTime = Time.deltaTime;
+        float cooltime = CoolTime;
+        while (cooltime > 0)
+        {
+            cooltime -= Time.deltaTime;
+            if (cooltime <= 0)
+            {
+                is_Available = true;
+                break;
+            }
+            yield return new WaitForFixedUpdate();
+        }
+        yield return null;
     }
 
 

@@ -10,7 +10,6 @@ public class UIController : Controller
     public Image T_ICON;
     public Image T_HP;
     public Image T_MP;
-
     public Image Player_status;
     public Image HP;
     public Image MP;
@@ -19,10 +18,7 @@ public class UIController : Controller
 
     [SerializeField]
     private Button[] skillslot;
-    float cooltime;
-    Image slot1,slot2,slot3;
-
-   
+    Image slot1,slot2,slot3;   
 
     void UI_Target()
     {
@@ -59,49 +55,26 @@ public class UIController : Controller
         mp.text = string.Format("MP {0}/{1}", player.status.MP,player.status.Max_MP);             
         
     }
-
     void UI_SkillSlot()
     {
         
         if (Input.GetKeyDown(KeyCode.Alpha1)&&player.skillbook[0].is_Available)
         {
-            ButtonOnClick(0);
-            StartCoroutine(CoolTime(slot1, player.skillbook[0].CoolTime));
-            
+            ButtonOnClick(0);            
         }
         if (Input.GetKeyDown(KeyCode.Alpha2) && player.skillbook[1].is_Available)
         {
             ButtonOnClick(1);
-            StartCoroutine(CoolTime(slot2, player.skillbook[1].CoolTime));
         }
         if (Input.GetKeyDown(KeyCode.Alpha3) && player.skillbook[2].is_Available)
         {
             ButtonOnClick(2);
-            StartCoroutine(CoolTime(slot3, player.skillbook[2].CoolTime));
         }
-    }
-    
+    }    
     private void ButtonOnClick(int btn)
     {
         skillslot[btn].onClick.Invoke();
     }
-    IEnumerator CoolTime(Image btn,float cool)
-    {
-        cooltime = cool;
-        while(cool>0.0f)
-        {
-            cooltime -= Time.deltaTime;
-            btn.fillAmount = 1-(cooltime/cool);
-            if (cooltime <= 0)
-            {
-                break;
-            }
-            yield return new WaitForFixedUpdate();
-        }
-
-        yield return null;
-    }
-
     void Toggled()
     {
         if(T_Auto.isOn)
@@ -111,11 +84,20 @@ public class UIController : Controller
         else
             player.is_Automatic = false;
     }
+    void Inventory()
+    {
+        
+    }
+    void Equipment()
+    {
+
+    }
 
     void Start()
     {
 
         slot1 = skillslot[0].image;
+        player.skillbook[0].Slot = skillslot[0].image;
         //slot2 = skillslot[1].image;
         //slot3 = skillslot[2].image;
 
@@ -129,5 +111,10 @@ public class UIController : Controller
         UI_Status();
         UI_SkillSlot();
         Toggled();
+        if (Input.GetKeyDown(KeyCode.I))
+            Inventory();
+
+        if (Input.GetKeyDown(KeyCode.E))
+            Equipment();
     }
 }

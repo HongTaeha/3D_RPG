@@ -121,16 +121,28 @@ public class PlayerController : Controller
          * 4. 중간에 피가 떨어지면 포션을 마신다.
          * 5. 스킬 쿨타임이 되면 바로 쓴다.*/
         Cal_Distance();
-        /*
-        if(player.skillbook[0].is_Available&&player.Attack_Target.status.HP>player.skillbook[0].value)
+        if (player.target != null)
         {
-            player.Use_Skill(0);
-        }
-        */
-        if (player.status.HP < player.status.Max_HP - 5)
-        {
-            if (player.Inventory.Count > 0)
-                player.Use_Item(0);
+            if (!player.target.isActiveAndEnabled)
+            {
+                player.target = null;
+            }
+            else
+            {
+                if(player.TargetDIstance(player,player.target)<player.status.Range)
+                if (player.skillbook.Count > 0)
+                {
+                    if (player.target != null)
+                        if (player.Attack_Target.status.HP > player.skillbook[0].value)
+                            player.Use_Skill(0);
+                }
+                if (player.status.HP < player.status.Max_HP - 5)
+                {
+                    if (player.Inventory.Count > 0)
+                        player.Use_Item(0);
+                }
+            }
+
         }
     }
 
@@ -141,22 +153,28 @@ public class PlayerController : Controller
     }
     void Cal_Distance()
     {
-        ObjectPooler.instance.getActiveObject(out List<GameObject> lst);
-        List<disLst> lst2 = new List<disLst>();
-        foreach (GameObject a in lst)
-        {
-            disLst tmp = new disLst();
-            tmp.obj = a;
-            tmp.distance = Vector3.Distance(player.transform.position, a.transform.position);
-            lst2.Add(tmp);
+        ObjectPooler.instance.getActiveObject("Enemy",out List<GameObject> activeobj);
+        List<disLst> lst = new List<disLst>();
 
-        }
-        lst2.Sort((x, y) => x.distance.CompareTo(y.distance));
-        player.target = lst2[0].obj.GetComponent<Enemy>();
-        player.Attack_Target = player.target;
-        player.POS = player.target.transform.position;
-        if (player.target.status.HP <= 0)
-            lst2.RemoveAt(0);
-
+        
+            foreach (GameObject a in activeobj)
+            {
+                disLst tmp = new disLst();
+                tmp.obj = a;
+                tmp.distance = Vector3.Distance(player.transform.position, a.transform.position);
+                lst.Add(tmp);
+            }
+            lst.Sort((x, y) => x.distance.CompareTo(y.distance));
+            if (lst.Count == 0)
+            {
+                Debug.Log("자동사냥 끝");
+                player.is_Automatic = false;
+            }
+            else
+            {
+                player.target = lst[0].obj.GetComponent<Enemy>();
+                player.Attack_Target = player.target;
+                player.POS = player.target.transform.position;
+            }
     }
 }
