@@ -8,13 +8,12 @@ public class LoadItems : MonoBehaviour
     public string FileName;
     void Awake()
     {
-        Skills_DB.instance.wakeup();
         TextAsset txtAsset = Resources.Load<TextAsset>(FileName);
         JSONNode root = JSON.Parse(txtAsset.text);
         JSONNode N1 = root[0];
         for (int i = 0; i < root.Count; i++)
         {
-            Item_Consum tmp = new Item_Consum();
+            Item_Consume tmp = new Item_Consume();
             JSONNode N = root[i];
             tmp.Item_name = N["Item_name"];
             tmp.Item_No = N["Item_No"];
@@ -27,5 +26,6 @@ public class LoadItems : MonoBehaviour
             Items_DB.instance.item.Add(tmp);
 
         }
+        Items_DB.instance.wakeup();
     }
 }

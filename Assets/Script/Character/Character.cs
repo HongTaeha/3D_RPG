@@ -221,9 +221,9 @@ public class Character : MonoBehaviour
         skill.Copy(tmp);
         skillbook.Add(tmp);
     }
-    public void additem(Item_Consum item)
+    public void additem(Item_Consume item)
     {
-        Item_Consum tmp = new Item_Consum();
+        Item_Consume tmp = new Item_Consume();
         item.Copy(tmp);
         if (Inventory.Exists(x => x.Item_No == tmp.Item_No))
         {

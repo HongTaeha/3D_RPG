@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 public  class Items
 {
     public string Item_name;
@@ -12,6 +13,9 @@ public  class Items
     public float CoolTime = 10;
     public int Amount = 1;
     public bool is_Available = true;
+    public Sprite icon;
+
+
     public void Copy(Items other)
     {
         other.Item_name = Item_name;
@@ -39,6 +43,7 @@ public  class Items
     public void Awake()
     {
         is_Available = true;
+        this.icon = Resources.Load<Sprite>("UI/Untitled");
     }
     public void cooldown(MonoBehaviour parentMonoBehaviour)
     {

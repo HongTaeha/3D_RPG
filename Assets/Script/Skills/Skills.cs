@@ -21,6 +21,7 @@ public class Skills
 
     public void Copy(Skills other)
     {
+        
         other.skillName = this.skillName;
         other.CoolTime = this.CoolTime;
         other.mpCost = this.mpCost;

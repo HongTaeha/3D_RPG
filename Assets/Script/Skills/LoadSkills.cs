@@ -9,7 +9,6 @@ public class LoadSkills : MonoBehaviour
     public string FileName;
     void Awake()
     {
-        Skills_DB.instance.wakeup();
         TextAsset txtAsset = Resources.Load<TextAsset>(FileName);
         JSONNode root = JSON.Parse(txtAsset.text);
         JSONNode N1 = root[0];
@@ -29,6 +28,7 @@ public class LoadSkills : MonoBehaviour
             Skills_DB.instance.skills.Add(tmp);
 
         }
+        Skills_DB.instance.wakeup();
     }
     private void Start()
     {

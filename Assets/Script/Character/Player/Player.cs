@@ -25,7 +25,7 @@ public class Player : Character
         skillbook = new List<Solo_skill>();             
         Status_DB.instance.status_dic.TryGetValue("Player", out tmp);
         addskill((Solo_skill)Skills_DB.instance.skills[0]);
-        additem((Item_Consum)Items_DB.instance.item[0]);
+        additem((Item_Consume)Items_DB.instance.item[0]);
 
         this.skillbook[0].Icon = Resources.Load("WOW_Icon/ability_ambush", typeof(Sprite)) as Sprite;
 
@@ -36,8 +36,6 @@ public class Player : Character
         SetAttackSpeed("Attack1", 1);
         ani.SetFloat("WalkSpeed",SetWalkSpeed("Walk"));
         Navi.speed = 3.0f;
-        Debug.Log(this.Inventory.Count);
-        Debug.Log(this.skillbook.Count);
     }
 
 
