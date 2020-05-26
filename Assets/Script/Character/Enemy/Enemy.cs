@@ -16,9 +16,7 @@ public class Enemy : Character
     void Start()
     {
 
-        Inventory = new List<Items>();
-        Equipment = new List<Item_Equip>();
-        QuestItems = new List<Item_Quest>();
+        inven = new Inventory();       
         Navi = GetComponent<NavMeshAgent>();
         status = new Status();
         skillbook = new List<Solo_skill>();

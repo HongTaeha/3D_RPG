@@ -14,19 +14,21 @@ public class Player : Character
 
     Status tmp;
     public Character Attack_Target = null;
-    public bool is_Automatic = false;    
-    void Start()
+    public bool is_Automatic = false;
+    private void Awake()
     {
-        Inventory = new List<Items>();
-        Equipment = new List<Item_Equip>();
-        QuestItems = new List<Item_Quest>();
-        Navi = GetComponent<NavMeshAgent>();        
+        inven = new Inventory();
+        Navi = GetComponent<NavMeshAgent>();
         status = new Status();
-        skillbook = new List<Solo_skill>();             
+        skillbook = new List<Solo_skill>();
         Status_DB.instance.status_dic.TryGetValue("Player", out tmp);
         addskill((Solo_skill)Skills_DB.instance.skills[0]);
-        additem((Item_Consume)Items_DB.instance.item[0]);
-
+        inven.Additem((Item_Consume)Items_DB.instance.item[0]);
+    }
+    void Start()
+    {
+       
+      
         this.skillbook[0].Icon = Resources.Load("WOW_Icon/ability_ambush", typeof(Sprite)) as Sprite;
 
         Get_Status(this.status, tmp);
@@ -71,24 +73,26 @@ public class Player : Character
     }
 
     public void Use_Item(int num)
-    {
-
+    {        
         if (Item_Available)
         {
-            if (Inventory.Exists(x => x.Item_No == num))
+            if (inven.Exists(num)&&inven.Is_consume(num))
             {
-                this.Inventory[num].Use(this);
-                if (this.Inventory[num].Tag == "Consume")
+                //inven.Inven[num].con.Use(this);
+                if (inven.Is_consume(num)) //소비템일때
                 {
-                    Item_cooldown = this.Inventory[num].CoolTime;
-                    Inventory[num].Amount -= 1;
-                    if (Inventory[num].Amount < 1)
+                    Item_cooldown = inven.Inven[num].con.CoolTime;
+                    inven.Inven[num].con.Amount -= 1;
+                    if (inven.Inven[num].con.Amount < 1)
                     {
-                        this.Inventory.RemoveAt(num);
-                        this.Inventory.Clear();
+                        inven.Removeitem(inven.Inven[num]);
                     }
                     Item_Available = false;
                     cooldown(this);
+                }
+                else //장비템일때
+                {
+
                 }
             }
         }

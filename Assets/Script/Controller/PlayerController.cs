@@ -138,7 +138,7 @@ public class PlayerController : Controller
                 }
                 if (player.status.HP < player.status.Max_HP - 5)
                 {
-                    if (player.Inventory.Count > 0)
+                    if (player.inven.Count>0)
                         player.Use_Item(0);
                 }
             }

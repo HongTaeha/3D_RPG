@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class Slots : MonoBehaviour
 {
-    private Rect rc;
-    public Rect RECT { get { return rc; } }
-    private RectTransform tr;
+    private Rect rect;
+    public Rect RECT { get { return rect; } }
+    private RectTransform rt;
     public Image Icon;
     public Player player;
-    int slot_num;
+    int slot_num=-2;
     public string ICONNAME
     {
         get
@@ -18,14 +18,24 @@ public class Slots : MonoBehaviour
             return Icon.sprite.name;
         }
     }
-
+    public int SLOTNUM
+    {
+        get
+        {
+            if (slot_num == -2)
+            {
+                string[] parse = this.name.Split('_');
+                if (parse[1] == "empty")
+                    slot_num = -1;
+                else
+                    slot_num = int.Parse(parse[1]);
+            }
+            return slot_num;
+        }
+    }
     public Sprite ICON
     {
-        // sprite는 메모리상에 있는 sprite이어야만 한다.
-        // 주의) 화면상의 게임오브젝트를 복사하는 것이 아니라 
-        // 메모리상(Resources.Load함수를 이용해서 로드한)의 리소스를 대입해야 한다.
         set { Icon.sprite = value; }
-
     }
 
     public GameObject ICONGAMEOBJECT
@@ -33,30 +43,28 @@ public class Slots : MonoBehaviour
         get { return Icon.gameObject; }
     }
 
+    private void Awake()
+    {
+        Icon = GetComponentInChildren<Image>();
+    }
     void Start()
     {
-        tr = GetComponent<RectTransform>();
+        rt = GetComponent<RectTransform>();
         // rc.x = tr.position.x - sizeDelta.x / 2;
-        rc.x = tr.position.x - tr.rect.width / 2;
-        rc.y = tr.position.y + tr.rect.height / 2;
-        rc.xMax = tr.rect.width;
-        rc.yMax = tr.rect.height;
-        rc.width = tr.rect.width;
-        rc.height = tr.rect.height;
+        rect.x = rt.position.x - rt.rect.width / 2;
+        rect.y = rt.position.y + rt.rect.height / 2;
+        rect.xMax = rt.rect.width;
+        rect.yMax = rt.rect.height;
+        rect.width = rt.rect.width;
+        rect.height = rt.rect.height;
 
-        
-
-        string[] parse = this.name.Split('_');
-        if (parse[1] == "empty")
-            slot_num = -1;
-        else
-            slot_num = int.Parse(parse[1]);
-        Debug.Log(player.Inventory.Count);
-        if(player.Inventory.Count>0)
+        Debug.Log(player.inven.Count);
+        /*
+        if(player.inven.Count>= SLOTNUM + 1)
         {
-            ICON = player.Inventory[slot_num].icon;
-        }
-
+            if(player.inven.Exists(SLOTNUM))
+            ICON = player.inven.Inven[SLOTNUM].con.ICON;
+        }*/
     }
 
     public void OffIcon()
@@ -69,13 +77,13 @@ public class Slots : MonoBehaviour
         Icon.gameObject.SetActive(true);
     }
 
-    public bool IsInRect(Vector2 uipos)
+    public bool IsInRect(Vector2 pos)
     {
         // 자신의 rect 영역안에 있다면 
-        if (uipos.x >= rc.x &&
-            uipos.x <= rc.x + rc.width &&
-            uipos.y >= rc.y - rc.height &&
-            uipos.y <= rc.y)
+        if (pos.x >= rect.x &&
+            pos.x <= rect.x + rect.width &&
+            pos.y >= rect.y - rect.height &&
+            pos.y <= rect.y)
         {
             return true;
         }

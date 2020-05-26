@@ -13,7 +13,14 @@ public  class Items
     public float CoolTime = 10;
     public int Amount = 1;
     public bool is_Available = true;
-    public Sprite icon;
+    protected Sprite icon;
+    public Sprite ICON
+    {
+        get
+        {
+            return icon;
+        }
+    }
 
 
     public void Copy(Items other)
@@ -26,6 +33,7 @@ public  class Items
         other.Tag = Tag;
         other.CoolTime = CoolTime;
         other.Amount = Amount;
+        other.icon = icon;
 
     }
 
@@ -40,11 +48,11 @@ public  class Items
         yield return null;
     }
 
-    public void Awake()
+    public virtual void Awake()
     {
-        is_Available = true;
-        this.icon = Resources.Load<Sprite>("UI/Untitled");
+       
     }
+
     public void cooldown(MonoBehaviour parentMonoBehaviour)
     {
         parentMonoBehaviour.StartCoroutine(CooldownTimeCoroutine());

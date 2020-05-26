@@ -38,10 +38,6 @@ public class Character : MonoBehaviour
     float attackCoolTime;
     float currentAttackCoolTime;
 
-    public List<Solo_skill> skillbook;
-    public List<Items> Inventory;
-    public List<Item_Equip> Equipment;
-    public List<Item_Quest> QuestItems;
 
     //케릭터 스킬
     public List<Buff> buff;
@@ -76,6 +72,11 @@ public class Character : MonoBehaviour
         }
 
     }
+
+    public List<Solo_skill> skillbook;
+    public Inventory inven;
+
+   
     void Start()
     {
     }
@@ -83,6 +84,107 @@ public class Character : MonoBehaviour
 
     void Update()
     {
+    }
+    public class Inventory
+    {
+        public class Item
+        {
+            public int num;
+            public Item_Consume con;
+            public Item_Equip equip;
+            void allocate()
+            {
+                con = new Item_Consume();
+            }
+        }
+        public List<Item> Inven;
+        List<Item_Quest> QuestItems = new List<Item_Quest>();
+        public int Count
+        {
+            get { return Inven.Count; }
+        }
+
+        public void sortInven()
+        {
+            Inven.Sort((x, y) => x.num.CompareTo(y.num));
+        }
+        public void allocate(Items item)
+        {
+            Item tmp = new Item();
+            if(item.Tag=="Consume")
+            tmp.con = new Item_Consume();
+            else
+            tmp.equip = new Item_Equip();
+        }
+        public void Additem(Item_Consume item)
+        {
+            Item tmp;
+
+            item.Copy(tmp.con);
+            sortInven();
+            tmp.num = Inven.Count + 1;
+            Inven.Add(tmp);
+
+        }
+        public void Additem(Item_Equip item)
+        {
+            Item tmp = new Item();
+            item.Copy(tmp.equip);
+            sortInven();
+            tmp.num = Inven.Count + 1;
+            Inven.Add(tmp);
+
+        }
+        public void Additem(Item_Quest item)
+        {
+            QuestItems.Add(item);
+        }
+        public void Removeitem(Item_Consume item)
+        {
+            foreach (Item t in Inven)
+            {
+                if (t.con == item)
+                    Inven.Remove(t);
+            }
+            sortInven();
+        }
+        public void Removeitem(Item_Equip item)
+        {
+            foreach (Item t in Inven)
+            {
+                if (t.equip == item)
+                    Inven.Remove(t);
+            }
+            sortInven();
+
+        }
+        public void Removeitem(Item_Quest item)
+        {
+            QuestItems.Remove(item);
+            sortInven();
+        }
+        public void Removeitem(Item item)
+        {
+            Inven.Remove(item);
+            sortInven();
+        }
+        public bool Is_consume(int num1)
+        {
+            if (Inven[num1].con != null)
+                return true;
+            else
+                return false;
+        }
+        public bool Exists(int num1)
+        {
+            sortInven();
+            if (Inven.Exists(x => x.num == num1))
+                return true;
+            else
+                return false;
+        }
+       
+
     }
     void Ani_speed(string str)
     {
@@ -221,28 +323,6 @@ public class Character : MonoBehaviour
         skill.Copy(tmp);
         skillbook.Add(tmp);
     }
-    public void additem(Item_Consume item)
-    {
-        Item_Consume tmp = new Item_Consume();
-        item.Copy(tmp);
-        if (Inventory.Exists(x => x.Item_No == tmp.Item_No))
-        {
-            Inventory[Inventory.FindIndex(x => x.Item_No == tmp.Item_No)].Amount += tmp.Amount;
-            
-        }
-        Inventory.Add(tmp);
-    }
-    public void additem(Item_Equip item)
-    {
-        Item_Equip tmp = new Item_Equip();
-        item.Copy(tmp);
-        Inventory.Add(tmp);
-    }
-    public void additem(Item_Quest item)
-    {
-        Item_Quest tmp = new Item_Quest();
-        item.Copy(tmp);
-        QuestItems.Add(tmp);
-    }
+   
 
 }
