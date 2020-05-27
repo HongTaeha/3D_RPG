@@ -16,6 +16,8 @@ public class UIController : Controller
     public Image MP;
 
     public Toggle T_Auto;
+    public GameObject Inven;
+
 
     [SerializeField]
     private Button[] skillslot;
@@ -113,9 +115,13 @@ public class UIController : Controller
         UI_SkillSlot();
         Toggled();
         if (Input.GetKeyDown(KeyCode.I))
-            Inventory();
+            if(Inven.activeSelf)
+                Inven.SetActive(false);
+            else
+                Inven.SetActive(true);
 
         if (Input.GetKeyDown(KeyCode.E))
             Equipment();
+
     }
 }

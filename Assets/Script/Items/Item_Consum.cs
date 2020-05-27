@@ -4,8 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 public class Item_Consume : Items
 {
-    public int Value=5;
-    public bool is_Damage = false;
     public override void Awake()
     {
         is_Available = true;
@@ -15,10 +13,8 @@ public class Item_Consume : Items
     }
     public void Copy(Item_Consume other)
     {
-        Copy((Items)other);
-        other.Value = Value;
-        other.is_Damage = is_Damage;
-        other.Tag = "Consume";        
+        Copy(other);
+        Tag = "Consume";        
     }
     public override IEnumerator Use_Item(Character user)
     {               

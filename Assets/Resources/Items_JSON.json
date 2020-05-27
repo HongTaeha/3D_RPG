@@ -5,9 +5,37 @@
 		"is_Breakable" : false,
 		"Price" : "0",
 		"Item_info" : "체력 회복용 포션",
-		"Tag" : "Potion",
+		"Tag" : "Consume",
 		"CoolTime" : "5",
 		"Amount" : "5",
-		"is_Active" : true	          
+		"is_Active" : true,
+		"Value" : "10",
+		"is_Damage":false
+	},
+	"2" : {
+		"Item_name" : "Potion_1",
+		"Item_No" : "0",
+		"is_Breakable" : false,
+		"Price" : "0",
+		"Item_info" : "체력 회복용 포션",
+		"Tag" : "Consume",
+		"CoolTime" : "5",
+		"Amount" : "4",
+		"is_Active" : true,
+		"Value" : "3",
+		"is_Damage":false
+	},
+	"3" : {
+		"Item_name" : "Potion_2",
+		"Item_No" : "0",
+		"is_Breakable" : false,
+		"Price" : "0",
+		"Item_info" : "체력 회복용 포션",
+		"Tag" : "Consume",
+		"CoolTime" : "5",
+		"Amount" : "3",
+		"is_Active" : true,
+		"Value" : "2",
+		"is_Damage":false
 	}
 }

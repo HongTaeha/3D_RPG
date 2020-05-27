@@ -11,6 +11,7 @@ public class Slots : MonoBehaviour
     public Image Icon;
     public Player player;
     int slot_num=-2;
+    public Text text;
     public string ICONNAME
     {
         get
@@ -45,7 +46,7 @@ public class Slots : MonoBehaviour
 
     private void Awake()
     {
-        Icon = GetComponentInChildren<Image>();
+        //Icon = GetComponentInChildren<Image>();
     }
     void Start()
     {
@@ -57,24 +58,28 @@ public class Slots : MonoBehaviour
         rect.yMax = rt.rect.height;
         rect.width = rt.rect.width;
         rect.height = rt.rect.height;
-
-        Debug.Log(player.inven.Count);
-        /*
-        if(player.inven.Count>= SLOTNUM + 1)
+        
+        
+        if(player.inven.Count>= SLOTNUM)
         {
-            if(player.inven.Exists(SLOTNUM))
-            ICON = player.inven.Inven[SLOTNUM].con.ICON;
-        }*/
+            if (player.inven.Exists(SLOTNUM))
+            {
+                ICON = player.inven.Inven[SLOTNUM].con.ICON;
+                OnIcon();
+            }
+        }
     }
 
     public void OffIcon()
     {
         Icon.gameObject.SetActive(false);
+        text.gameObject.SetActive(false);
     }
 
     public void OnIcon()
     {
         Icon.gameObject.SetActive(true);
+        text.gameObject.SetActive(true);
     }
 
     public bool IsInRect(Vector2 pos)
@@ -92,6 +97,18 @@ public class Slots : MonoBehaviour
 
     void Update()
     {
+        if (player.inven.Exists(SLOTNUM))
+        {
+            if (Icon.isActiveAndEnabled)
+            {
+                text.text = player.inven.Inven[SLOTNUM].con.Amount.ToString();
+            }
+        }
+        else
+        {
+            ICON = null;
+            OffIcon();
+        }
 
     }
 }

@@ -14,6 +14,10 @@ public  class Items
     public int Amount = 1;
     public bool is_Available = true;
     protected Sprite icon;
+    public int Value = 5;
+    public bool is_Damage = false;
+
+
     public Sprite ICON
     {
         get
@@ -25,15 +29,17 @@ public  class Items
 
     public void Copy(Items other)
     {
-        other.Item_name = Item_name;
-        other.Item_No = Item_No;
-        other.is_Breakable = is_Breakable;
-        other.Price = Price;
-        other.Item_info = Item_info;
-        other.Tag = Tag;
-        other.CoolTime = CoolTime;
-        other.Amount = Amount;
-        other.icon = icon;
+        Item_name= other.Item_name ;
+        Item_No = other.Item_No ;
+        is_Breakable=other.is_Breakable ;
+        Price=other.Price;
+        Item_info =other.Item_info;
+        Tag=other.Tag ;
+        CoolTime=other.CoolTime;
+        Amount=other.Amount;
+        icon=other.icon;
+        Value = other.Value;
+        is_Damage = other.is_Damage;
 
     }
 

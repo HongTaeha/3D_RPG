@@ -57,7 +57,7 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndD
 
                 MoveIcon.gameObject.SetActive(true);
                 //MoveIcon.sprite = Resources.Load<Sprite>("Icon/" + slots[i].ICONNAME);
-                MoveIcon.sprite = player.inven.Inven[workSlot].con.ICON;
+                MoveIcon.sprite = player.inven.Inven[i].con.ICON;
                 slots[i].OffIcon();
                 workSlot = i;
                 break;

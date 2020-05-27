@@ -91,53 +91,44 @@ public class Character : MonoBehaviour
         {
             public int num;
             public Item_Consume con;
-            public Item_Equip equip;
-            void allocate()
-            {
-                con = new Item_Consume();
-            }
+            public Item_Equip equip;            
         }
-        public List<Item> Inven;
+        public List<Item> Inven = new List<Item>();
         List<Item_Quest> QuestItems = new List<Item_Quest>();
+
         public int Count
         {
             get { return Inven.Count; }
         }
-
         public void sortInven()
         {
             Inven.Sort((x, y) => x.num.CompareTo(y.num));
-        }
-        public void allocate(Items item)
+        }        
+        public void Additem<T>(T t) where T : Items,new()
         {
-            Item tmp = new Item();
-            if(item.Tag=="Consume")
-            tmp.con = new Item_Consume();
-            else
-            tmp.equip = new Item_Equip();
-        }
-        public void Additem(Item_Consume item)
-        {
-            Item tmp;
-
-            item.Copy(tmp.con);
+            switch(t.Tag)
+            {
+                case "Consume":
+                    Item tem = new Item();
+                    tem.con = new Item_Consume();
+                    tem.con.Copy(t);
+                    tem.num = Inven.Count ;
+                    Inven.Add(tem);
+                    break;
+                case "Equip":
+                    Item tem1 = new Item();
+                    tem1.equip = new Item_Equip();
+                    tem1.equip.Copy(t);
+                    tem1.num = Inven.Count;
+                    Inven.Add(tem1);
+                    break;
+                case "Quest":
+                    Item_Quest tmp3 = new Item_Quest();
+                    tmp3.Copy(t);
+                    QuestItems.Add(tmp3);
+                    break;
+            }
             sortInven();
-            tmp.num = Inven.Count + 1;
-            Inven.Add(tmp);
-
-        }
-        public void Additem(Item_Equip item)
-        {
-            Item tmp = new Item();
-            item.Copy(tmp.equip);
-            sortInven();
-            tmp.num = Inven.Count + 1;
-            Inven.Add(tmp);
-
-        }
-        public void Additem(Item_Quest item)
-        {
-            QuestItems.Add(item);
         }
         public void Removeitem(Item_Consume item)
         {
@@ -177,7 +168,6 @@ public class Character : MonoBehaviour
         }
         public bool Exists(int num1)
         {
-            sortInven();
             if (Inven.Exists(x => x.num == num1))
                 return true;
             else
