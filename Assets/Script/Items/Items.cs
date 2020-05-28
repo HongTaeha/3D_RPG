@@ -42,6 +42,20 @@ public  class Items
         is_Damage = other.is_Damage;
 
     }
+    public void Copy_to(Items other)
+    {
+        other.Item_name=Item_name;
+        other.Item_No=Item_No;
+        other.is_Breakable=is_Breakable;
+        other.Price = Price;
+        other.Item_info=Item_info;
+        other.Tag=Tag;
+        other.CoolTime=CoolTime;
+        other.Amount=Amount;
+        other.icon=icon;
+        other.Value=Value;
+        other.is_Damage=is_Damage;
+    }
 
     public void Use(Character parent)
     {

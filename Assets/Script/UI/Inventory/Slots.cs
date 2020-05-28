@@ -62,13 +62,20 @@ public class Slots : MonoBehaviour
         
         if(player.inven.Count>= SLOTNUM)
         {
-            if (player.inven.Exists(SLOTNUM))
-            {
-                ICON = player.inven.Inven[SLOTNUM].con.ICON;
-                OnIcon();
-            }
+            setIcon();
         }
     }
+
+    public void setIcon()
+    {
+        if (player.inven.Exists(SLOTNUM))
+        {
+            ICON = player.inven.Inven[SLOTNUM].con.ICON;
+            OnIcon();
+        }
+    }
+
+
 
     public void OffIcon()
     {
@@ -97,18 +104,13 @@ public class Slots : MonoBehaviour
 
     void Update()
     {
-        if (player.inven.Exists(SLOTNUM))
+        if(SLOTNUM>=0)
+        if (Icon.gameObject.activeSelf)
         {
-            if (Icon.isActiveAndEnabled)
-            {
-                text.text = player.inven.Inven[SLOTNUM].con.Amount.ToString();
-            }
+            if (player.inven.Is_consume(SLOTNUM))
+                text.text = player.inven.Findbynum(SLOTNUM).con.Amount.ToString();
         }
-        else
-        {
-            ICON = null;
-            OffIcon();
-        }
-
+        
+    
     }
 }

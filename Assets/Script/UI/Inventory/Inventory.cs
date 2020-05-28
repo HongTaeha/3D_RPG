@@ -17,9 +17,7 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndD
         {
             if(s.SLOTNUM>=0)
             slots.Add(s);
-        }
-        //slots.Sort((x, y) => x.name.CompareTo(y.name));
-        
+        }        
     }
     public void OnDrag(PointerEventData data)
     {
@@ -30,34 +28,28 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndD
 
         MoveIcon.rectTransform.position = eventData.position;
     }
-
-    /****************************************************
-     * 마우스 , 터치,  다운시 호출
-     ****************************************************/
     public void OnPointerDown(PointerEventData eventData)
     {
-        // 눌려질때의 위치
-        //Debug.Log(eventData.position);
         Vector2 UiPos = eventData.position;
-        // MoveIcon의 위치를 터치한 위치로 이동 
         MoveIcon.rectTransform.position = UiPos;
-
         // 터치한 슬롯을 검색
         for (int i = 0; i < slots.Count; i++)
         {
             if (slots[i].IsInRect(UiPos))
             {
-                // MoveIcon에 적용(MoveIcon을 활성화)
-                // 실시간 로드하여 스프라이트를 MoveIcon에 대입
-                // 구조화 필요 : ResourceManager(매니저클래스)를 제작하여 검색하여
-                // 가져오기
                 //비어있는 슬롯을 눌렀을 경우
                 if (slots[i].ICONGAMEOBJECT.gameObject.activeSelf == false)
                     return;
-
                 MoveIcon.gameObject.SetActive(true);
-                //MoveIcon.sprite = Resources.Load<Sprite>("Icon/" + slots[i].ICONNAME);
-                MoveIcon.sprite = player.inven.Inven[i].con.ICON;
+                if (player.inven.Is_consume(i))
+                {
+                    MoveIcon.sprite = player.inven.Findbynum(i).con.ICON;
+                }
+                else
+                {
+                    MoveIcon.sprite = player.inven.Findbynum(i).equip.ICON;
+                }
+                player.inven.Findbynum(i).num = i;
                 slots[i].OffIcon();
                 workSlot = i;
                 break;
@@ -68,15 +60,10 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndD
     public void OnPointerUp(PointerEventData eventData)
     {
         Vector2 uiPos = eventData.position;
-        //int index = -1;
         for (int i = 0; i < slots.Count; i++)
         {
             if (slots[i].IsInRect(uiPos))
             {
-                //내려놓는 곳의 슬롯 번호를 찾고
-                //index = i;
-                //조건비교
-
                 //드래그 안하고 바로 놓을 때
                 if (i == workSlot)
                 {
@@ -106,16 +93,15 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndD
                 }
 
                 //1. 기존아이템이 없는 경우
-                // if ( slots[i].ICONNAME.Equals(string.Empty) )
                 if (slots[i].ICONGAMEOBJECT.activeSelf == false)
                 {
-                    // 이동중인 아이콘 정보를 가져와서
-                    // 내려놓는 곳에 아이콘에 대입
-                    // 이동중인 아이콘은 없도록 설정
-                    //slots[i].ICON = Resources.Load<Sprite>("Icon/" + slots[workSlot].ICONNAME);
-
-                    slots[i].ICON = player.skillbook[workSlot].Icon;
-
+                    if (player.inven.Is_consume(workSlot))
+                    {
+                        slots[i].ICON = player.inven.Findbynum(workSlot).con.ICON;
+                    }
+                    else
+                        slots[i].ICON = player.inven.Findbynum(workSlot).equip.ICON;
+                    player.inven.Findbynum(workSlot).num = i;
                     slots[i].OnIcon();
                     slots[workSlot].ICON = null;
                     slots[workSlot].OffIcon();
@@ -123,11 +109,14 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndD
                 else
                 {
                     //2. 기존아이템이 있는 경우
-                    // 내려놓는 곳과 옮기는곳의 아이템을 교체
-                    string strTmp = slots[workSlot].ICONNAME;
-                    slots[workSlot].ICONGAMEOBJECT.SetActive(true);
-                    slots[workSlot].ICON = Resources.Load<Sprite>("Icon/" + slots[i].ICONNAME);
-                    slots[i].ICON = Resources.Load<Sprite>("Icon/" + strTmp);
+                    //slots[workSlot].ICONGAMEOBJECT.SetActive(true);
+                    //slots[i].ICONGAMEOBJECT.SetActive(true);
+                    slots[i].OnIcon();
+                    slots[workSlot].OnIcon();
+
+                    slots[workSlot].ICON = player.inven.Findbynum(i).con.ICON;
+                    slots[i].ICON = player.inven.Findbynum(workSlot).con.ICON;
+                    player.inven.Swapnum(i, workSlot);
 
                 }
                 MoveIcon.gameObject.SetActive(false);
@@ -135,7 +124,7 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndD
                 return;
             }
         }
-
+        if(workSlot!=-1)
         slots[workSlot].OnIcon();
         MoveIcon.sprite = null;
         MoveIcon.gameObject.SetActive(false);

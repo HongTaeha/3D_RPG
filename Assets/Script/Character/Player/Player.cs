@@ -87,7 +87,7 @@ public class Player : Character
                     inven.Inven[num].con.Amount -= 1;
                     if (inven.Inven[num].con.Amount < 1)
                     {
-                        inven.Removeitem(inven.Inven[num]);
+                        inven.Removeitem<Item_Consume>(inven.Inven[num].con);
                     }
                     Item_Available = false;
                     cooldown(this);

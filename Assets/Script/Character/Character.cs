@@ -95,7 +95,6 @@ public class Character : MonoBehaviour
         }
         public List<Item> Inven = new List<Item>();
         List<Item_Quest> QuestItems = new List<Item_Quest>();
-
         public int Count
         {
             get { return Inven.Count; }
@@ -103,6 +102,12 @@ public class Character : MonoBehaviour
         public void sortInven()
         {
             Inven.Sort((x, y) => x.num.CompareTo(y.num));
+            int i = 0;
+            foreach(Item t in Inven)
+            {
+                t.num = i;
+                i++;
+            }
         }        
         public void Additem<T>(T t) where T : Items,new()
         {
@@ -130,41 +135,45 @@ public class Character : MonoBehaviour
             }
             sortInven();
         }
-        public void Removeitem(Item_Consume item)
+        public void Removeitem<T>(T t) where T : Items
         {
-            foreach (Item t in Inven)
+            switch(t.Tag)
             {
-                if (t.con == item)
-                    Inven.Remove(t);
+                case "Consume":
+                    foreach (Item tem in Inven)
+                    {
+                        if (tem.con == t)
+                        {
+                            Inven.Remove(tem);
+                            break;
+                        }
+                    }
+                    break;
+                case "Equip":
+                    foreach (Item tem in Inven)
+                    {
+                        if (tem.equip == t)
+                        {
+                            Inven.Remove(tem);
+                            break;
+                        }
+                    }
+                    break;
+                case "Quest":
+                    Item_Quest te = new Item_Quest();
+                    te.Copy(t);
+                    QuestItems.Remove(te);
+                    break;
             }
-            sortInven();
-        }
-        public void Removeitem(Item_Equip item)
-        {
-            foreach (Item t in Inven)
-            {
-                if (t.equip == item)
-                    Inven.Remove(t);
-            }
-            sortInven();
-
-        }
-        public void Removeitem(Item_Quest item)
-        {
-            QuestItems.Remove(item);
-            sortInven();
-        }
-        public void Removeitem(Item item)
-        {
-            Inven.Remove(item);
-            sortInven();
-        }
+        }       
         public bool Is_consume(int num1)
         {
-            if (Inven[num1].con != null)
-                return true;
-            else
-                return false;
+            foreach(Item t in Inven)
+            {
+                if (t.num == num1&&t.con!=null)
+                    return true;
+            }
+            return false;
         }
         public bool Exists(int num1)
         {
@@ -173,12 +182,74 @@ public class Character : MonoBehaviour
             else
                 return false;
         }
-       
+        public int Exists<T>(T t)where T:Items
+        {
+            switch(t.Tag)
+            {
+                case "Consume":
+                    if (Inven.Exists(x => x.con == t))
+                    {
+                        foreach(Item tem in Inven)
+                        {
+                            if (tem.con == t)
+                            {
+                                return tem.num;
+                            }
+                        }
+                    }
+                        break;
+                case "Equip":
+                    if (Inven.Exists(x => x.equip == t))
+                    {
+                        foreach (Item tem in Inven)
+                        {
+                            if (tem.equip == t)
+                            {
+                                return tem.num;
+                            }
+                        }
+                    }
 
-    }
-    void Ani_speed(string str)
-    {
+                    break;
+                case "Quest":
+                    if(QuestItems.Exists(x=>x==t))
+                    {
+                        int i = 0;
+                        foreach(Item_Quest te in QuestItems)
+                        {
+                            if(te==t)
+                            {
+                                return i;
+                            }
+                            i++;
+                        }
+                    }
+                    break;
+                default:
+                    return 0;
+            }
+            return 0;
+        }
+        public Item Findbynum(int num)
+        {
+            
+            foreach(Item tem in Inven)
+            {
+                if(tem.num==num)
+                {
+                    return tem;      
+                }
+            }
+            return null;
+        }
+        public void Swapnum(int num, int num1)
+        {
+            Item tmp1 = Findbynum(num);
+            Item tmp2 = Findbynum(num1);
 
+            tmp1.num = num1;
+            tmp2.num = num;
+        }
     }
     public List<Character> Recognition(string tag, float range)
     {
