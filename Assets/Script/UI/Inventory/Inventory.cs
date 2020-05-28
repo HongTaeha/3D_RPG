@@ -19,6 +19,13 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndD
             slots.Add(s);
         }        
     }
+    public void cleanup()
+    {
+        foreach(Slots s in slots)
+        {
+            s.setIcon();
+        }
+    }
     public void OnDrag(PointerEventData data)
     {
         MoveIcon.rectTransform.position = data.position;
@@ -56,7 +63,6 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndD
             }
         }
     }
-
     public void OnPointerUp(PointerEventData eventData)
     {
         Vector2 uiPos = eventData.position;
@@ -76,8 +82,6 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndD
             }
         }
     }
-
-
     public void OnEndDrag(PointerEventData eventData)
     {
         Vector2 Uipos = eventData.position;
@@ -109,8 +113,6 @@ public class Inventory : MonoBehaviour, IPointerDownHandler, IDragHandler, IEndD
                 else
                 {
                     //2. 기존아이템이 있는 경우
-                    //slots[workSlot].ICONGAMEOBJECT.SetActive(true);
-                    //slots[i].ICONGAMEOBJECT.SetActive(true);
                     slots[i].OnIcon();
                     slots[workSlot].OnIcon();
 

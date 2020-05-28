@@ -68,10 +68,18 @@ public class Slots : MonoBehaviour
 
     public void setIcon()
     {
-        if (player.inven.Exists(SLOTNUM))
+        if (SLOTNUM >= 0)
         {
-            ICON = player.inven.Inven[SLOTNUM].con.ICON;
-            OnIcon();
+            if (player.inven.Exists(SLOTNUM))
+            {
+                ICON = player.inven.Inven[SLOTNUM].con.ICON;
+                OnIcon();
+            }
+            else
+            {
+                ICON = null;
+                OffIcon();
+            }
         }
     }
 

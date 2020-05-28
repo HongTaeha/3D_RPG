@@ -17,6 +17,7 @@ public class UIController : Controller
 
     public Toggle T_Auto;
     public GameObject Inven;
+    Inventory inven;
 
 
     [SerializeField]
@@ -107,6 +108,14 @@ public class UIController : Controller
         slot1.sprite = player.skillbook[0].Icon;
         //slot2.sprite = player.skillbook[1].Icon;
         //slot3.sprite = player.skillbook[2].Icon;
+
+        inven = Inven.GetComponentInChildren<Inventory>();
+    }
+    public void cleanup()
+    {
+        player.inven.sortInven();
+        inven.cleanup();
+        
     }
     void Update()
     {
@@ -115,8 +124,10 @@ public class UIController : Controller
         UI_SkillSlot();
         Toggled();
         if (Input.GetKeyDown(KeyCode.I))
-            if(Inven.activeSelf)
-                Inven.SetActive(false);
+            if (Inven.activeSelf)
+            {
+                Inven.SetActive(false);                
+            }
             else
                 Inven.SetActive(true);
 
