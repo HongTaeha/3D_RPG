@@ -1115,7 +1115,7 @@ GameObject:
   - component: {fileID: -7551726028806023852}
   - component: {fileID: 3764245376130710465}
   - component: {fileID: 5700417517084421984}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Polygonal Metalon Green
   m_TagString: Untagged
   m_Icon: {fileID: 0}

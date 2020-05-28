@@ -751,7 +751,7 @@ GameObject:
   - component: {fileID: 3816240601114007025}
   - component: {fileID: 3815940641293659510}
   - component: {fileID: -4488021634129582691}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Polygonal Metalon Purple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
