@@ -97,6 +97,12 @@ public class UIController : Controller
 
     }
 
+    public void cleanup()
+    {
+        player.inven.sortInven();
+        inven.cleanup();
+
+    }
     void Start()
     {
 
@@ -111,12 +117,6 @@ public class UIController : Controller
 
         inven = Inven.GetComponentInChildren<Inventory>();
     }
-    public void cleanup()
-    {
-        player.inven.sortInven();
-        inven.cleanup();
-        
-    }
     void Update()
     {
         UI_Target();
@@ -124,10 +124,8 @@ public class UIController : Controller
         UI_SkillSlot();
         Toggled();
         if (Input.GetKeyDown(KeyCode.I))
-            if (Inven.activeSelf)
-            {
-                Inven.SetActive(false);                
-            }
+            if (Inven.activeSelf)            
+                Inven.SetActive(false);                          
             else
                 Inven.SetActive(true);
 

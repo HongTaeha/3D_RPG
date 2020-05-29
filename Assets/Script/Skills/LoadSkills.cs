@@ -24,7 +24,7 @@ public class LoadSkills : MonoBehaviour
             tmp.value = N["value"];
             tmp.is_Available = N["is_Available"];
             tmp.is_Damage = N["is_Damage"];
-            tmp.is_Active = N["is_Active"];            
+            tmp.is_Active = N["is_Active"];
             Skills_DB.instance.skills.Add(tmp);
 
         }

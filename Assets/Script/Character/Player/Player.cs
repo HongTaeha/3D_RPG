@@ -22,17 +22,15 @@ public class Player : Character
         status = new Status();
         skillbook = new List<Solo_skill>();
         Status_DB.instance.status_dic.TryGetValue("Player", out tmp);
-        addskill((Solo_skill)Skills_DB.instance.skills[0]);
     }
     void Start()
     {
 
-        //inven.Additem((Item_Consume)Items_DB.instance.item[0]);
+        addskill((Solo_skill)Skills_DB.instance.skills[0]);
         inven.Additem<Item_Consume>(Items_DB.instance.c[0]);
         inven.Additem<Item_Consume>(Items_DB.instance.c[1]);
         inven.Additem<Item_Consume>(Items_DB.instance.c[2]);
 
-        this.skillbook[0].Icon = Resources.Load("WOW_Icon/ability_ambush", typeof(Sprite)) as Sprite;
         Get_Status(this.status, tmp);
         ani = GetComponent<Animator>();  
         POS = transform.position;

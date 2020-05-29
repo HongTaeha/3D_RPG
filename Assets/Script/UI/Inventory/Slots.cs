@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 public class Slots : MonoBehaviour
 {
@@ -25,12 +26,15 @@ public class Slots : MonoBehaviour
         {
             if (slot_num == -2)
             {
-                string[] parse = this.name.Split('_');
-                if (parse[1] == "empty")
-                    slot_num = -1;
-                else
-                    slot_num = int.Parse(parse[1]);
+                string iconname = this.name;
+                string slotname = Regex.Replace(iconname, @"\D", "");
+                slot_num = int.Parse(slotname);
             }
+            else
+            {
+                slot_num = -1;
+            }
+            Debug.Log(slot_num);
             return slot_num;
         }
     }

@@ -9,7 +9,7 @@ public class Skills
     public float CoolTime = 10;
     public float mpCost = 0;
     public float SpellID;
-    public Sprite Icon;
+    private Sprite icon;
     public int Animation_ID=5;
     public float value=5;
     public bool is_Available=true;
@@ -18,6 +18,7 @@ public class Skills
     public Buff buff;
     public Image Slot;
 
+    public Sprite Icon { get => icon;  }
 
     public void Copy(Skills other)
     {
@@ -26,7 +27,7 @@ public class Skills
         other.CoolTime = this.CoolTime;
         other.mpCost = this.mpCost;
         other.SpellID= this.SpellID;
-        other.Icon= this.Icon;
+        other.icon= this.icon;
         other.Animation_ID = this.Animation_ID;
         other.is_Available = this.is_Available;
         other.is_Damage = this.is_Damage;
@@ -54,6 +55,9 @@ public class Skills
     public void Awake()
     {
         is_Available = true;
+        Sprite[] s = Resources.LoadAll<Sprite>("WOW_Icon/");
+        int ran = Random.Range(0, s.Length);
+        this.icon = s[ran];
     }
     public void cooldown(MonoBehaviour parentMonoBehaviour)
     {
