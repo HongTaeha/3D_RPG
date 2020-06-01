@@ -33,6 +33,8 @@ public class Enemy_Walk : StateMachineBehaviour
                 //대기
                 animator.SetInteger("iAniIndex", 0);
             }
+
+
         }        
     }
 

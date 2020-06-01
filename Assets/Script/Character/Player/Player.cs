@@ -30,7 +30,6 @@ public class Player : Character
         inven.Additem<Item_Consume>(Items_DB.instance.c[0]);
         inven.Additem<Item_Consume>(Items_DB.instance.c[1]);
         inven.Additem<Item_Consume>(Items_DB.instance.c[2]);
-
         Get_Status(this.status, tmp);
         ani = GetComponent<Animator>();  
         POS = transform.position;

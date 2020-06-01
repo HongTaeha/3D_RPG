@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy_Idle : StateMachineBehaviour
 {
@@ -43,7 +44,9 @@ public class Enemy_Idle : StateMachineBehaviour
     {
         if (!enemy.target)
         {
-            enemy.Random_spot();
+            NavMeshPath path = new NavMeshPath();
+            if (NavMesh.CalculatePath(enemy.transform.position, enemy.POS, -1, path)!=false)
+                enemy.Random_spot();
         }
 
     }

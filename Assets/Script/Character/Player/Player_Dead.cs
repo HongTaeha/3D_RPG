@@ -11,11 +11,14 @@ public class Player_Dead : StateMachineBehaviour
         {
             player = animator.GetComponent<Player>();
         }
+
+        player.Navi.isStopped = true;
+        Time.timeScale = 0;
+
     }
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //player.Navi.isStopped = true;
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

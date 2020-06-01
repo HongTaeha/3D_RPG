@@ -12,8 +12,6 @@ public class Spawner : MonoBehaviour
         foreach (Vector3 a in lst)
         {
             GenMonster(a, "Enemy");
-            GenMonster(a, "Enemy");
-            GenMonster(a, "Enemy");
         }
        
     }    

@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class PlayerController : Controller
 {
@@ -113,6 +115,7 @@ public class PlayerController : Controller
         }
 
     }
+    public Toggle t;
     void Automatic()
     {
         /* 1. 지역의 몬스터 리스트를 갖고 온다 
@@ -151,30 +154,57 @@ public class PlayerController : Controller
         public GameObject obj;
         public float distance;
     }
+    bool GetPath(NavMeshPath path, Vector3 fromPos, Vector3 toPos, int passableMask)
+    {
+        path.ClearCorners();
+        if (NavMesh.CalculatePath(fromPos, toPos, passableMask, path) == false)
+            return false;
+        return true;
+    }
+
+    float GetPathLength(NavMeshPath path)
+    {
+        float lng = 0.0f;
+        if ((path.status != NavMeshPathStatus.PathInvalid) && (path.corners.Length > 1))
+        {
+            for (int i = 1; i < path.corners.Length; ++i)
+            {
+                lng += Vector3.Distance(path.corners[i - 1], path.corners[i]);
+            }
+        }
+        return lng;
+    }
     void Cal_Distance()
     {
         ObjectPooler.instance.getActiveObject("Enemy",out List<GameObject> activeobj);
         List<disLst> lst = new List<disLst>();
-
-        
-            foreach (GameObject a in activeobj)
+        foreach (GameObject a in activeobj)
+        {
+            disLst tmp = new disLst();
+            tmp.obj = a;
+            NavMeshPath t = new NavMeshPath();
+            if(GetPath(t, player.transform.position, a.transform.position, -1))
             {
-                disLst tmp = new disLst();
-                tmp.obj = a;
-                tmp.distance = Vector3.Distance(player.transform.position, a.transform.position);
-                lst.Add(tmp);
-            }
-            lst.Sort((x, y) => x.distance.CompareTo(y.distance));
-            if (lst.Count == 0)
-            {
-                Debug.Log("자동사냥 끝");
-                player.is_Automatic = false;
+                tmp.distance = GetPathLength(t);
             }
             else
             {
-                player.target = lst[0].obj.GetComponent<Enemy>();
-                player.Attack_Target = player.target;
-                player.POS = player.target.transform.position;
+                tmp.distance = Mathf.Infinity;
             }
+            lst.Add(tmp);
+        }
+        lst.Sort((x, y) => x.distance.CompareTo(y.distance));
+        if (lst.Count == 0)
+        {
+            Debug.Log("자동사냥 끝");
+            t.isOn = false;
+            player.is_Automatic = false;
+        }
+        else
+        {
+            player.target = lst[0].obj.GetComponent<Enemy>();
+            player.Attack_Target = player.target;
+            player.POS = player.target.transform.position;
+        }
     }
 }

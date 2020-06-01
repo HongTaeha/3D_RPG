@@ -26,15 +26,15 @@ public class Slots : MonoBehaviour
         {
             if (slot_num == -2)
             {
+                
                 string iconname = this.name;
                 string slotname = Regex.Replace(iconname, @"\D", "");
-                slot_num = int.Parse(slotname);
+                if (slotname != "")
+                    slot_num = int.Parse(slotname);
+                else
+                    slot_num = -1;
+               
             }
-            else
-            {
-                slot_num = -1;
-            }
-            Debug.Log(slot_num);
             return slot_num;
         }
     }

@@ -7,7 +7,7 @@
 		"Item_info" : "체력 회복용 포션",
 		"Tag" : "Consume",
 		"CoolTime" : "5",
-		"Amount" : "5",
+		"Amount" : "10",
 		"is_Active" : true,
 		"Value" : "10",
 		"is_Damage":false

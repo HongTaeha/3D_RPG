@@ -18,7 +18,7 @@ public class UIController : Controller
     public Toggle T_Auto;
     public GameObject Inven;
     Inventory inven;
-
+    public GameObject UI_Dead;
 
     [SerializeField]
     private Button[] skillslot;
@@ -85,8 +85,9 @@ public class UIController : Controller
         {
             player.is_Automatic = true;
         }
-        else
+        else 
             player.is_Automatic = false;
+
     }
     void Inventory()
     {
@@ -131,6 +132,10 @@ public class UIController : Controller
 
         if (Input.GetKeyDown(KeyCode.E))
             Equipment();
+        if(Time.timeScale==0)
+        {
+            UI_Dead.SetActive(true);
+        }
 
     }
 }

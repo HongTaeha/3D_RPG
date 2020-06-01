@@ -70,8 +70,8 @@ public class Enemy : Character
     {
         Vector3 tmp = this.POS;
                
-            float dx = Random.Range(-4f, 4f);
-            float dz = Random.Range(-4f, 4f);
+            float dx = Random.Range(-3f, 3f);
+            float dz = Random.Range(-3f, 3f);
             tmp.x = this.Spawn_Point.x + dx;
             tmp.z = this.Spawn_Point.z + dz;
        
