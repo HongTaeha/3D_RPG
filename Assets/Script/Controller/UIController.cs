@@ -30,7 +30,7 @@ public class UIController : Controller
         {
             
             Target.SetActive(true);
-            T_ICON.sprite = player.target.icon;
+            T_ICON.sprite = player.target.Icon;
 
             T_HP.fillAmount= player.target.status.HP / player.target.status.Max_HP;
             T_MP.fillAmount = player.target.status.MP / player.target.status.Max_MP;
@@ -49,7 +49,7 @@ public class UIController : Controller
     void UI_Status()
     {
 
-        Player_status.sprite = player.icon;
+        Player_status.sprite = player.Icon;
         Text hp= HP.GetComponentInChildren<Text>(); 
         Text mp = MP.GetComponentInChildren<Text>();
         

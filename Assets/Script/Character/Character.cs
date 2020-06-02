@@ -20,7 +20,7 @@ public class Character : MonoBehaviour
         }
     }
     public Vector3 mypos;
-    public Sprite icon;
+    public Sprite Icon;
 
     //애니메이션
     public Animator ani;
@@ -31,6 +31,7 @@ public class Character : MonoBehaviour
         get { return pos; }
         set { pos = value; }
     }
+
 
 
     //케릭터 스텟    
