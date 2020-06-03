@@ -35,6 +35,7 @@ public class Skills
     }
     public void Use(Character parent)
     {
+        if(parent.target!=null)
         if (parent.TargetDIstance(parent, parent.target) > parent.status.Range)
         {
             Debug.Log("대상이 너무 멀리 있습니다.");

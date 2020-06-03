@@ -50,12 +50,10 @@ public class Slots : MonoBehaviour
 
     private void Awake()
     {
-        //Icon = GetComponentInChildren<Image>();
     }
     void Start()
     {
         rt = GetComponent<RectTransform>();
-        // rc.x = tr.position.x - sizeDelta.x / 2;
         rect.x = rt.position.x - rt.rect.width / 2;
         rect.y = rt.position.y + rt.rect.height / 2;
         rect.xMax = rt.rect.width;

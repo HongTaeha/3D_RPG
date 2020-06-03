@@ -20,11 +20,10 @@ public class Character : MonoBehaviour
         }
     }
     public Vector3 mypos;
-    public Sprite Icon;
+    public Sprite icon;
 
     //애니메이션
     public Animator ani;
-    float speed = 3.0f;
     private Vector3 pos = Vector3.zero;
     public Vector3 POS
     {
@@ -374,9 +373,16 @@ public class Character : MonoBehaviour
     }
     public void Use_Skill(int num)
     {
-        if (skillbook[num].is_Active && skillbook[num].is_Available)
+        if (skillbook[num] != null)
         {
-            skillbook[num].Use(this);
+            if (skillbook[num].is_Active && skillbook[num].is_Available)
+            {
+                skillbook[num].Use(this);
+            }
+        }
+        else
+        {
+            Debug.Log("배정된 스킬이 없습니다.");
         }
     }
     public void addskill(Skills skill)

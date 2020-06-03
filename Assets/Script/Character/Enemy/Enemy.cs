@@ -31,6 +31,7 @@ public class Enemy : Character
         SetAttackSpeed("Stab Attack", 0.5f);
         ani.SetFloat("WalkSpeed", SetWalkSpeed("Run Forward In Place"));
         Navi.speed = 3.0f;
+        
     }
    
     // Update is called once per frame

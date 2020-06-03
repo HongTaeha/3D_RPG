@@ -22,7 +22,7 @@ public class PlayerController : Controller
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                if (hit.collider.CompareTag("ground"))
+                if (hit.collider.CompareTag("Terrain"))
                 {
                     // 배경을 눌렀을 경우 타겟 변화 없음
                     // 오로지 이동만
@@ -92,6 +92,8 @@ public class PlayerController : Controller
         {
             player.target = null;
         }
+        if (player.target!=null&&player.target.status.HP <= 0)
+            player.target = null;
     }
     void Start()
     {

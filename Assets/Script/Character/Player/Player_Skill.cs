@@ -12,6 +12,7 @@ public class Player_Skill : StateMachineBehaviour
             player = animator.GetComponent<Player>();
         }
         player.Navi.isStopped = true;
+        if(player.Attack_Target!=null)
         if (player.Attack_Target.target == null)
             player.Attack_Target.target = player;
     }
